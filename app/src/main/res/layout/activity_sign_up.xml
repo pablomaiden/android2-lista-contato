@@ -12,37 +12,47 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nome"
+        android:hint="@string/label_nome"
+        android:inputType="textPersonName"
         android:id="@+id/formulario_nome"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Sobrenome"
+        android:hint="@string/label_sobrenome"
+        android:inputType="textPersonName"
         android:id="@+id/formulario_sobrenome"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Telefone"
+        android:hint="@string/label_telefone"
+        android:inputType="phone"
         android:id="@+id/formulario_telefone"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Email"
+        android:hint="@string/label_email"
+        android:inputType="textEmailAddress"
         android:id="@+id/formulario_email"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Senha"
-        android:id="@+id/formulario_senha"/>
+        android:hint="@string/label_senha"
+        android:id="@+id/formulario_senha"
+        android:singleLine="true"
+        android:maxLength="15"
+        android:inputType="textPassword"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Confirme a senha"
-        android:id="@+id/formulario_conf_senha"/>
+        android:hint="@string/label_conf_senha"
+        android:id="@+id/formulario_conf_senha"
+        android:singleLine="true"
+        android:maxLength="15"
+        android:inputType="textPassword" />
 
 </LinearLayout>
