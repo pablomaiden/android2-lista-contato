@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:orientation="vertical">
+    android:background="@color/colorPrimary">
 
      <TextView
          android:layout_width="wrap_content"
@@ -11,17 +11,84 @@
          android:textAppearance="?android:attr/textAppearanceLarge"
          android:text="Login"
          android:id="@+id/textView"
-         android:gravity="center|bottom"/>
+         android:layout_marginTop="101dp"
+         android:layout_alignParentTop="true"
+         android:layout_alignLeft="@+id/textView3"
+         android:layout_alignStart="@+id/textView3"
+         android:textColor="@color/white"/>
 
      <EditText
          android:layout_width="200sp"
          android:layout_height="wrap_content"
          android:textAppearance="?android:attr/textAppearanceLarge"
          android:text=""
+         android:id="@+id/textView3"
+         android:layout_below="@+id/textView"
+         android:layout_centerHorizontal="true"
+         android:textColor="@color/white"/>
+
+     <TextView
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:textAppearance="?android:attr/textAppearanceLarge"
+         android:text="Senha"
          android:id="@+id/textView2"
-         android:gravity="center|bottom"/>
+         android:layout_below="@+id/textView3"
+         android:layout_alignLeft="@+id/textView3"
+         android:layout_alignStart="@+id/textView3"
+         android:layout_marginTop="31dp"
+         android:textColor="@color/white"/>
+
+     <EditText
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:id="@+id/editText"
+         android:layout_centerVertical="true"
+         android:layout_alignLeft="@+id/textView2"
+         android:layout_alignStart="@+id/textView2"
+         android:layout_alignRight="@+id/textView3"
+         android:layout_alignEnd="@+id/textView3"
+         android:textColor="@color/white"/>
+
+     <Button
+         android:layout_width="100sp"
+         android:layout_height="40sp"
+         android:text="Entrar"
+         android:id="@+id/button"
+         android:layout_below="@+id/editText"
+         android:layout_alignLeft="@+id/editText"
+         android:layout_alignStart="@+id/editText"
+         android:layout_marginTop="34dp"
+         android:textColor="@color/white"
+         android:background="@color/colorPrimaryDark"
+         android:onClick="autenticar"/>
+
+     <Button
+         style="?android:attr/buttonStyleSmall"
+         android:layout_width="100sp"
+         android:layout_height="40sp"
+         android:text="Registrar"
+         android:id="@+id/button2"
+         android:layout_alignTop="@+id/button"
+         android:layout_toRightOf="@+id/button"
+         android:layout_toEndOf="@+id/button"
+         android:layout_marginLeft="23dp"
+         android:layout_marginStart="23dp"
+         android:textColor="@color/white"
+         android:background="@color/colorPrimaryDark"
+         android:onClick="registrar"/>
+
+     <TextView
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="Sing up"
+         android:textAppearance="?android:attr/textAppearanceLarge"
+         android:id="@+id/textView4"
+         android:layout_alignParentTop="true"
+         android:layout_toRightOf="@+id/textView"
+         android:layout_toEndOf="@+id/textView"
+         android:layout_marginTop="26dp"
+         android:textColor="@color/white"/>
 
 
-
-
-</LinearLayout>
+</RelativeLayout>
