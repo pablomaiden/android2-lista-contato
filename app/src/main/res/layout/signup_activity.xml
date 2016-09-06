@@ -13,16 +13,15 @@
          android:id="@+id/textView"
          android:layout_marginTop="101dp"
          android:layout_alignParentTop="true"
-         android:layout_alignLeft="@+id/textView3"
-         android:layout_alignStart="@+id/textView3"
+         android:layout_alignLeft="@+id/et_login"
+         android:layout_alignStart="@+id/et_login"
          android:textColor="@color/white"/>
 
      <EditText
          android:layout_width="200sp"
          android:layout_height="wrap_content"
          android:textAppearance="?android:attr/textAppearanceLarge"
-         android:text=""
-         android:id="@+id/textView3"
+         android:id="@+id/et_login"
          android:layout_below="@+id/textView"
          android:layout_centerHorizontal="true"
          android:textColor="@color/white"/>
@@ -33,21 +32,21 @@
          android:textAppearance="?android:attr/textAppearanceLarge"
          android:text="Senha"
          android:id="@+id/textView2"
-         android:layout_below="@+id/textView3"
-         android:layout_alignLeft="@+id/textView3"
-         android:layout_alignStart="@+id/textView3"
+         android:layout_below="@+id/et_login"
+         android:layout_alignLeft="@+id/et_login"
+         android:layout_alignStart="@+id/et_login"
          android:layout_marginTop="31dp"
          android:textColor="@color/white"/>
 
      <EditText
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
-         android:id="@+id/editText"
+         android:id="@+id/et_senha"
          android:layout_centerVertical="true"
          android:layout_alignLeft="@+id/textView2"
          android:layout_alignStart="@+id/textView2"
-         android:layout_alignRight="@+id/textView3"
-         android:layout_alignEnd="@+id/textView3"
+         android:layout_alignRight="@+id/et_login"
+         android:layout_alignEnd="@+id/et_login"
          android:textColor="@color/white"/>
 
      <Button
@@ -55,9 +54,9 @@
          android:layout_height="40sp"
          android:text="Entrar"
          android:id="@+id/button"
-         android:layout_below="@+id/editText"
-         android:layout_alignLeft="@+id/editText"
-         android:layout_alignStart="@+id/editText"
+         android:layout_below="@+id/et_senha"
+         android:layout_alignLeft="@+id/et_senha"
+         android:layout_alignStart="@+id/et_senha"
          android:layout_marginTop="34dp"
          android:textColor="@color/white"
          android:background="@color/colorPrimaryDark"
