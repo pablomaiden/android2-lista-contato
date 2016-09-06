@@ -1,5 +1,6 @@
 package br.com.meuscontatos.principal;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -8,7 +9,7 @@ import br.com.meuscontatos.principal.domain.Usuario;
 import br.com.meuscontatos.principal.service.Service;
 import io.realm.Realm;
 
-public class SignInActivity extends AppCompatActivity {
+public class SignInActivity extends Activity {
 
     private EditText et_nome;
     private EditText et_email;

@@ -21,7 +21,7 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.signup_activity);
 
         et_login  = (EditText) findViewById(R.id.et_login);
-        et_login  = (EditText) findViewById(R.id.et_senha);
+        et_senha  = (EditText) findViewById(R.id.et_senha);
     }
 
     public void registrar(View view){
@@ -32,7 +32,15 @@ public class SignUpActivity extends AppCompatActivity {
     public void autenticar(View view){
         Usuario usuario = new Usuario();
         Realm realm = Service.getInstace().getRealm(getApplicationContext());
-        Usuario usuario_= realm.where(Usuario.class).equalTo("usuario",et_login.getText().toString()).equalTo("senha",et_login.getText().toString()).findFirst();
+        Usuario usuario_= realm.where(Usuario.class).equalTo("usuario",et_login.getText().toString()).equalTo("senha",et_senha.getText().toString()).findFirst();
+
+        if(usuario_==null){
+
+        }else{
+            Intent intent = new Intent(this,MainActivity.class);
+            startActivity(intent);
+        }
+
     }
 
 }
