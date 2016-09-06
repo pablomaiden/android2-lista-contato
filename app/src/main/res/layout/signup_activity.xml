@@ -50,22 +50,17 @@
          android:textColor="@color/white"/>
 
      <Button
-         android:layout_width="100sp"
-         android:layout_height="40sp"
+         style="@style/Button"
          android:text="Entrar"
          android:id="@+id/button"
          android:layout_below="@+id/et_senha"
          android:layout_alignLeft="@+id/et_senha"
          android:layout_alignStart="@+id/et_senha"
          android:layout_marginTop="34dp"
-         android:textColor="@color/white"
-         android:background="@color/colorPrimaryDark"
          android:onClick="autenticar"/>
 
      <Button
-         style="?android:attr/buttonStyleSmall"
-         android:layout_width="100sp"
-         android:layout_height="40sp"
+         style="@style/Button"
          android:text="Registrar"
          android:id="@+id/button2"
          android:layout_alignTop="@+id/button"
@@ -73,21 +68,16 @@
          android:layout_toEndOf="@+id/button"
          android:layout_marginLeft="23dp"
          android:layout_marginStart="23dp"
-         android:textColor="@color/white"
-         android:background="@color/colorPrimaryDark"
          android:onClick="registrar"/>
 
      <TextView
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
          android:text="Sing up"
-         android:textAppearance="?android:attr/textAppearanceLarge"
          android:id="@+id/textView4"
          android:layout_alignParentTop="true"
          android:layout_toRightOf="@+id/textView"
          android:layout_toEndOf="@+id/textView"
-         android:layout_marginTop="26dp"
-         android:textColor="@color/white"/>
-
+         android:layout_marginTop="26dp"/>
 
 </RelativeLayout>
