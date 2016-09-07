@@ -2,82 +2,93 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     android:fitsSystemWindows="true"
-    android:background="@color/colorPrimary">
+    android:orientation="vertical">
 
-     <TextView
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:textAppearance="?android:attr/textAppearanceLarge"
-         android:text="Login"
-         android:id="@+id/textView"
-         android:layout_marginTop="101dp"
-         android:layout_alignParentTop="true"
-         android:layout_alignLeft="@+id/et_login"
-         android:layout_alignStart="@+id/et_login"
-         android:textColor="@color/white"/>
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="26dp"
+        android:layout_toEndOf="@+id/textView"
+        android:layout_toRightOf="@+id/textView"
+        android:text="Sing up" />
 
-     <EditText
-         android:layout_width="200sp"
-         android:layout_height="wrap_content"
-         android:textAppearance="?android:attr/textAppearanceLarge"
-         android:id="@+id/et_login"
-         android:layout_below="@+id/textView"
-         android:layout_centerHorizontal="true"
-         android:textColor="@color/white"/>
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/et_login"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/et_login"
+        android:layout_marginTop="101dp"
+        android:text="Login"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/white" />
 
-     <TextView
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:textAppearance="?android:attr/textAppearanceLarge"
-         android:text="Senha"
-         android:id="@+id/textView2"
-         android:layout_below="@+id/et_login"
-         android:layout_alignLeft="@+id/et_login"
-         android:layout_alignStart="@+id/et_login"
-         android:layout_marginTop="31dp"
-         android:textColor="@color/white"/>
+    <EditText
+        android:id="@+id/et_login"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/white" />
 
-     <EditText
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:id="@+id/et_senha"
-         android:layout_centerVertical="true"
-         android:layout_alignLeft="@+id/textView2"
-         android:layout_alignStart="@+id/textView2"
-         android:layout_alignRight="@+id/et_login"
-         android:layout_alignEnd="@+id/et_login"
-         android:textColor="@color/white"/>
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/et_login"
+        android:layout_alignStart="@+id/et_login"
+        android:layout_below="@+id/et_login"
+        android:layout_marginTop="31dp"
+        android:text="Senha"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/white" />
 
-     <Button
-         style="@style/Button"
-         android:text="Entrar"
-         android:id="@+id/button"
-         android:layout_below="@+id/et_senha"
-         android:layout_alignLeft="@+id/et_senha"
-         android:layout_alignStart="@+id/et_senha"
-         android:layout_marginTop="34dp"
-         android:onClick="autenticar"/>
+    <EditText
+        android:id="@+id/et_senha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/et_login"
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_alignRight="@+id/et_login"
+        android:layout_alignStart="@+id/textView2"
+        android:layout_centerVertical="true"
+        android:textColor="@color/white" />
 
-     <Button
-         style="@style/Button"
-         android:text="Registrar"
-         android:id="@+id/button2"
-         android:layout_alignTop="@+id/button"
-         android:layout_toRightOf="@+id/button"
-         android:layout_toEndOf="@+id/button"
-         android:layout_marginLeft="23dp"
-         android:layout_marginStart="23dp"
-         android:onClick="registrar"/>
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/textView2"
+        android:layout_alignEnd="@+id/textView2"
+        android:layout_marginBottom="81dp">
 
-     <TextView
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:text="Sing up"
-         android:id="@+id/textView4"
-         android:layout_alignParentTop="true"
-         android:layout_toRightOf="@+id/textView"
-         android:layout_toEndOf="@+id/textView"
-         android:layout_marginTop="26dp"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/registrar"
+        style="@style/Button"
+        android:onClick="registrar"
+        android:text="@string/label_registrar"
+        android:layout_above="@+id/linearLayout"
+        android:layout_toRightOf="@+id/textView4"
+        android:layout_toEndOf="@+id/textView4" />
+
+    <Button
+        android:id="@+id/entrar"
+        style="@style/Button"
+        android:onClick="autenticar"
+        android:text="@string/label_entrar"
+        android:layout_above="@+id/linearLayout"
+        android:layout_alignRight="@+id/textView4"
+        android:layout_alignEnd="@+id/textView4" />
+
 
 </RelativeLayout>
