@@ -13,6 +13,8 @@
     <string name="label_telefone">Telefone:</string>
     <string name="label_email">Email:</string>
     <string name="label_senha">Senha:</string>
+    <string name="label_registrar">REGISTRAR</string>
+    <string name="label_entrar">ENTRAR</string>
     <string name="label_conf_senha">Confirme a Senha:</string>
     <string name="btn_enter_value">Registrar</string>
     <string name="login_auth_ok">Senha OK!</string>
