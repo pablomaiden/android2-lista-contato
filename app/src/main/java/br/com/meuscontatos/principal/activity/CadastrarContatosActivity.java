@@ -42,9 +42,9 @@ public class CadastrarContatosActivity extends AppCompatActivity {
         getSupportActionBar().setShowHideAnimationEnabled(true);
         getSupportActionBar().setTitle("Cadastro Contato");
 
-        et_nome  = (EditText)  findViewById(R.id.nome);
-        et_email = (EditText)  findViewById(R.id.email);
-        telefone = (EditText)  findViewById(R.id.telefone);
+        et_nome  = (EditText)  findViewById(R.id.cad_nome);
+        et_email = (EditText)  findViewById(R.id.cad_email);
+        telefone = (EditText)  findViewById(R.id.cad_telefone);
         foto     = (ImageView) findViewById(R.id.foto);
     }
 

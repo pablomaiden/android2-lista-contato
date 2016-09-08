@@ -22,7 +22,7 @@
             android:onClick="acionarCamera" />
 
         <EditText
-            android:id="@+id/nome"
+            android:id="@+id/cad_nome"
             style="@style/text_lista_contatos"
             android:layout_width="300sp"
             android:layout_column="0"
@@ -33,7 +33,7 @@
             android:textColor="@color/colorPrimary" />
 
         <EditText
-            android:id="@+id/telefone"
+            android:id="@+id/cad_telefone"
             style="@style/text_lista_contatos"
             android:layout_width="300sp"
             android:layout_column="0"
@@ -44,7 +44,7 @@
             android:textColor="@color/colorPrimary" />
 
         <EditText
-            android:id="@+id/email"
+            android:id="@+id/cad_email"
             style="@style/text_lista_contatos"
             android:layout_width="300sp"
             android:layout_column="0"
