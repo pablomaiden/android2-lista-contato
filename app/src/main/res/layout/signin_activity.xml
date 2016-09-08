@@ -32,60 +32,67 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
-        android:background="@color/white"
+        android:background="@android:drawable/editbox_background"
+        android:hint="@string/hint_nome"
         android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/et_email"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/et_nome"
-        android:layout_alignRight="@+id/et_nome"
+        android:layout_below="@id/et_nome"
         android:layout_centerVertical="true"
-        android:inputType="textEmailAddress"
-        android:layout_alignLeft="@+id/et_nome"
-        android:layout_alignStart="@+id/et_nome" />
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@android:drawable/editbox_background"
+        android:hint="@string/hint_email"
+        android:inputType="textEmailAddress" />
 
     <EditText
         android:id="@+id/et_senha"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="27dp"
-        android:hint="@string/hint_senha"
-        android:inputType="textWebPassword"
-        android:layout_alignLeft="@+id/et_email"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentStart="true"
         android:layout_alignStart="@+id/et_email"
-        android:layout_below="@+id/et_email" />
+        android:layout_below="@+id/et_email"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@android:drawable/editbox_background"
+        android:hint="@string/hint_senha"
+        android:inputType="textWebPassword" />
+
 
     <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/et_senha"
-        android:layout_alignStart="@+id/et_senha"
+        android:id="@+id/btn_salvar"
+        style="@style/Button"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/et_senha"
-        android:layout_marginLeft="29dp"
-        android:layout_marginStart="29dp"
-        android:layout_marginTop="30dp"
-        android:background="@color/colorPrimaryDark"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:clickable="true"
+        android:enabled="true"
         android:onClick="salvar"
-        android:text="Salvar"
-        android:textColor="@color/white" />
+        android:text="@string/label_salvar" />
 
     <Button
-        android:id="@+id/button4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/button3"
-        android:layout_marginLeft="39dp"
-        android:layout_marginStart="39dp"
-        android:layout_toEndOf="@+id/button3"
-        android:layout_toRightOf="@+id/button3"
-        android:background="@color/colorPrimaryDark"
-        android:text="Cancelar"
-        android:textColor="@color/white" />
+        android:id="@+id/btn_cancelar"
+        style="@style/Button"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/btn_salvar"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:clickable="true"
+        android:enabled="true"
+        android:onClick="cancelar"
+        android:text="@string/label_cancelar" />
 
 
 </RelativeLayout>

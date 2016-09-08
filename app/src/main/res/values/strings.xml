@@ -15,11 +15,13 @@
     <string name="label_email">Email:</string>
     <string name="label_senha">Senha:</string>
     <string name="label_registrar">REGISTRAR</string>
+    <string name="label_cancelar">CANCELAR</string>
     <string name="label_entrar">ENTRAR</string>
     <string name="label_conf_senha">Confirme a Senha:</string>
     <string name="btn_enter_value">Registrar</string>
     <string name="login_auth_ok">Senha OK!</string>
     <string name="login_user_size_invalid">Seu login deve ter entre 6 e 15 caracteres!</string>
     <string name="login_pass_size_invalid">Sua senha deve ter entre 6 e 15 caracteres!</string>
+    <string name="label_salvar">SALVAR</string>
 </resources>
 
