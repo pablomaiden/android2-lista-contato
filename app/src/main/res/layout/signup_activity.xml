@@ -29,7 +29,6 @@
         android:background="@color/white"
         android:hint="@string/hint_email"
         android:inputType="textEmailAddress"
-        android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/colorPrimaryDark"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
