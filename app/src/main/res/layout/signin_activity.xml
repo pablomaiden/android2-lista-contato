@@ -34,6 +34,7 @@
         android:layout_marginTop="20dp"
         android:background="@android:drawable/editbox_background"
         android:hint="@string/hint_nome"
+        android:imeOptions="actionNext"
         android:inputType="textPersonName" />
 
     <EditText
@@ -47,6 +48,7 @@
         android:layout_marginTop="20dp"
         android:background="@android:drawable/editbox_background"
         android:hint="@string/hint_email"
+        android:imeOptions="actionNext"
         android:inputType="textEmailAddress" />
 
     <EditText
@@ -63,8 +65,8 @@
         android:layout_marginTop="20dp"
         android:background="@android:drawable/editbox_background"
         android:hint="@string/hint_senha"
+        android:imeOptions="actionGo"
         android:inputType="textWebPassword" />
-
 
     <Button
         android:id="@+id/btn_salvar"
