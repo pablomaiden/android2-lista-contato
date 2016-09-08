@@ -34,9 +34,11 @@ public class ContatoRecyclerViewAdapter extends RecyclerView.Adapter<ContatoRecy
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
+        //Bitmap bImage = BitmapFactory.decodeResource(this.getResources(), R.drawable.my_image);
         viewHolder.foto.setImageResource(R.drawable.sem_foto);
         viewHolder.nome.setText(contatos.get(position).getNome());
         viewHolder.email.setText(contatos.get(position).getEmail());
+        viewHolder.telefone.setText(contatos.get(position).getTelefone());
         YoYo.with(Techniques.FadeIn).duration(500).playOn(viewHolder.itemView);
     }
 
@@ -50,12 +52,14 @@ public class ContatoRecyclerViewAdapter extends RecyclerView.Adapter<ContatoRecy
         public ImageView foto;
         public TextView nome;
         public TextView email;
+        public TextView telefone;
 
         public ViewHolder(View itemView){
             super(itemView);
-            foto  = (ImageView) itemView.findViewById(R.id.foto);
-            nome  = (TextView)  itemView.findViewById(R.id.nome);
-            email = (TextView)  itemView.findViewById(R.id.email);
+            foto     = (ImageView) itemView.findViewById(R.id.foto);
+            nome     = (TextView)  itemView.findViewById(R.id.nome);
+            email    = (TextView)  itemView.findViewById(R.id.email);
+            telefone = (TextView)  itemView.findViewById(R.id.email);
         }
     }
 }
