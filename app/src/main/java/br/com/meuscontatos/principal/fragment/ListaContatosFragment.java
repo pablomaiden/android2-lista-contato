@@ -3,14 +3,13 @@ package br.com.meuscontatos.principal.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.melnykov.fab.FloatingActionButton;
-
-import java.util.List;
 
 import br.com.meuscontatos.principal.R;
 import br.com.meuscontatos.principal.activity.CadastrarContatosActivity;
@@ -29,10 +28,16 @@ public class ListaContatosFragment extends Fragment {
         View view = inflater.inflate(R.layout.lista_contato_fragment, container, false);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_lista_contatos);
-        Realm realm = Service.getInstace().getRealm(getContext());
+        mRecyclerView.setHasFixedSize(true);
+
+        LinearLayoutManager lm = new LinearLayoutManager(getActivity());
+        lm.setOrientation(LinearLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(lm);
+
+        Realm realm = Service.getInstace().getRealm(getActivity());
         RealmResults<Contato> listaContatos = realm.where(Contato.class).findAll();
-        ContatoRecyclerViewAdapter conttosAdapter = new ContatoRecyclerViewAdapter(getActivity(),listaContatos);
-        mRecyclerView.setAdapter(conttosAdapter);
+        ContatoRecyclerViewAdapter contatosAdapter = new ContatoRecyclerViewAdapter(getActivity(),listaContatos);
+        mRecyclerView.setAdapter(contatosAdapter);
 
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.attachToRecyclerView(mRecyclerView);
@@ -42,6 +47,7 @@ public class ListaContatosFragment extends Fragment {
                 Intent intent = new Intent(getActivity(),CadastrarContatosActivity.class);
                 startActivity(intent);
             }});
+
         return view;
     }
 

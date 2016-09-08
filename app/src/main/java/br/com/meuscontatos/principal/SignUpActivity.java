@@ -1,7 +1,5 @@
 package br.com.meuscontatos.principal;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -36,7 +34,10 @@ public class SignUpActivity extends AppCompatActivity {
         Realm realm = Service.getInstace().getRealm(getApplicationContext());
         Usuario usuario_= realm.where(Usuario.class).equalTo("usuario",et_login.getText().toString()).equalTo("senha",et_senha.getText().toString()).findFirst();
 
-        if(usuario_==null){
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
+
+        /*if(usuario_==null){
             AlertDialog builder = new AlertDialog.Builder(this)
                     .setTitle("Erro")
                     .setMessage("Usuário ou senha incorretos")
@@ -50,7 +51,7 @@ public class SignUpActivity extends AppCompatActivity {
         }else{
             Intent intent = new Intent(this,MainActivity.class);
             startActivity(intent);
-        }
+        }*/
     }
 
 }

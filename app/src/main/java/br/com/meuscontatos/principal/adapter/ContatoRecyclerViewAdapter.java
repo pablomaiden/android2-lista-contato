@@ -5,7 +5,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import java.util.List;
 import br.com.meuscontatos.principal.R;
 import br.com.meuscontatos.principal.domain.Contato;
@@ -25,32 +28,34 @@ public class ContatoRecyclerViewAdapter extends RecyclerView.Adapter<ContatoRecy
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View v = layoutInflater.inflate(R.layout.item_contatos,viewGroup,false);
-        ViewHolder myViewHolder = new ViewHolder(v);
-        return myViewHolder;
+        ViewHolder mvh = new ViewHolder(v);
+        return mvh;
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-
+    public void onBindViewHolder(ViewHolder viewHolder, int position) {
+        viewHolder.foto.setImageResource(R.drawable.sem_foto);
+        viewHolder.nome.setText(contatos.get(position).getNome());
+        viewHolder.email.setText(contatos.get(position).getEmail());
+        YoYo.with(Techniques.FadeIn).duration(500).playOn(viewHolder.itemView);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return contatos.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements RecyclerView.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder{
 
-        public TextView nomeCompleto;
+        public ImageView foto;
+        public TextView nome;
+        public TextView email;
 
         public ViewHolder(View itemView){
             super(itemView);
-            nomeCompleto = (TextView)itemView.findViewById(R.id.nome_completo);
-            itemView.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View v) {
+            foto  = (ImageView) itemView.findViewById(R.id.foto);
+            nome  = (TextView)  itemView.findViewById(R.id.nome);
+            email = (TextView)  itemView.findViewById(R.id.email);
         }
     }
 }
