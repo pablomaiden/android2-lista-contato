@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 
 import br.com.meuscontatos.principal.fragment.ListaContatosFragment;
+import br.com.meuscontatos.principal.fragment.TabContatosPrincipalFragment;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -22,9 +23,9 @@ public class MainActivity extends ActionBarActivity {
         //setSupportActionBar(tbHead);
         tbBottom = (Toolbar) findViewById(R.id.tb_bottom);
 
-        ListaContatosFragment listaContatos = (ListaContatosFragment) getSupportFragmentManager().findFragmentByTag("fragListaContatos");
+        TabContatosPrincipalFragment listaContatos = (TabContatosPrincipalFragment) getSupportFragmentManager().findFragmentByTag("fragListaContatos");
         if(listaContatos==null){
-            listaContatos=new ListaContatosFragment();
+            listaContatos=new TabContatosPrincipalFragment();
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.fragment_container,listaContatos,"fragListaContatos");
             ft.commit();
