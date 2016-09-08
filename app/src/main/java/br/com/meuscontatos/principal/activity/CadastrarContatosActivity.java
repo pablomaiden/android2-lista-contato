@@ -27,7 +27,7 @@ public class CadastrarContatosActivity extends AppCompatActivity {
 
     private EditText et_nome;
     private EditText et_email;
-    private EditText et_senha;
+    private EditText telefone;
     public ImageView foto;
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private Bitmap mImageBitmap;
@@ -42,9 +42,9 @@ public class CadastrarContatosActivity extends AppCompatActivity {
         getSupportActionBar().setShowHideAnimationEnabled(true);
         getSupportActionBar().setTitle("Cadastro Contato");
 
-        et_nome  = (EditText)  findViewById(R.id.et_nome);
-        et_email = (EditText)  findViewById(R.id.et_email);
-        et_senha = (EditText)  findViewById(R.id.et_senha);
+        et_nome  = (EditText)  findViewById(R.id.nome);
+        et_email = (EditText)  findViewById(R.id.email);
+        telefone = (EditText)  findViewById(R.id.telefone);
         foto     = (ImageView) findViewById(R.id.foto);
     }
 
@@ -71,7 +71,7 @@ public class CadastrarContatosActivity extends AppCompatActivity {
             contato.setId(autoIncremento());
             contato.setNome(et_nome.getText().toString());
             contato.setEmail(et_email.getText().toString());
-            contato.setEmail(et_senha.getText().toString());
+            contato.setTelefone(telefone.getText().toString());
 
             realm.beginTransaction();
             realm.insertOrUpdate(contato);
@@ -88,9 +88,10 @@ public class CadastrarContatosActivity extends AppCompatActivity {
         return 0L;
     }
 
-    public void acionarCamera(View view){
+    public void acionarCamera(View view) throws IOException {
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
         startActivityForResult(intent,REQUEST_IMAGE_CAPTURE);
+        createImageFile();
     }
 
     private File createImageFile() throws IOException {
