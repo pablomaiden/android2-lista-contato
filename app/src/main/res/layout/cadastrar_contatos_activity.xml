@@ -1,120 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:background="@color/colorPrimary">
+    android:background="@color/white">
 
-     <TextView
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:textAppearance="?android:attr/textAppearanceLarge"
-         android:text="@string/label_nome"
-         android:id="@+id/tv_nome"
-         android:layout_alignParentTop="true"
-         android:layout_alignParentLeft="true"
-         android:layout_alignParentStart="true"
-         android:layout_marginLeft="64dp"
-         android:layout_marginStart="64dp"
-         android:layout_marginTop="89dp"
-         android:textColor="@color/white"/>
+     <GridLayout
+         android:layout_width="match_parent"
+         android:layout_height="240sp"
+         android:layout_marginTop="20sp"
+         android:rowCount="4">
 
-     <EditText
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:id="@+id/et_nome"
-         android:layout_below="@+id/tv_nome"
-         android:layout_alignLeft="@+id/tv_nome"
-         android:layout_alignStart="@+id/tv_nome"
-         android:layout_alignParentRight="true"
-         android:layout_alignParentEnd="true"
-         android:inputType="textPersonName"/>
+     <ImageView
+         android:id="@+id/foto"
+         android:layout_height="100sp"
+         android:layout_width="100sp"
+         android:background="@drawable/sem_foto"
+         android:layout_row="0"
+         android:layout_column="0"
+         android:layout_gravity="center"
+         android:onClick="acionarCamera"/>
 
-     <TextView
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:textAppearance="?android:attr/textAppearanceLarge"
-         android:text="@string/label_email"
-         android:id="@+id/textEmail"
-         android:layout_below="@+id/et_nome"
-         android:layout_alignLeft="@+id/et_nome"
-         android:layout_alignStart="@+id/et_nome"
-         android:layout_marginTop="34dp"
-         android:textColor="@color/white" />
+          <EditText
+              style="@style/text_lista_contatos"
+              android:id="@+id/nome"
+              android:text="Nome"
+              android:textColor="@color/colorPrimary"
+              android:layout_row="1"
+              android:layout_column="0"
+              android:layout_gravity="center"
+              android:layout_width="300sp"/>
 
-     <EditText
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:id="@+id/et_email"
-         android:layout_centerVertical="true"
-         android:layout_alignLeft="@+id/textEmail"
-         android:layout_alignStart="@+id/textEmail"
-         android:layout_alignRight="@+id/et_nome"
-         android:layout_alignEnd="@+id/et_nome"
-         android:inputType="textEmailAddress"/>
+          <EditText
+              style="@style/text_lista_contatos"
+              android:id="@+id/telefone"
+              android:text="Telefone"
+              android:textColor="@color/colorPrimary"
+              android:layout_row="2"
+              android:layout_column="0"
+              android:layout_gravity="center"
+              android:layout_width="300sp"/>
 
-     <TextView
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:textAppearance="?android:attr/textAppearanceLarge"
-         android:text="@string/label_senha"
-         android:id="@+id/textSenha"
-         android:layout_below="@+id/et_email"
-         android:layout_alignLeft="@+id/et_email"
-         android:layout_alignStart="@+id/et_email"
-         android:layout_marginTop="27dp"
-         android:textColor="@color/white"/>
+          <EditText
+              style="@style/text_lista_contatos"
+              android:id="@+id/email"
+              android:text="Email"
+              android:textColor="@color/colorPrimary"
+              android:layout_row="3"
+              android:layout_column="0"
+              android:layout_gravity="center"
+              android:layout_width="300sp"/>
 
-     <EditText
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:id="@+id/et_senha"
-         android:hint="@string/hint_senha"
-         android:layout_below="@+id/textSenha"
-         android:layout_alignLeft="@+id/textSenha"
-         android:layout_alignStart="@+id/textSenha"
-         android:layout_marginTop="27dp"
-         android:layout_alignParentRight="true"
-         android:layout_alignParentEnd="true"
-         android:inputType="textWebPassword"/>
+     </GridLayout>
 
-     <Button
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:text="Salvar"
-         android:id="@+id/button3"
-         android:layout_marginTop="30dp"
-         android:layout_below="@+id/et_senha"
-         android:layout_alignLeft="@+id/et_senha"
-         android:layout_alignStart="@+id/et_senha"
-         android:layout_marginLeft="29dp"
-         android:layout_marginStart="29dp"
-         android:textColor="@color/white"
-         android:background="@color/colorPrimaryDark"
-         android:onClick="salvar"/>
-
-     <Button
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:text="Cancelar"
-         android:id="@+id/button4"
-         android:layout_alignTop="@+id/button3"
-         android:layout_toRightOf="@+id/button3"
-         android:layout_toEndOf="@+id/button3"
-         android:layout_marginLeft="39dp"
-         android:layout_marginStart="39dp"
-         android:textColor="@color/white"
-         android:background="@color/colorPrimaryDark"/>
-
-     <TextView
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:textAppearance="?android:attr/textAppearanceLarge"
-         android:text="Novo Cadastro"
-         android:id="@+id/textView8"
-         android:layout_alignParentTop="true"
-         android:layout_centerHorizontal="true"
-         android:layout_marginTop="31dp"
-         android:textColor="@color/white"/>
-
-</RelativeLayout>
+</FrameLayout>
