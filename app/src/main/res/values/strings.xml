@@ -5,9 +5,10 @@
     <string name="nome_requerido">Campo nome obrigatório!</string>
     <string name="sobrenome_requerido">Campo SobreNome obrigatório!</string>
     <string name="password_required">Campo senha obrigatório!</string>
-    <string name="nome_hint">Nome</string>
-    <string name="sobrenome_hint">Sobrenome</string>
-    <string name="senha_hint">senha</string>
+    <string name="hint_nome">Nome</string>
+    <string name="hint_sobrenome">Sobrenome</string>
+    <string name="hint_senha">senha</string>
+    <string name="hint_email">email</string>
     <string name="label_nome">Nome:</string>
     <string name="label_sobrenome">SobreNome:</string>
     <string name="label_telefone">Telefone:</string>

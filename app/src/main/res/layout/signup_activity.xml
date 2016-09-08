@@ -8,87 +8,85 @@
 
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="26dp"
-        android:layout_toEndOf="@+id/textView"
-        android:layout_toRightOf="@+id/textView"
-        android:text="Sing up" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+        style="@style/Base.TextAppearance.AppCompat.Large.Inverse"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/et_login"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/et_login"
-        android:layout_marginTop="101dp"
-        android:text="Login"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/white" />
+        android:layout_marginTop="26dp"
+        android:text="Sing up"
+        android:textAlignment="center" />
 
     <EditText
         android:id="@+id/et_login"
         android:layout_width="200sp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView"
+        android:layout_below="@+id/textView4"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:background="@color/white"
+        android:hint="@string/hint_email"
+        android:inputType="textEmailAddress"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/white" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/et_login"
-        android:layout_alignStart="@+id/et_login"
-        android:layout_below="@+id/et_login"
-        android:layout_marginTop="31dp"
-        android:text="Senha"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/white" />
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:id="@+id/et_senha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/et_login"
-        android:layout_alignLeft="@+id/textView2"
+        android:layout_alignLeft="@+id/et_login"
         android:layout_alignRight="@+id/et_login"
-        android:layout_alignStart="@+id/textView2"
+        android:layout_alignStart="@+id/et_login"
+        android:layout_below="@+id/et_login"
         android:layout_centerVertical="true"
-        android:textColor="@color/white" />
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:hint="@string/hint_senha"
+        android:inputType="textWebPassword"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/textView2"
-        android:layout_alignEnd="@+id/textView2"
-        android:layout_marginBottom="81dp">
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/registrar"
-        style="@style/Button"
-        android:onClick="registrar"
-        android:text="@string/label_registrar"
-        android:layout_above="@+id/linearLayout"
-        android:layout_toRightOf="@+id/textView4"
-        android:layout_toEndOf="@+id/textView4" />
 
     <Button
         android:id="@+id/entrar"
         style="@style/Button"
+        android:layout_alignEnd="@+id/textView4"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/textView4"
+        android:layout_below="@+id/et_senha"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:clickable="true"
+        android:enabled="true"
         android:onClick="autenticar"
         android:text="@string/label_entrar"
-        android:layout_above="@+id/linearLayout"
-        android:layout_alignRight="@+id/textView4"
-        android:layout_alignEnd="@+id/textView4" />
+        android:textAlignment="center" />
 
-
+    <Button
+        android:id="@+id/registrar"
+        style="@style/Button"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/entrar"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_toEndOf="@+id/textView4"
+        android:layout_toRightOf="@+id/textView4"
+        android:clickable="true"
+        android:enabled="true"
+        android:onClick="registrar"
+        android:text="@string/label_registrar" />
 </RelativeLayout>
