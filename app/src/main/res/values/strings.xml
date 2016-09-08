@@ -23,5 +23,6 @@
     <string name="login_user_size_invalid">Seu login deve ter entre 6 e 15 caracteres!</string>
     <string name="login_pass_size_invalid">Sua senha deve ter entre 6 e 15 caracteres!</string>
     <string name="label_salvar">SALVAR</string>
+    <string name="hint_telefone">Telefone</string>
 </resources>
 
