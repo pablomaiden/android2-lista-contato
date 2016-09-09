@@ -19,6 +19,8 @@ import br.com.meuscontatos.principal.service.Service;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
+// TODO: 08/09/2016  - Atualizar a lista depois da inclusão do contato
+
 public class ListaContatosFragment extends Fragment {
 
     private RecyclerView mRecyclerView;

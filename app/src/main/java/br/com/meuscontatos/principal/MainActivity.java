@@ -21,7 +21,7 @@ public class MainActivity extends ActionBarActivity {
 
         tbHead   = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(tbHead);
-        tbBottom = (Toolbar) findViewById(R.id.tb_bottom);
+      //  tbBottom = (Toolbar) findViewById(R.id.tb_bottom);
 
         TabContatosPrincipalFragment listaContatos = (TabContatosPrincipalFragment) getSupportFragmentManager().findFragmentByTag("fragListaContatos");
         if(listaContatos==null){
