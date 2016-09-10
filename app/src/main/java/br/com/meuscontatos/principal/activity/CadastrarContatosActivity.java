@@ -32,7 +32,6 @@ public class CadastrarContatosActivity extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private Bitmap mImageBitmap;
     private String mCurrentPhotoPath;
-    private ImageView mImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +44,7 @@ public class CadastrarContatosActivity extends AppCompatActivity {
         et_nome  = (EditText)  findViewById(R.id.cad_nome);
         et_email = (EditText)  findViewById(R.id.cad_email);
         telefone = (EditText)  findViewById(R.id.cad_telefone);
+        telefone.addTextChangedListener(Mask.insert("(##)####-####", telefone));
         foto     = (ImageView) findViewById(R.id.foto);
     }
 
@@ -98,7 +98,9 @@ public class CadastrarContatosActivity extends AppCompatActivity {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
+
         File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+
         File image = File.createTempFile(imageFileName,".jpg",storageDir);
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = "file:" + image.getAbsolutePath();
@@ -109,6 +111,7 @@ public class CadastrarContatosActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             try {
+                createImageFile();
                 mImageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), Uri.parse(mCurrentPhotoPath));
                 foto.setImageBitmap(mImageBitmap);
             } catch (IOException e) {
