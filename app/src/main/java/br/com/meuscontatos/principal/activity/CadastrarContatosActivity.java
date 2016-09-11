@@ -7,11 +7,14 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,6 +36,8 @@ public class CadastrarContatosActivity extends AppCompatActivity {
     private Bitmap mImageBitmap;
     private String mCurrentPhotoPath;
 
+    String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,11 +46,12 @@ public class CadastrarContatosActivity extends AppCompatActivity {
         getSupportActionBar().setShowHideAnimationEnabled(true);
         getSupportActionBar().setTitle("Cadastro Contato");
 
-        et_nome  = (EditText)  findViewById(R.id.cad_nome);
-        et_email = (EditText)  findViewById(R.id.cad_email);
-        telefone = (EditText)  findViewById(R.id.cad_telefone);
+        et_nome = (EditText) findViewById(R.id.cad_nome);
+        et_email = (EditText) findViewById(R.id.cad_email);
+        telefone = (EditText) findViewById(R.id.cad_telefone);
+
         telefone.addTextChangedListener(Mask.insert("(##)####-####", telefone));
-        foto     = (ImageView) findViewById(R.id.foto);
+        foto = (ImageView) findViewById(R.id.foto);
     }
 
     @Override
@@ -58,39 +64,54 @@ public class CadastrarContatosActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.salvar:
-                salvar();
-                finish();
+                validar();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-        public void salvar(){
-            Realm realm = Service.getInstace().getRealm(getApplicationContext());
-            Contato contato=new Contato();
-            contato.setId(autoIncremento());
-            contato.setNome(et_nome.getText().toString());
-            contato.setEmail(et_email.getText().toString());
-            contato.setTelefone(telefone.getText().toString());
 
-            realm.beginTransaction();
-            realm.insertOrUpdate(contato);
-            realm.commitTransaction();
+    private void validar() {
+        Validator.validateNotNull(et_nome, "Preencha o campo nome");
+        Validator.validateNotNull(telefone, "Preencha o campo telefone");
+
+        boolean email_valido = Validator.validateEmail(et_email.getText().toString());
+        if (!email_valido) {
+            et_email.setError("Email inválido");
+            et_email.setFocusable(true);
+            et_email.requestFocus();
+        }
+        salvar();
+        finish();
     }
 
-    public Long autoIncremento(){
+
+    public void salvar() {
+        Realm realm = Service.getInstace().getRealm(getApplicationContext());
+        Contato contato = new Contato();
+        contato.setId(autoIncremento());
+        contato.setNome(et_nome.getText().toString());
+        contato.setEmail(et_email.getText().toString());
+        contato.setTelefone(telefone.getText().toString());
+
+        realm.beginTransaction();
+        realm.insertOrUpdate(contato);
+        realm.commitTransaction();
+    }
+
+    public Long autoIncremento() {
         Realm realm = Service.getInstace().getRealm(getApplicationContext());
         Long isContem = realm.where(Contato.class).count();
-        if(isContem==0){
-        }else{
-            return realm.where(Contato.class).max("id").longValue()+1;
+        if (isContem == 0) {
+        } else {
+            return realm.where(Contato.class).max("id").longValue() + 1;
         }
         return 0L;
     }
 
     public void acionarCamera(View view) throws IOException {
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-        startActivityForResult(intent,REQUEST_IMAGE_CAPTURE);
+        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
         createImageFile();
     }
 
@@ -101,7 +122,7 @@ public class CadastrarContatosActivity extends AppCompatActivity {
 
         File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
 
-        File image = File.createTempFile(imageFileName,".jpg",storageDir);
+        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = "file:" + image.getAbsolutePath();
         return image;
