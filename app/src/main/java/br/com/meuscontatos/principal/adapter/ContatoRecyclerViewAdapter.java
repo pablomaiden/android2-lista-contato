@@ -3,6 +3,7 @@ package br.com.meuscontatos.principal.adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,8 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import java.util.List;
 import br.com.meuscontatos.principal.R;
+import br.com.meuscontatos.principal.activity.CadastrarContatosActivity;
+import br.com.meuscontatos.principal.activity.EditarContatosActivity;
 import br.com.meuscontatos.principal.domain.Contato;
 import br.com.meuscontatos.principal.service.Service;
 import io.realm.Realm;
@@ -60,7 +63,9 @@ public class ContatoRecyclerViewAdapter extends RecyclerView.Adapter<ContatoRecy
         viewHolder.v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(),"On click",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(v.getContext(),EditarContatosActivity.class);
+                intent.putExtra("idContato",getIdContato(position));
+                v.getContext().startActivity(intent);
             }
         });
 
