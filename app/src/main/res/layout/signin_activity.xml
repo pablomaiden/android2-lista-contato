@@ -16,7 +16,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="30dp"
-        android:text="Novo Cadastro"
+        android:text="Sign up"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/white" />
 
