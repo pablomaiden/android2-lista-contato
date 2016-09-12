@@ -11,7 +11,7 @@
         android:layout_marginTop="20sp"
         android:rowCount="4">
 
-        <ImageView
+        <com.theartofdev.edmodo.cropper.CropImageView
             android:id="@+id/foto"
             android:layout_width="100sp"
             android:layout_height="100sp"
@@ -19,7 +19,8 @@
             android:layout_gravity="center"
             android:layout_row="0"
             android:background="@drawable/sem_foto"
-            android:onClick="acionarCamera" />
+            android:onClick="capturarFoto">
+        </com.theartofdev.edmodo.cropper.CropImageView>
 
         <EditText
             android:id="@+id/cad_nome"
