@@ -11,19 +11,25 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.MediaStore;
-import android.system.ErrnoException;
 import android.support.v7.app.ActionBarActivity;
+import android.system.ErrnoException;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
 import com.theartofdev.edmodo.cropper.CropImageView;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
 import br.com.meuscontatos.principal.R;
 
 public class CortarFotoActivity extends ActionBarActivity {
@@ -55,6 +61,7 @@ public class CortarFotoActivity extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.salvar:
+                salvarFoto();
                 finish();
                 return true;
             default:
@@ -82,6 +89,34 @@ public class CortarFotoActivity extends ActionBarActivity {
             if (!requirePermissions) {
                 mCropImageView.setImageUriAsync(imageUri);
             }
+        }
+    }
+
+    public String escreveImagens(Bitmap bmp){
+        String nomeArquivo="";
+        try {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+
+            byte[] bytes = stream.toByteArray();;
+            nomeArquivo = Environment.getExternalStorageDirectory().getAbsolutePath()+"/image.png";
+
+            FileOutputStream fos = new FileOutputStream(nomeArquivo);
+            fos.write(bytes);
+            fos.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return nomeArquivo;
+    }
+
+    public void salvarFoto(){
+        Bitmap cropped =  mCropImageView.getCroppedImage(500, 500);
+        if (cropped != null){
+            Intent intent = new Intent(this,CadastrarContatosActivity.class);
+            intent.putExtra("foto",escreveImagens(cropped));
+            startActivity(intent);
         }
     }
 

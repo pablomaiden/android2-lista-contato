@@ -1,14 +1,14 @@
 package br.com.meuscontatos.principal.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-
-import com.theartofdev.edmodo.cropper.CropImageView;
+import android.widget.ImageView;
 
 import br.com.meuscontatos.principal.R;
 import br.com.meuscontatos.principal.domain.Contato;
@@ -20,7 +20,8 @@ public class CadastrarContatosActivity extends AppCompatActivity {
     private EditText et_nome;
     private EditText et_email;
     private EditText telefone;
-    public CropImageView foto;
+    public ImageView foto;
+    private Uri mCropImageUri;
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
     @Override
@@ -36,7 +37,18 @@ public class CadastrarContatosActivity extends AppCompatActivity {
         telefone = (EditText) findViewById(R.id.cad_telefone);
 
         telefone.addTextChangedListener(Mask.insert("(##)####-####", telefone));
-        foto = (CropImageView) findViewById(R.id.foto);
+        foto = (ImageView) findViewById(R.id.foto);
+
+        if(getIntent()!=null){
+            if(getIntent().getExtras()!=null){
+                String cropped = (String) getIntent().getExtras().get("foto");
+
+                if(cropped!=null){
+                   foto.setImageURI(Uri.parse("file://"+cropped));
+                   foto.setBackground(null);
+                }
+            }
+        }
     }
 
     @Override
