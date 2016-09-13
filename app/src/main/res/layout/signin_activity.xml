@@ -3,97 +3,90 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textNovo"
-        android:layout_width="wrap_content"
+        android:id="@+id/textView4"
+        style="@style/Base.TextAppearance.AppCompat.Large.Inverse"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/et_login"
         android:layout_alignParentEnd="false"
-        android:layout_alignParentStart="false"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:layout_marginTop="26dp"
+        android:text="Sign in"
+        android:textAlignment="center" />
+
+    <EditText
+        android:id="@+id/et_login"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView4"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="30dp"
-        android:text="Sign up"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/white" />
-
-
-    <EditText
-        android:id="@+id/et_nome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/textNovo"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="20dp"
-        android:background="@android:drawable/editbox_background"
-        android:hint="@string/hint_nome"
-        android:imeOptions="actionNext"
-        android:inputType="textPersonName" />
-
-    <EditText
-        android:id="@+id/et_email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/et_nome"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="20dp"
         android:background="@android:drawable/editbox_background"
         android:hint="@string/hint_email"
         android:imeOptions="actionNext"
-        android:inputType="textEmailAddress" />
+        android:inputType="textEmailAddress"
+        android:textColor="@color/colorPrimaryDark" />
 
     <EditText
         android:id="@+id/et_senha"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="false"
+        android:layout_alignEnd="@+id/et_login"
+        android:layout_alignLeft="@+id/et_login"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:layout_alignStart="@+id/et_email"
-        android:layout_below="@+id/et_email"
+        android:layout_alignRight="@+id/et_login"
+        android:layout_alignStart="@+id/et_login"
+        android:layout_below="@+id/et_login"
         android:layout_centerVertical="true"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
         android:background="@android:drawable/editbox_background"
         android:hint="@string/hint_senha"
-        android:imeOptions="actionGo"
-        android:inputType="textWebPassword" />
+        android:imeOptions="actionDone"
+        android:inputType="textWebPassword"
+        android:textColor="@color/colorPrimaryDark" />
+
 
     <Button
-        android:id="@+id/btn_salvar"
+        android:id="@+id/entrar"
         style="@style/Button"
+        android:layout_alignEnd="@+id/textView4"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/textView4"
         android:layout_below="@+id/et_senha"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
         android:clickable="true"
         android:enabled="true"
-        android:onClick="salvar"
-        android:text="@string/label_salvar" />
+        android:onClick="autenticar"
+        android:text="@string/label_entrar" />
 
     <Button
-        android:id="@+id/btn_cancelar"
+        android:id="@+id/registrar"
         style="@style/Button"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/btn_salvar"
+        android:layout_below="@+id/entrar"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
+        android:layout_toEndOf="@+id/textView4"
+        android:layout_toRightOf="@+id/textView4"
         android:clickable="true"
         android:enabled="true"
-        android:onClick="cancelar"
-        android:text="@string/label_cancelar" />
-
+        android:onClick="registrar"
+        android:text="@string/label_registrar" />
 </RelativeLayout>
