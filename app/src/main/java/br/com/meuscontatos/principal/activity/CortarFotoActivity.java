@@ -15,17 +15,15 @@ import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.system.ErrnoException;
 import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-
 import com.theartofdev.edmodo.cropper.CropImageView;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-
-
 import br.com.meuscontatos.principal.R;
 
 public class CortarFotoActivity extends ActionBarActivity {
@@ -38,22 +36,30 @@ public class CortarFotoActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cropp_image_activity);
         mCropImageView = (CropImageView)  findViewById(R.id.CropImageView);
+        startActivityForResult(getPickImageChooserIntent(),200);
     }
 
-    /**
-     * On load image button click, start pick  image chooser activity.
-     */
-    public void onLoadImageClick(View view) {
-        startActivityForResult(getPickImageChooserIntent(), 200);
-    }
-
-    /**
-     * Crop the image and set it back to the  cropping view.
-     */
     public void onCropImageClick(View view) {
         Bitmap cropped =  mCropImageView.getCroppedImage(500, 500);
         if (cropped != null)
             mCropImageView.setImageBitmap(cropped);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_cadastro_contato, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.salvar:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -67,7 +73,6 @@ public class CortarFotoActivity extends ActionBarActivity {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
                     checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED &&
                     isUriRequiresPermissions(imageUri)) {
-
                 // request permissions and handle the result in onRequestPermissionsResult()
                 requirePermissions = true;
                 mCropImageUri = imageUri;
@@ -96,13 +101,13 @@ public class CortarFotoActivity extends ActionBarActivity {
      */
     public Intent getPickImageChooserIntent() {
 
-// Determine Uri of camera image to  save.
+        // Determine Uri of camera image to  save.
         Uri outputFileUri =  getCaptureImageOutputUri();
 
         List<Intent> allIntents = new ArrayList<>();
         PackageManager packageManager =  getPackageManager();
 
-// collect all camera intents
+        // collect all camera intents
         Intent captureIntent = new  Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         List<ResolveInfo> listCam =  packageManager.queryIntentActivities(captureIntent, 0);
         for (ResolveInfo res : listCam) {
@@ -115,7 +120,7 @@ public class CortarFotoActivity extends ActionBarActivity {
             allIntents.add(intent);
         }
 
-// collect all gallery intents
+        // collect all gallery intents
         Intent galleryIntent = new  Intent(Intent.ACTION_GET_CONTENT);
         galleryIntent.setType("image/*");
         List<ResolveInfo> listGallery =  packageManager.queryIntentActivities(galleryIntent, 0);
@@ -126,7 +131,7 @@ public class CortarFotoActivity extends ActionBarActivity {
             allIntents.add(intent);
         }
 
-// the main intent is the last in the  list (fucking android) so pickup the useless one
+        // the main intent is the last in the  list (fucking android) so pickup the useless one
         Intent mainIntent =  allIntents.get(allIntents.size() - 1);
         for (Intent intent : allIntents) {
             if  (intent.getComponent().getClassName().equals("com.android.documentsui.DocumentsActivity"))  {
@@ -136,10 +141,10 @@ public class CortarFotoActivity extends ActionBarActivity {
         }
         allIntents.remove(mainIntent);
 
-// Create a chooser from the main  intent
+        // Create a chooser from the main  intent
         Intent chooserIntent =  Intent.createChooser(mainIntent, "Select source");
 
-// Add all other intents
+        // Add all other intents
         chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS,  allIntents.toArray(new Parcelable[allIntents.size()]));
 
         return chooserIntent;
