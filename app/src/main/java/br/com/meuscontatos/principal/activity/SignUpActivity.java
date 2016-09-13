@@ -1,16 +1,17 @@
-package br.com.meuscontatos.principal;
+package br.com.meuscontatos.principal.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
+
+import br.com.meuscontatos.principal.R;
 import br.com.meuscontatos.principal.domain.Usuario;
 import br.com.meuscontatos.principal.service.Service;
 import io.realm.Realm;
 import android.content.Intent;
 
-public class SignInActivity extends Activity {
+public class SignUpActivity extends Activity {
 
     private EditText et_nome;
     private EditText et_email;
@@ -19,7 +20,7 @@ public class SignInActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.signin_activity);
+        setContentView(R.layout.signup_activity);
 
         et_nome  = (EditText) findViewById(R.id.et_nome);
         et_email = (EditText) findViewById(R.id.et_email);

@@ -4,25 +4,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:text="Load Image"
-        android:onClick="onLoadImageClick"/>
-
     <com.theartofdev.edmodo.cropper.CropImageView
         android:id="@+id/CropImageView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        />
+        android:layout_weight="1"/>
 
     <Button
-        android:layout_width="match_parent"
+        android:layout_width="200sp"
         android:layout_height="wrap_content"
-
-        android:text="Crop Image"
-        android:onClick="onCropImageClick"/>
+        android:text="Recortar Imagem"
+        android:onClick="onCropImageClick"
+        android:layout_gravity="center"/>
 
 </LinearLayout>
