@@ -8,6 +8,7 @@ import android.widget.EditText;
 import br.com.meuscontatos.principal.domain.Usuario;
 import br.com.meuscontatos.principal.service.Service;
 import io.realm.Realm;
+import android.content.Intent;
 
 public class SignInActivity extends Activity {
 
@@ -36,5 +37,9 @@ public class SignInActivity extends Activity {
         realm.insertOrUpdate(usuario);
         realm.commitTransaction();
     }
+
+
+
+
 
 }
