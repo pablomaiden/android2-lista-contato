@@ -7,8 +7,8 @@
     <string name="password_required">Campo senha obrigatório!</string>
     <string name="hint_nome">Nome</string>
     <string name="hint_sobrenome">Sobrenome</string>
-    <string name="hint_senha">senha</string>
-    <string name="hint_email">email</string>
+    <string name="hint_senha">Senha</string>
+    <string name="hint_email">E-mail</string>
     <string name="label_nome">Nome:</string>
     <string name="label_sobrenome">SobreNome:</string>
     <string name="label_telefone">Telefone:</string>
@@ -19,7 +19,7 @@
     <string name="label_entrar">ENTRAR</string>
     <string name="label_conf_senha">Confirme a Senha:</string>
     <string name="btn_enter_value">Registrar</string>
-    <string name="login_auth_ok">Senha OK!</string>
+    <string name="login_auth_ok">Senha Ok!</string>
     <string name="login_user_size_invalid">Seu login deve ter entre 6 e 15 caracteres!</string>
     <string name="login_pass_size_invalid">Sua senha deve ter entre 6 e 15 caracteres!</string>
     <string name="label_salvar">SALVAR</string>

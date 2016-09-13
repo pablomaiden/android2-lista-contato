@@ -1,4 +1,4 @@
-package br.com.meuscontatos.principal;
+package br.com.meuscontatos.principal.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,11 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 
+import br.com.meuscontatos.principal.R;
 import br.com.meuscontatos.principal.domain.Usuario;
 import br.com.meuscontatos.principal.service.Service;
 import io.realm.Realm;
 
-public class SignUpActivity extends AppCompatActivity {
+public class SignInActivity extends AppCompatActivity {
 
     private EditText et_login;
     private EditText et_senha;
@@ -18,14 +19,14 @@ public class SignUpActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.signup_activity);
+        setContentView(R.layout.signin_activity);
 
         et_login  = (EditText) findViewById(R.id.et_login);
         et_senha  = (EditText) findViewById(R.id.et_senha);
     }
 
     public void registrar(View view){
-        Intent intent = new Intent(this,SignInActivity.class);
+        Intent intent = new Intent(this,SignUpActivity.class);
         startActivity(intent);
     }
 
