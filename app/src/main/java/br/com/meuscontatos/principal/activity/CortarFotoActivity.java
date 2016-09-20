@@ -99,7 +99,7 @@ public class CortarFotoActivity extends ActionBarActivity {
             bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
 
             byte[] bytes = stream.toByteArray();;
-            nomeArquivo = Environment.getExternalStorageDirectory().getAbsolutePath()+"/image.png";
+            nomeArquivo = Environment.getExternalStorageDirectory().getAbsolutePath()+"/"+System.currentTimeMillis()+"_image.png";
 
             FileOutputStream fos = new FileOutputStream(nomeArquivo);
             fos.write(bytes);

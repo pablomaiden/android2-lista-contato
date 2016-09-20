@@ -2,6 +2,7 @@ package br.com.meuscontatos.principal.activity;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -23,6 +24,7 @@ public class CadastrarContatosActivity extends AppCompatActivity {
     public ImageView foto;
     private Uri mCropImageUri;
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+    private String urlFoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +34,7 @@ public class CadastrarContatosActivity extends AppCompatActivity {
         getSupportActionBar().setShowHideAnimationEnabled(true);
         getSupportActionBar().setTitle("Cadastro Contato");
 
-        et_nome = (EditText) findViewById(R.id.cad_nome);
+        et_nome  = (EditText) findViewById(R.id.cad_nome);
         et_email = (EditText) findViewById(R.id.cad_email);
         telefone = (EditText) findViewById(R.id.cad_telefone);
 
@@ -41,11 +43,13 @@ public class CadastrarContatosActivity extends AppCompatActivity {
 
         if(getIntent()!=null){
             if(getIntent().getExtras()!=null){
-                String cropped = (String) getIntent().getExtras().get("foto");
+                urlFoto = "file://"+(String) getIntent().getExtras().get("foto");
 
-                if(cropped!=null){
-                   foto.setImageURI(Uri.parse("file://"+cropped));
-                   foto.setBackground(null);
+                if(urlFoto!=null){
+                   foto.setImageURI(Uri.parse(urlFoto));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        foto.setBackground(null);
+                    }
                 }
             }
         }
@@ -90,6 +94,7 @@ public class CadastrarContatosActivity extends AppCompatActivity {
         contato.setNome(et_nome.getText().toString());
         contato.setEmail(et_email.getText().toString());
         contato.setTelefone(telefone.getText().toString());
+        contato.setUrlFoto(urlFoto);
 
         realm.beginTransaction();
         realm.insertOrUpdate(contato);
