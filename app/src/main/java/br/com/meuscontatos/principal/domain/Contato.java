@@ -14,6 +14,16 @@ public class Contato extends RealmObject {
     private String email;
     private String urlFoto;
 
+    public Contato(){}
+
+    public Contato(String nome, String sobreNome, String telefone, String email, String urlFoto){
+        this.nome = nome;
+        this.sobreNome = sobreNome;
+        this.telefone = telefone;
+        this.email = email;
+        this.urlFoto = urlFoto;
+    }
+
     //getters and setters
     public long getId() {
         return id;
