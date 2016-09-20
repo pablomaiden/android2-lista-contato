@@ -10,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.daimajia.androidanimations.library.Techniques;
@@ -22,6 +21,7 @@ import br.com.meuscontatos.principal.R;
 import br.com.meuscontatos.principal.activity.EditarContatosActivity;
 import br.com.meuscontatos.principal.domain.Contato;
 import br.com.meuscontatos.principal.service.Service;
+import de.hdodenhof.circleimageview.CircleImageView;
 import io.realm.Realm;
 
 public class ContatoRecyclerViewAdapter extends RecyclerView.Adapter<ContatoRecyclerViewAdapter.ViewHolder>{
@@ -109,7 +109,7 @@ public class ContatoRecyclerViewAdapter extends RecyclerView.Adapter<ContatoRecy
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public View v;
-        public ImageView foto;
+        public CircleImageView foto;
         public TextView nome;
         public TextView email;
         public TextView telefone;
@@ -117,7 +117,7 @@ public class ContatoRecyclerViewAdapter extends RecyclerView.Adapter<ContatoRecy
         public ViewHolder(View view){
             super(view);
             v=view;
-            foto     = (ImageView) itemView.findViewById(R.id.foto);
+            foto     = (CircleImageView) itemView.findViewById(R.id.foto);
             nome     = (TextView)  itemView.findViewById(R.id.nome);
             email    = (TextView)  itemView.findViewById(R.id.email);
             telefone = (TextView)  itemView.findViewById(R.id.telefone);
