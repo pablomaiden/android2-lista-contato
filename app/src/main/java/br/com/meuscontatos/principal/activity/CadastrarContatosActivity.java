@@ -36,16 +36,16 @@ public class CadastrarContatosActivity extends AppCompatActivity {
         et_email = (EditText) findViewById(R.id.cad_email);
         telefone = (EditText) findViewById(R.id.cad_telefone);
 
-        telefone.addTextChangedListener(Mask.insert("(##)####-####", telefone));
+        telefone.addTextChangedListener(Mask.insert("(##)#####-####", telefone));
         foto = (ImageView) findViewById(R.id.foto);
 
-        if(getIntent()!=null){
-            if(getIntent().getExtras()!=null){
+        if (getIntent() != null) {
+            if (getIntent().getExtras() != null) {
                 String cropped = (String) getIntent().getExtras().get("foto");
 
-                if(cropped!=null){
-                   foto.setImageURI(Uri.parse("file://"+cropped));
-                   foto.setBackground(null);
+                if (cropped != null) {
+                    foto.setImageURI(Uri.parse("file://" + cropped));
+                    foto.setBackground(null);
                 }
             }
         }
@@ -69,17 +69,27 @@ public class CadastrarContatosActivity extends AppCompatActivity {
     }
 
     private void validar() {
-        Validator.validateNotNull(et_nome, "Preencha o campo nome");
-        Validator.validateNotNull(telefone, "Preencha o campo telefone");
-
+        boolean nome_preenchido = Validator.validateNotNull(et_nome, "Preencha o campo nome");
+        boolean telefone_preenchido = Validator.validateNotNull(telefone, "Preencha o campo telefone");
+        boolean email_preenchido = Validator.validateNotNull(et_email, "Preencha o campo email");
         boolean email_valido = Validator.validateEmail(et_email.getText().toString());
-        if (!email_valido) {
-            et_email.setError("Email inválido");
-            et_email.setFocusable(true);
-            et_email.requestFocus();
+
+        if (nome_preenchido) {
+            if (email_preenchido) {
+                if (email_preenchido) {
+                    if (email_valido) {
+                        salvar();
+                        finish();
+                    } else {
+                        if (!email_valido) {
+                            et_email.setError("Email inválido");
+                            et_email.setFocusable(true);
+                            et_email.requestFocus();
+                        }
+                    }
+                }
+            }
         }
-        salvar();
-        finish();
     }
 
 
@@ -106,8 +116,8 @@ public class CadastrarContatosActivity extends AppCompatActivity {
         return 0L;
     }
 
-    public void capturarFoto(View view){
-        Intent intent = new Intent(this,CortarFotoActivity.class);
+    public void capturarFoto(View view) {
+        Intent intent = new Intent(this, CortarFotoActivity.class);
         startActivity(intent);
     }
 }
