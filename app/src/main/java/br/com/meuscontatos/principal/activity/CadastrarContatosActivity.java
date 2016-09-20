@@ -2,6 +2,7 @@ package br.com.meuscontatos.principal.activity;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -23,6 +24,7 @@ public class CadastrarContatosActivity extends AppCompatActivity {
     public ImageView foto;
     private Uri mCropImageUri;
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+    private String urlFoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,20 +34,22 @@ public class CadastrarContatosActivity extends AppCompatActivity {
         getSupportActionBar().setShowHideAnimationEnabled(true);
         getSupportActionBar().setTitle("Cadastro Contato");
 
-        et_nome = (EditText) findViewById(R.id.cad_nome);
+        et_nome  = (EditText) findViewById(R.id.cad_nome);
         et_email = (EditText) findViewById(R.id.cad_email);
         telefone = (EditText) findViewById(R.id.cad_telefone);
 
-        telefone.addTextChangedListener(Mask.insert("(##)#####-####", telefone));
+        telefone.addTextChangedListener(Mask.insert("(##)####-####", telefone));
         foto = (ImageView) findViewById(R.id.foto);
 
-        if (getIntent() != null) {
-            if (getIntent().getExtras() != null) {
-                String cropped = (String) getIntent().getExtras().get("foto");
+        if(getIntent()!=null){
+            if(getIntent().getExtras()!=null){
+                urlFoto = "file://"+(String) getIntent().getExtras().get("foto");
 
-                if (cropped != null) {
-                    foto.setImageURI(Uri.parse("file://" + cropped));
-                    foto.setBackground(null);
+                if(urlFoto!=null){
+                   foto.setImageURI(Uri.parse(urlFoto));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        foto.setBackground(null);
+                    }
                 }
             }
         }
@@ -69,27 +73,17 @@ public class CadastrarContatosActivity extends AppCompatActivity {
     }
 
     private void validar() {
-        boolean nome_preenchido = Validator.validateNotNull(et_nome, "Preencha o campo nome");
-        boolean telefone_preenchido = Validator.validateNotNull(telefone, "Preencha o campo telefone");
-        boolean email_preenchido = Validator.validateNotNull(et_email, "Preencha o campo email");
-        boolean email_valido = Validator.validateEmail(et_email.getText().toString());
+        Validator.validateNotNull(et_nome, "Preencha o campo nome");
+        Validator.validateNotNull(telefone, "Preencha o campo telefone");
 
-        if (nome_preenchido) {
-            if (email_preenchido) {
-                if (email_preenchido) {
-                    if (email_valido) {
-                        salvar();
-                        finish();
-                    } else {
-                        if (!email_valido) {
-                            et_email.setError("Email inválido");
-                            et_email.setFocusable(true);
-                            et_email.requestFocus();
-                        }
-                    }
-                }
-            }
+        boolean email_valido = Validator.validateEmail(et_email.getText().toString());
+        if (!email_valido) {
+            et_email.setError("Email inválido");
+            et_email.setFocusable(true);
+            et_email.requestFocus();
         }
+        salvar();
+        finish();
     }
 
 
@@ -100,6 +94,7 @@ public class CadastrarContatosActivity extends AppCompatActivity {
         contato.setNome(et_nome.getText().toString());
         contato.setEmail(et_email.getText().toString());
         contato.setTelefone(telefone.getText().toString());
+        contato.setUrlFoto(urlFoto);
 
         realm.beginTransaction();
         realm.insertOrUpdate(contato);
@@ -116,8 +111,8 @@ public class CadastrarContatosActivity extends AppCompatActivity {
         return 0L;
     }
 
-    public void capturarFoto(View view) {
-        Intent intent = new Intent(this, CortarFotoActivity.class);
+    public void capturarFoto(View view){
+        Intent intent = new Intent(this,CortarFotoActivity.class);
         startActivity(intent);
     }
 }

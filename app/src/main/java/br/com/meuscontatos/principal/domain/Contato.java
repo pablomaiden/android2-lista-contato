@@ -12,6 +12,7 @@ public class Contato extends RealmObject {
     private String sobreNome;
     private String telefone;
     private String email;
+    private String urlFoto;
 
     //getters and setters
     public long getId() {
@@ -52,6 +53,14 @@ public class Contato extends RealmObject {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getUrlFoto() {
+        return urlFoto;
+    }
+
+    public void setUrlFoto(String urlFoto) {
+        this.urlFoto = urlFoto;
     }
 
 
