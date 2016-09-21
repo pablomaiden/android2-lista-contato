@@ -107,7 +107,7 @@ public class CadastrarContatosActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        foto = (ImageView) findViewById(R.id.foto);
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == FOTO_REQUEST_FOR_RESULT) {
             if (getIntent() != null) {
                 if (getIntent().getExtras() != null) {

@@ -34,6 +34,7 @@ dependencies {
     //noinspection GradleCompatible
     compile 'com.android.support:support-v4:24.+'
     compile group: 'com.facebook.android', name: 'facebook-android-sdk', version: '4.15.0'
+    compile group: 'org.androidannotations', name: 'androidannotations-api', version: '4.1.0'
     compile('com.mikepenz:materialdrawer:5.3.1@aar') {
         transitive = true
     }

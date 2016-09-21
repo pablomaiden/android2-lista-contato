@@ -114,7 +114,7 @@ public class CortarFotoActivity extends ActionBarActivity {
         if (cropped != null){
             Intent intent = new Intent(this,CadastrarContatosActivity.class);
             intent.putExtra("foto",escreveImagens(cropped));
-            setResult(FOTO_REQUEST_FOR_RESULT);
+            setResult(FOTO_REQUEST_FOR_RESULT, intent);
         }
     }
 
