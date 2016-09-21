@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import br.com.meuscontatos.principal.fragment.ListaBluetoothFragment;
 import br.com.meuscontatos.principal.fragment.ListaContatosFragment;
-import br.com.meuscontatos.principal.fragment.ListaNetworkFragment;
 
 public class TabsAdapter extends FragmentPagerAdapter {
     private Context mContext;
