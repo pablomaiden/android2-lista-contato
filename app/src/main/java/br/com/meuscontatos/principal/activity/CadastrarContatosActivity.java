@@ -73,26 +73,21 @@ public class CadastrarContatosActivity extends AppCompatActivity {
     }
 
     private void validar() {
-        boolean nome_preenchido = Validator.validateNotNull(et_nome, "Preencha o campo nome");
-        boolean telefone_preenchido = Validator.validateNotNull(telefone, "Preencha o campo telefone");
-        boolean email_preenchido = Validator.validateNotNull(et_email, "Preencha o campo email");
-        boolean email_valido = Validator.validateEmail(et_email.getText().toString());
-        if (nome_preenchido) {
-            if (telefone_preenchido) {
-                if (email_preenchido) {
-                    if (email_valido) {
-                        if (email_valido) {
-                            salvar();
-                            finish();
-                        } else {
-                            et_email.setError("Email inválido");
-                            et_email.setFocusable(true);
-                            et_email.requestFocus();
-                        }
+        if (Validator.validateNotNull(et_nome, "Preencha o campo nome")) {
+            if (Validator.validateNotNull(telefone, "Preencha o campo telefone")) {
+                if (Validator.validateNotNull(et_email, "Preencha o campo email")) {
+                    if (Validator.validateEmail(et_email.getText().toString())) {
+                        salvar();
+                        finish();
+                    } else {
+                        et_email.setError("Email inválido");
+                        et_email.setFocusable(true);
+                        et_email.requestFocus();
                     }
                 }
             }
         }
+
     }
 
 
