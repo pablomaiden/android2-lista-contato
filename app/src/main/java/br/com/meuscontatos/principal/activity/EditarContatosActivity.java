@@ -76,8 +76,7 @@ public class EditarContatosActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.salvar:
-                salvar();
-                finish();
+                validar();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -110,6 +109,24 @@ public class EditarContatosActivity extends AppCompatActivity {
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
         startActivityForResult(intent,REQUEST_IMAGE_CAPTURE);
         createImageFile();
+    }
+
+    private void validar() {
+        if (Validator.validateNotNull(et_nome, "Preencha o campo nome")) {
+            if (Validator.validateNotNull(telefone, "Preencha o campo telefone")) {
+                if (Validator.validateNotNull(et_email, "Preencha o campo email")) {
+                    if (Validator.validateEmail(et_email.getText().toString())) {
+                        salvar();
+                        finish();
+                    } else {
+                        et_email.setError("Email inválido");
+                        et_email.setFocusable(true);
+                        et_email.requestFocus();
+                    }
+                }
+            }
+        }
+
     }
 
     private File createImageFile() throws IOException {

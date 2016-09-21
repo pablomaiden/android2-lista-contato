@@ -63,6 +63,14 @@
             android:theme="@style/Base.Theme.AppCompat">
         </activity>
 
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/id_facebook"/>
+
+        <provider
+            android:authorities="com.facebook.app.FacebookContentProvider932943306832209"
+            android:name="com.facebook.FacebookContentProvider"
+            android:exported="true" />
     </application>
 
 </manifest>

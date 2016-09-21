@@ -25,6 +25,7 @@ public class CadastrarContatosActivity extends AppCompatActivity {
     private Uri mCropImageUri;
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     private String urlFoto;
+    static final int FOTO_REQUEST_FOR_RESULT = 15;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,25 +35,10 @@ public class CadastrarContatosActivity extends AppCompatActivity {
         getSupportActionBar().setShowHideAnimationEnabled(true);
         getSupportActionBar().setTitle("Cadastro Contato");
 
-        et_nome  = (EditText) findViewById(R.id.cad_nome);
+        et_nome = (EditText) findViewById(R.id.cad_nome);
         et_email = (EditText) findViewById(R.id.cad_email);
         telefone = (EditText) findViewById(R.id.cad_telefone);
-
         telefone.addTextChangedListener(Mask.insert("(##)####-####", telefone));
-        foto = (ImageView) findViewById(R.id.foto);
-
-        if(getIntent()!=null){
-            if(getIntent().getExtras()!=null){
-                urlFoto = "file://"+(String) getIntent().getExtras().get("foto");
-
-                if(urlFoto!=null){
-                   foto.setImageURI(Uri.parse(urlFoto));
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                        foto.setBackground(null);
-                    }
-                }
-            }
-        }
     }
 
     @Override
@@ -73,17 +59,20 @@ public class CadastrarContatosActivity extends AppCompatActivity {
     }
 
     private void validar() {
-        Validator.validateNotNull(et_nome, "Preencha o campo nome");
-        Validator.validateNotNull(telefone, "Preencha o campo telefone");
-
-        boolean email_valido = Validator.validateEmail(et_email.getText().toString());
-        if (!email_valido) {
-            et_email.setError("Email inválido");
-            et_email.setFocusable(true);
-            et_email.requestFocus();
+        if (Validator.validateNotNull(et_nome, "Preencha o campo nome")) {
+            if (Validator.validateNotNull(telefone, "Preencha o campo telefone")) {
+                if (Validator.validateNotNull(et_email, "Preencha o campo email")) {
+                    if (Validator.validateEmail(et_email.getText().toString())) {
+                        salvar();
+                        finish();
+                    } else {
+                        et_email.setError("Email inválido");
+                        et_email.setFocusable(true);
+                        et_email.requestFocus();
+                    }
+                }
+            }
         }
-        salvar();
-        finish();
     }
 
 
@@ -111,8 +100,28 @@ public class CadastrarContatosActivity extends AppCompatActivity {
         return 0L;
     }
 
-    public void capturarFoto(View view){
-        Intent intent = new Intent(this,CortarFotoActivity.class);
-        startActivity(intent);
+    public void capturarFoto(View view) {
+        Intent intent = new Intent(this, CortarFotoActivity.class);
+        startActivityForResult(intent,FOTO_REQUEST_FOR_RESULT);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == FOTO_REQUEST_FOR_RESULT) {
+            if (getIntent() != null) {
+                if (getIntent().getExtras() != null) {
+                    urlFoto = "file://" + (String) getIntent().getExtras().get("foto");
+                    if (urlFoto != null) {
+                        foto.setImageURI(Uri.parse(urlFoto));
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                            foto.setBackground(null);
+                        }
+                    }
+                }
+            }
+            if (resultCode == RESULT_OK) {
+            }
+        }
     }
 }

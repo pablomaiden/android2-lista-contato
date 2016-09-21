@@ -19,9 +19,7 @@ import android.system.ErrnoException;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
 import com.theartofdev.edmodo.cropper.CropImageView;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -29,13 +27,13 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-
 import br.com.meuscontatos.principal.R;
 
 public class CortarFotoActivity extends ActionBarActivity {
 
     private CropImageView mCropImageView;
     private Uri mCropImageUri;
+    static final int FOTO_REQUEST_FOR_RESULT = 15;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,7 +114,7 @@ public class CortarFotoActivity extends ActionBarActivity {
         if (cropped != null){
             Intent intent = new Intent(this,CadastrarContatosActivity.class);
             intent.putExtra("foto",escreveImagens(cropped));
-            startActivity(intent);
+            setResult(FOTO_REQUEST_FOR_RESULT, intent);
         }
     }
 
@@ -129,13 +127,7 @@ public class CortarFotoActivity extends ActionBarActivity {
         }
     }
 
-    /**
-     * Create a chooser intent to select the  source to get image from.<br/>
-     * The source can be camera's  (ACTION_IMAGE_CAPTURE) or gallery's (ACTION_GET_CONTENT).<br/>
-     * All possible sources are added to the  intent chooser.
-     */
     public Intent getPickImageChooserIntent() {
-
         // Determine Uri of camera image to  save.
         Uri outputFileUri =  getCaptureImageOutputUri();
 
@@ -185,9 +177,6 @@ public class CortarFotoActivity extends ActionBarActivity {
         return chooserIntent;
     }
 
-    /**
-     * Get URI to image received from capture  by camera.
-     */
     private Uri getCaptureImageOutputUri() {
         Uri outputFileUri = null;
         File getImage = getExternalCacheDir();
@@ -197,12 +186,6 @@ public class CortarFotoActivity extends ActionBarActivity {
         return outputFileUri;
     }
 
-    /**
-     * Get the URI of the selected image from  {@link #getPickImageChooserIntent()}.<br/>
-     * Will return the correct URI for camera  and gallery image.
-     *
-     * @param data the returned data of the  activity result
-     */
     public Uri getPickImageResultUri(Intent  data) {
         boolean isCamera = true;
         if (data != null && data.getData() != null) {
@@ -212,9 +195,6 @@ public class CortarFotoActivity extends ActionBarActivity {
         return isCamera ?  getCaptureImageOutputUri() : data.getData();
     }
 
-    /**
-     * Test if we can open the given Android URI to test if permission required error is thrown.<br>
-     */
     public boolean isUriRequiresPermissions(Uri uri) {
         try {
             ContentResolver resolver = getContentResolver();

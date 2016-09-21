@@ -2,10 +2,11 @@
 
 buildscript {
     repositories {
-        jcenter()
+        jcenter();
+        mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.0'
+        classpath 'com.android.tools.build:gradle:2.1.2'
         classpath 'io.realm:realm-gradle-plugin:1.2.0'
         classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.5.2'
     }
@@ -14,6 +15,7 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        mavenCentral()
     }
 }
 
