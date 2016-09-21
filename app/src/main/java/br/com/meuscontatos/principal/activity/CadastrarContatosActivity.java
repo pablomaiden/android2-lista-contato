@@ -25,6 +25,7 @@ public class CadastrarContatosActivity extends AppCompatActivity {
     private Uri mCropImageUri;
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     private String urlFoto;
+    static final int FOTO_REQUEST_FOR_RESULT = 15;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,22 +38,7 @@ public class CadastrarContatosActivity extends AppCompatActivity {
         et_nome = (EditText) findViewById(R.id.cad_nome);
         et_email = (EditText) findViewById(R.id.cad_email);
         telefone = (EditText) findViewById(R.id.cad_telefone);
-
         telefone.addTextChangedListener(Mask.insert("(##)####-####", telefone));
-        foto = (ImageView) findViewById(R.id.foto);
-
-        if (getIntent() != null) {
-            if (getIntent().getExtras() != null) {
-                urlFoto = "file://" + (String) getIntent().getExtras().get("foto");
-
-                if (urlFoto != null) {
-                    foto.setImageURI(Uri.parse(urlFoto));
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                        foto.setBackground(null);
-                    }
-                }
-            }
-        }
     }
 
     @Override
@@ -116,6 +102,26 @@ public class CadastrarContatosActivity extends AppCompatActivity {
 
     public void capturarFoto(View view) {
         Intent intent = new Intent(this, CortarFotoActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent,FOTO_REQUEST_FOR_RESULT);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        foto = (ImageView) findViewById(R.id.foto);
+        if (requestCode == FOTO_REQUEST_FOR_RESULT) {
+            if (getIntent() != null) {
+                if (getIntent().getExtras() != null) {
+                    urlFoto = "file://" + (String) getIntent().getExtras().get("foto");
+                    if (urlFoto != null) {
+                        foto.setImageURI(Uri.parse(urlFoto));
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                            foto.setBackground(null);
+                        }
+                    }
+                }
+            }
+            if (resultCode == RESULT_OK) {
+            }
+        }
     }
 }
