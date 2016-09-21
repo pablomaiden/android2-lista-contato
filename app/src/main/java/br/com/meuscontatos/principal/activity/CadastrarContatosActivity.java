@@ -87,7 +87,6 @@ public class CadastrarContatosActivity extends AppCompatActivity {
                 }
             }
         }
-
     }
 
 
