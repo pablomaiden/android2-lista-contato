@@ -6,11 +6,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import br.com.meuscontatos.principal.fragment.ListaBluetoothFragment;
 import br.com.meuscontatos.principal.fragment.ListaContatosFragment;
 
 public class TabsAdapter extends FragmentPagerAdapter {
     private Context mContext;
-    private String[] titles = {"CHAMADAS", "CONVERSAS", "CONTATOS", "NETWORK"};
+    private String[] titles = {"CHAMADAS", "CONVERSAS", "CONTATOS", "BLUETOOTH"};
     //private int[] icons = new int[]{R.drawable.account, R.drawable.almoco_, R.drawable.bell_ring, R.drawable.account, R.drawable.account};
     //private int heightIcon;
 
@@ -28,7 +29,7 @@ public class TabsAdapter extends FragmentPagerAdapter {
             case 0: frag = new ListaContatosFragment(); break;
             case 1: frag = new ListaContatosFragment(); break;
             case 2: frag = new ListaContatosFragment(); break;
-            case 3: frag = new ListaNetworkFragment(); break;
+            case 3: frag = new ListaBluetoothFragment(); break;
         }
         Bundle b = new Bundle();
         b.putInt("position", position);
