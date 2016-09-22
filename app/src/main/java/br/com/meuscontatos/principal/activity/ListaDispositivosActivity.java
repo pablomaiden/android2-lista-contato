@@ -3,6 +3,7 @@ package br.com.meuscontatos.principal.activity;
 import android.app.ListActivity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -19,7 +20,7 @@ import java.util.Set;
 public class ListaDispositivosActivity extends ListActivity {
 
     private BluetoothAdapter myBluetoothAdapter = null;
-    private String MAC_ADDRESS = null;
+    static String MAC_ADDRESS = null;
 
 
     @Override
@@ -45,7 +46,14 @@ public class ListaDispositivosActivity extends ListActivity {
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        String itemLabel = ((TextView)v).getText().toString();
-        Toast.makeText(getApplicationContext(), "Info: "+itemLabel, Toast.LENGTH_LONG).show();
+        String itemText = ((TextView)v).getText().toString();
+
+        String macAddress = itemText.substring(itemText.length() - 17); //MacAddress tem 17 caracteres
+        //Toast.makeText(getApplicationContext(), "mac: "+macAddress, Toast.LENGTH_LONG).show();
+
+        Intent intentGetMacAddress = new Intent();
+        intentGetMacAddress.putExtra(MAC_ADDRESS, macAddress);
+        setResult(RESULT_OK, intentGetMacAddress);
+        finish();
     }
 }

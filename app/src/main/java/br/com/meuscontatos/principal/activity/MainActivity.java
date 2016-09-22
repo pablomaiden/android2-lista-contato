@@ -25,6 +25,7 @@ public class MainActivity extends ActionBarActivity {
     private final int REQUEST_ENABLE_BT = 1; //identificador para a solicitação de ativação de BT
     private final int REQUEST_CONN_BT = 2; //identificador para a solicitação conexão
     private boolean conn = false;
+    private static String MAC = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,16 +49,11 @@ public class MainActivity extends ActionBarActivity {
                 }
             }
         });
+
+
+
+        //**************************************
         tbHead   = (Toolbar) findViewById(R.id.toolbar);
-
-
-
-
-
-
-
-
-
 
 
 
@@ -78,6 +74,8 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
+
+
     protected void setupBluetooth(){
         myBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if(myBluetoothAdapter == null){
@@ -90,7 +88,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        switch (requestCode){ //Parametro de intent
+        switch (requestCode){ //Parâmetro de intent
 
             case REQUEST_ENABLE_BT:
                 if(resultCode == Activity.RESULT_OK){
@@ -100,6 +98,16 @@ public class MainActivity extends ActionBarActivity {
                     finish();
                 }
                 break;
+            case REQUEST_CONN_BT:
+                if(resultCode == Activity.RESULT_OK){
+                    MAC = data.getExtras().getString(ListaDispositivosActivity.MAC_ADDRESS);
+                    Toast.makeText(getApplicationContext(), "MAC: " + MAC, Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Falha ao obter o MAC", Toast.LENGTH_LONG).show();
+                }
         }
     }
+
+
+
 }
