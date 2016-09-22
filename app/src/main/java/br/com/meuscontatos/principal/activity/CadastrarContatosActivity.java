@@ -64,7 +64,6 @@ public class CadastrarContatosActivity extends AppCompatActivity {
                 if (Validator.validateNotNull(et_email, "Preencha o campo email")) {
                     if (Validator.validateEmail(et_email.getText().toString())) {
                         salvar();
-                        finish();
                     } else {
                         et_email.setError("Email inválido");
                         et_email.setFocusable(true);
@@ -88,6 +87,8 @@ public class CadastrarContatosActivity extends AppCompatActivity {
         realm.beginTransaction();
         realm.insertOrUpdate(contato);
         realm.commitTransaction();
+        setResult(10);
+        onBackPressed();
     }
 
     public Long autoIncremento() {
@@ -109,10 +110,11 @@ public class CadastrarContatosActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == FOTO_REQUEST_FOR_RESULT) {
-            if (getIntent() != null) {
-                if (getIntent().getExtras() != null) {
-                    urlFoto = "file://" + (String) getIntent().getExtras().get("foto");
+            if (data != null) {
+                if (data.getExtras() != null) {
+                    urlFoto = "file://" + (String) data.getExtras().get("foto");
                     if (urlFoto != null) {
+                        foto=(ImageView)findViewById(R.id.foto);
                         foto.setImageURI(Uri.parse(urlFoto));
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                             foto.setBackground(null);

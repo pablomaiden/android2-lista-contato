@@ -3,6 +3,7 @@ package br.com.meuscontatos.principal.activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -47,17 +48,23 @@ public class EditarContatosActivity extends AppCompatActivity {
         telefone = (EditText)  findViewById(R.id.cad_telefone);
         telefone.addTextChangedListener(Mask.insert("(##)#####-####", telefone));
         foto     = (ImageView) findViewById(R.id.foto);
-
         recuperarContato();
-        et_nome.setText(contato.getNome());
-        et_email.setText(contato.getEmail());
-        telefone.setText(contato.getTelefone());
     }
 
     public void recuperarContato(){
         Long idContato = (Long) getIntent().getExtras().get("idContato");
         if(idContato!=null) {
             contato = getContato(idContato);
+        }
+        et_nome.setText(contato.getNome());
+        et_email.setText(contato.getEmail());
+        telefone.setText(contato.getTelefone());
+
+        if(contato.getUrlFoto()!=null && !contato.getUrlFoto().isEmpty()){
+            foto.setImageURI(Uri.parse(contato.getUrlFoto()));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                foto.setBackground(null);
+            }
         }
     }
 

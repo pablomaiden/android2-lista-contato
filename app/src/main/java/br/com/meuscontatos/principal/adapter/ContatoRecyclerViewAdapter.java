@@ -90,6 +90,7 @@ public class ContatoRecyclerViewAdapter extends RecyclerView.Adapter<ContatoRecy
                                 realm.where(Contato.class).equalTo("id",getIdContato(position)).findFirst().deleteFromRealm();
                                 realm.commitTransaction();
                                 notifyItemRemoved(position);
+                                notifyDataSetChanged();
                             }
                         }).setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {

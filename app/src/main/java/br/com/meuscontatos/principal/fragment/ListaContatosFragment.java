@@ -8,9 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.melnykov.fab.FloatingActionButton;
-
 import br.com.meuscontatos.principal.R;
 import br.com.meuscontatos.principal.activity.CadastrarContatosActivity;
 import br.com.meuscontatos.principal.adapter.ContatoRecyclerViewAdapter;
@@ -37,7 +35,7 @@ public class ListaContatosFragment extends Fragment {
         mRecyclerView.setLayoutManager(lm);
 
         Realm realm = Service.getInstace().getRealm(getActivity());
-        RealmResults<Contato> listaContatos = realm.where(Contato.class).findAll();
+        RealmResults<Contato> listaContatos = realm.where(Contato.class).findAllSorted("nome");
         contatosAdapter = new ContatoRecyclerViewAdapter(getActivity(),listaContatos);
         mRecyclerView.setAdapter(contatosAdapter);
 
@@ -53,7 +51,16 @@ public class ListaContatosFragment extends Fragment {
     }
 
     @Override
+    public void onResume(){
+        super.onResume();
+        Realm realm = Service.getInstace().getRealm(getActivity());
+        int total = (int) realm.where(Contato.class).count();
+        contatosAdapter.notifyItemInserted(total);
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == FOTO_REQUEST_FOR_RESULT) {
             Realm realm = Service.getInstace().getRealm(getActivity());
             int total = (int) realm.where(Contato.class).count();
