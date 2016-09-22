@@ -22,7 +22,7 @@
     </RelativeLayout>
 
     <Button
-        android:text="Conecte um dispositivo"
+        android:text="Conectar um dispositivo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/fragment_container"

@@ -2,6 +2,8 @@ package br.com.meuscontatos.principal.activity;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -10,6 +12,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import java.io.IOException;
+import java.util.UUID;
 
 import br.com.meuscontatos.principal.R;
 import br.com.meuscontatos.principal.fragment.ListaContatosFragment;
@@ -26,6 +31,9 @@ public class MainActivity extends ActionBarActivity {
     private final int REQUEST_CONN_BT = 2; //identificador para a solicitação conexão
     private boolean conn = false;
     private static String MAC = null;
+    BluetoothDevice deviceToConnect = null;
+    BluetoothSocket myBluetoothSocket = null;
+    UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb"); //default para comunicações inseguras e sem autenticação.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +50,15 @@ public class MainActivity extends ActionBarActivity {
 
                 if(conn){
                     //desconectar
+                    try{
+                        myBluetoothSocket.close();
+                        conn = false;
+                        btnConnect.setText("Conectar um dispositivo");
+                        Toast.makeText(getApplicationContext(), "Bluetooth desconectado com sucesso", Toast.LENGTH_SHORT).show();
+                    } catch (IOException e){
+                        Toast.makeText(getApplicationContext(), "Falha ao tentar desconectar: "+e, Toast.LENGTH_SHORT).show();
+                    }
+
                 } else {
                     //conectar
                     Intent openListDevices = new Intent(MainActivity.this, ListaDispositivosActivity.class);
@@ -102,6 +119,20 @@ public class MainActivity extends ActionBarActivity {
                 if(resultCode == Activity.RESULT_OK){
                     MAC = data.getExtras().getString(ListaDispositivosActivity.MAC_ADDRESS);
                     Toast.makeText(getApplicationContext(), "MAC: " + MAC, Toast.LENGTH_LONG).show();
+                    deviceToConnect = myBluetoothAdapter.getRemoteDevice(MAC);
+                    try {
+                        myBluetoothSocket = deviceToConnect.createRfcommSocketToServiceRecord(MY_UUID);
+                        myBluetoothSocket.connect();
+                        conn = true;
+                        btnConnect.setText("Desconectar um dispositivo");
+                        Toast.makeText(getApplicationContext(), "Conexão com "+MAC+" realizada com sucesso", Toast.LENGTH_LONG).show();
+
+                    } catch (IOException e) {
+                        conn = false;
+                        Toast.makeText(getApplicationContext(), "Erro ao se conectar a "+MAC, Toast.LENGTH_LONG).show();
+                    }
+
+
                 } else {
                     Toast.makeText(getApplicationContext(), "Falha ao obter o MAC", Toast.LENGTH_LONG).show();
                 }
