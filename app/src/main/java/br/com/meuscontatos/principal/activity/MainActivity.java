@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -21,7 +22,9 @@ public class MainActivity extends ActionBarActivity {
     private Toolbar tbBottom;
     private Button btnConnect;
     private BluetoothAdapter myBluetoothAdapter = null;
-    private final int REQUEST_ENABLE_BT = 1; //identificador para a solicitação/evento
+    private final int REQUEST_ENABLE_BT = 1; //identificador para a solicitação de ativação de BT
+    private final int REQUEST_CONN_BT = 2; //identificador para a solicitação conexão
+    private boolean conn = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +34,33 @@ public class MainActivity extends ActionBarActivity {
         setupBluetooth(); //Ativando o Bluetooth
 
         btnConnect = (Button) findViewById(R.id.btnConnect);
+
+        btnConnect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(conn){
+                    //desconectar
+                } else {
+                    //conectar
+                    Intent openListDevices = new Intent(MainActivity.this, ListaDispositivosActivity.class);
+                    startActivityForResult(openListDevices, REQUEST_CONN_BT);
+                }
+            }
+        });
         tbHead   = (Toolbar) findViewById(R.id.toolbar);
+
+
+
+
+
+
+
+
+
+
+
+
         //setSupportActionBar(tbHead);
       //  tbBottom = (Toolbar) findViewById(R.id.tb_bottom);
 

@@ -59,9 +59,17 @@
         </activity>
 
         <activity
+            android:name=".activity.ListaDispositivosActivity"
+            android:label="Dispositivos Pareados"
+            android:theme="@android:style/Theme.Dialog">
+        </activity>
+
+        <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat">
         </activity>
+
+
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
