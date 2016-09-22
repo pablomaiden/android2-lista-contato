@@ -4,7 +4,11 @@ import android.app.ListActivity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Set;
 
@@ -36,6 +40,12 @@ public class ListaDispositivosActivity extends ListActivity {
         }
         setListAdapter(arrayBluetoothAdapter);
 
+    }
 
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+        String itemLabel = ((TextView)v).getText().toString();
+        Toast.makeText(getApplicationContext(), "Info: "+itemLabel, Toast.LENGTH_LONG).show();
     }
 }
