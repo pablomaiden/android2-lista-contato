@@ -24,20 +24,20 @@ import br.com.meuscontatos.principal.vo.ContatoVO;
 public class ListaBluetoothFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
-    private BluetoothAdapter myBluetoothAdapter = null;
-    private int REQUEST_ENABLE_BT_ID = 1; //identificador para a solicitação/evento
+//    private BluetoothAdapter myBluetoothAdapter = null;
+//    private int REQUEST_ENABLE_BT_ID = 1; //identificador para a solicitação/evento
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        myBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        if(myBluetoothAdapter == null){
-            Toast.makeText(getActivity(), "Seu dispositivo não possui bluetooth", Toast.LENGTH_LONG).show();
-
-        } else if(!myBluetoothAdapter.isEnabled()){
-            Intent activateBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(activateBluetooth, REQUEST_ENABLE_BT_ID);
-        }
+//        myBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+//        if(myBluetoothAdapter == null){
+//            Toast.makeText(getActivity(), "Seu dispositivo não possui bluetooth", Toast.LENGTH_LONG).show();
+//
+//        } else if(!myBluetoothAdapter.isEnabled()){
+//            Intent activateBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+//            startActivityForResult(activateBluetooth, REQUEST_ENABLE_BT_ID);
+//        }
 
 
         View view = inflater.inflate(R.layout.lista_bluetooth_fragment, container, false);

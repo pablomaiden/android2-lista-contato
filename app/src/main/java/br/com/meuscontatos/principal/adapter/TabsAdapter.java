@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import br.com.meuscontatos.principal.fragment.ListaBluetoothFragment;
 import br.com.meuscontatos.principal.fragment.ListaContatosFragment;
+import br.com.meuscontatos.principal.fragment.ListaConversasFragment;
 
 public class TabsAdapter extends FragmentPagerAdapter {
     private Context mContext;
@@ -27,7 +28,7 @@ public class TabsAdapter extends FragmentPagerAdapter {
         Fragment frag = null;
         switch (position){
             case 0: frag = new ListaContatosFragment(); break;
-            case 1: frag = new ListaContatosFragment(); break;
+            case 1: frag = new ListaConversasFragment(); break;
             case 2: frag = new ListaContatosFragment(); break;
             case 3: frag = new ListaBluetoothFragment(); break;
         }
