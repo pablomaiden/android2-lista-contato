@@ -80,12 +80,13 @@ public class ConversasRecyclerViewAdapter extends RecyclerView.Adapter<Conversas
         viewHolder.v.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                final Realm realm = Service.getInstace().getRealm(v.getContext());
+
                 AlertDialog builder = new AlertDialog.Builder(v.getContext())
                         .setTitle("Exclusão")
                         .setMessage("Deseja excluir "+getNomeContato(position)+" ? ")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
+                                Realm realm = Service.getInstace().getRealm(context);
                                 realm.beginTransaction();
                                 realm.where(Contato.class).equalTo("id",getIdContato(position)).findFirst().deleteFromRealm();
                                 realm.commitTransaction();

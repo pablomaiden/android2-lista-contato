@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,10 +56,6 @@ public class ContatoRecyclerViewAdapter extends RecyclerView.Adapter<ContatoRecy
     public void onBindViewHolder(ViewHolder viewHolder,final int position) {
         if(contatos.get(position).getUrlFoto()!=null && !contatos.get(position).getUrlFoto().isEmpty()){
            viewHolder.foto.setImageURI(Uri.parse(contatos.get(position).getUrlFoto()));
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                viewHolder.foto.setBackground(null);
-            }
-        }else {
            viewHolder.foto.setImageResource(R.drawable.sem_foto);
         }
         viewHolder.nome.setText(contatos.get(position).getNome());
@@ -80,12 +75,13 @@ public class ContatoRecyclerViewAdapter extends RecyclerView.Adapter<ContatoRecy
         viewHolder.v.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                final Realm realm = Service.getInstace().getRealm(v.getContext());
+
                 AlertDialog builder = new AlertDialog.Builder(v.getContext())
                         .setTitle("Exclusão")
                         .setMessage("Deseja excluir "+getNomeContato(position)+" ? ")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
+                                Realm realm = Service.getInstace().getRealm(context);
                                 realm.beginTransaction();
                                 realm.where(Contato.class).equalTo("id",getIdContato(position)).findFirst().deleteFromRealm();
                                 realm.commitTransaction();
