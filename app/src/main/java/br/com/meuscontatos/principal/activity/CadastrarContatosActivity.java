@@ -38,7 +38,7 @@ public class CadastrarContatosActivity extends AppCompatActivity {
         et_nome = (EditText) findViewById(R.id.cad_nome);
         et_email = (EditText) findViewById(R.id.cad_email);
         telefone = (EditText) findViewById(R.id.cad_telefone);
-        telefone.addTextChangedListener(Mask.insert("(##)####-####", telefone));
+        telefone.addTextChangedListener(Mask.insert("(##)#####-####", telefone));
     }
 
     @Override
