@@ -10,24 +10,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-
 import java.util.List;
-
 import br.com.meuscontatos.principal.R;
 import br.com.meuscontatos.principal.activity.EditarContatosActivity;
 import br.com.meuscontatos.principal.domain.Contato;
 import br.com.meuscontatos.principal.service.Service;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.realm.Realm;
+import br.com.meuscontatos.principal.interfaces.RecyclerViewOnClickListenerHack;
 
 public class ContatoRecyclerViewAdapter extends RecyclerView.Adapter<ContatoRecyclerViewAdapter.ViewHolder>{
 
     private List<Contato> contatos;
     private LayoutInflater layoutInflater;
     private Context context;
+    private RecyclerViewOnClickListenerHack mRecyclerViewOnClickListenerHack;
 
     public ContatoRecyclerViewAdapter(Context context, List<Contato> contatos) {
         this.context=context;
@@ -45,6 +44,10 @@ public class ContatoRecyclerViewAdapter extends RecyclerView.Adapter<ContatoRecy
         return contato.getNome();
     }
 
+    public void setRecyclerViewOnClickListenerHack(RecyclerViewOnClickListenerHack r){
+        mRecyclerViewOnClickListenerHack = r;
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View v = layoutInflater.inflate(R.layout.item_contatos,viewGroup,false);
@@ -56,7 +59,7 @@ public class ContatoRecyclerViewAdapter extends RecyclerView.Adapter<ContatoRecy
     public void onBindViewHolder(ViewHolder viewHolder,final int position) {
         if(contatos.get(position).getUrlFoto()!=null && !contatos.get(position).getUrlFoto().isEmpty()){
            viewHolder.foto.setImageURI(Uri.parse(contatos.get(position).getUrlFoto()));
-           viewHolder.foto.setImageResource(R.drawable.sem_foto);
+           //viewHolder.foto.setImageResource(R.drawable.sem_foto);
         }
         viewHolder.nome.setText(contatos.get(position).getNome());
         viewHolder.email.setText(contatos.get(position).getEmail());
@@ -71,32 +74,6 @@ public class ContatoRecyclerViewAdapter extends RecyclerView.Adapter<ContatoRecy
                 v.getContext().startActivity(intent);
             }
         });
-
-        viewHolder.v.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-
-                AlertDialog builder = new AlertDialog.Builder(v.getContext())
-                        .setTitle("Exclusão")
-                        .setMessage("Deseja excluir "+getNomeContato(position)+" ? ")
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                Realm realm = Service.getInstace().getRealm(context);
-                                realm.beginTransaction();
-                                realm.where(Contato.class).equalTo("id",getIdContato(position)).findFirst().deleteFromRealm();
-                                realm.commitTransaction();
-                                notifyItemRemoved(position);
-                                notifyDataSetChanged();
-                            }
-                        }).setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        }).setIcon(android.R.drawable.ic_dialog_alert).create();
-                builder.show();
-                return true;
-            }
-        });
     }
 
     @Override
@@ -104,7 +81,7 @@ public class ContatoRecyclerViewAdapter extends RecyclerView.Adapter<ContatoRecy
         return contatos.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
         public View v;
         public CircleImageView foto;
         public TextView nome;
@@ -118,6 +95,24 @@ public class ContatoRecyclerViewAdapter extends RecyclerView.Adapter<ContatoRecy
             nome     = (TextView)  itemView.findViewById(R.id.nome);
             email    = (TextView)  itemView.findViewById(R.id.email);
             telefone = (TextView)  itemView.findViewById(R.id.telefone);
+            view.setOnClickListener(this);
+            view.setOnLongClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if(mRecyclerViewOnClickListenerHack != null){
+                mRecyclerViewOnClickListenerHack.onClickListener(v, getPosition());
+            }
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            if(mRecyclerViewOnClickListenerHack != null){
+                mRecyclerViewOnClickListenerHack.onLongClickListener(v, getPosition());
+                return true;
+            }
+            return false;
         }
     }
 }
