@@ -26,6 +26,7 @@ public class ListaContatosFragment extends Fragment implements RecyclerViewOnCli
 
     private RecyclerView mRecyclerView;
     static final int FOTO_REQUEST_FOR_RESULT = 10;
+    static final int EDIT_REQUEST_FOR_RESULT = 15;
     ContatoRecyclerViewAdapter contatosAdapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -77,7 +78,7 @@ public class ListaContatosFragment extends Fragment implements RecyclerViewOnCli
     public void onClickListener(View view, int position) {
         Intent intent = new Intent(view.getContext(),EditarContatosActivity.class);
         intent.putExtra("idContato",contatosAdapter.getIdContato(position));
-        startActivity(intent);
+        startActivityForResult(intent,EDIT_REQUEST_FOR_RESULT);
         contatosAdapter.notifyDataSetChanged();
     }
 
@@ -88,12 +89,11 @@ public class ListaContatosFragment extends Fragment implements RecyclerViewOnCli
                 .setMessage("Deseja excluir ? ")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-
                         Realm realm = Service.getInstace().getRealm(getActivity());
                         realm.beginTransaction();
                         realm.where(Contato.class).equalTo("id",contatosAdapter.getIdContato(position)).findFirst().deleteFromRealm();
                         realm.commitTransaction();
-                        contatosAdapter.notifyDataSetChanged();
+                        contatosAdapter.notifyItemRemoved(position);
                     }
                 }).setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
