@@ -1,5 +1,6 @@
 package br.com.meuscontatos.principal.util;
 
+import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -8,7 +9,7 @@ import android.content.Intent;
 import java.util.Calendar;
 
 
-public class AlarmManager extends BroadcastReceiver {
+public class AlarmeManager extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -29,14 +30,14 @@ public class AlarmManager extends BroadcastReceiver {
         else
             milisegundos_alarme = calendar.getTimeInMillis();
 
-        android.app.AlarmManager alarmeMenager = (android.app.AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(context,AlarmManager.class);
+        AlarmManager alarmeMenager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context,AlarmeManager.class);
         PendingIntent pending = PendingIntent.getBroadcast(context,id,intent,0);
         alarmeMenager.setRepeating(android.app.AlarmManager.RTC_WAKEUP, milisegundos_alarme, 1000 * 60 * 60 * intervalo,pending);
     }
 
     public static void cancelAlarme(Context context, int id){
-        Intent intent = new Intent(context,AlarmManager.class);
+        Intent intent = new Intent(context,AlarmeManager.class);
         PendingIntent pending = PendingIntent.getBroadcast(context,id,intent,PendingIntent.FLAG_CANCEL_CURRENT);
         android.app.AlarmManager alarmeMenager = (android.app.AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmeMenager.cancel(pending);

@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.melnykov.fab.FloatingActionButton;
+
 import br.com.meuscontatos.principal.R;
 import br.com.meuscontatos.principal.activity.CadastrarContatosActivity;
 import br.com.meuscontatos.principal.activity.EditarContatosActivity;
