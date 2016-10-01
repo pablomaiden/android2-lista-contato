@@ -27,25 +27,25 @@ import io.realm.Realm;
 
 public class BluetoothRecyclerViewAdapter extends RecyclerView.Adapter<BluetoothRecyclerViewAdapter.ViewHolder>{
 
-    private List<ContatoVO> contatosVO;
+    private List<String> listaBluetooth;
     private LayoutInflater layoutInflater;
     private Context context;
 
-    public BluetoothRecyclerViewAdapter(Context context, List<ContatoVO> contatosVO) {
+    public BluetoothRecyclerViewAdapter(Context context, List<String> listaBluetooth) {
         this.context=context;
-        this.contatosVO=contatosVO;
+        this.listaBluetooth=listaBluetooth;
         this.layoutInflater= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    public Long getIdContatoVO(int position){
-        ContatoVO contatoVO =  contatosVO.get(position);
-        return contatoVO.getId();
-    }
-
-    public String getNomeContatoVO(int position){
-        ContatoVO contatoVO =  contatosVO.get(position);
-        return contatoVO.getNome();
-    }
+//    public Long getIdContatoVO(int position){
+//        ContatoVO contatoVO =  contatosVO.get(position);
+//        return contatoVO.getId();
+//    }
+//
+//    public String getNomeContatoVO(int position){
+//        ContatoVO contatoVO =  contatosVO.get(position);
+//        return contatoVO.getNome();
+//    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
@@ -57,7 +57,7 @@ public class BluetoothRecyclerViewAdapter extends RecyclerView.Adapter<Bluetooth
     @Override
     public void onBindViewHolder(ViewHolder viewHolder,final int position) {
 
-        viewHolder.labelBluetooth.setText(contatosVO.get(position).getLabelBluetooth());
+        viewHolder.labelBluetooth.setText(listaBluetooth.get(position));
         YoYo.with(Techniques.FadeIn).duration(800).playOn(viewHolder.itemView);
 
 
@@ -97,7 +97,7 @@ public class BluetoothRecyclerViewAdapter extends RecyclerView.Adapter<Bluetooth
 
     @Override
     public int getItemCount() {
-        return contatosVO.size();
+        return listaBluetooth.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -109,8 +109,10 @@ public class BluetoothRecyclerViewAdapter extends RecyclerView.Adapter<Bluetooth
             super(view);
             v=view;
 
-            labelBluetooth = (TextView) itemView.findViewById(R.id.labelBluetooth);
-
+            labelBluetooth = (TextView) itemView.findViewById(R.id. labelBluetooth);
+            //nome     = (TextView)  itemView.findViewById(R.id.nome);
+            //email    = (TextView)  itemView.findViewById(R.id.email);
+            //telefone = (TextView)  itemView.findViewById(R.id.telefone);
         }
     }
 }

@@ -34,9 +34,7 @@ public class ListaDispositivosActivity extends ListActivity {
 
         if(pairedDevices.size() > 0){
             for(BluetoothDevice device : pairedDevices){
-                String deviceName = device.getName();
-                String deviceMac = device.getAddress();
-                arrayBluetoothAdapter.add(deviceName + "\n" + deviceMac);
+                arrayBluetoothAdapter.add(device.getName() + "\n" + device.getAddress());
             }
         }
         setListAdapter(arrayBluetoothAdapter);

@@ -1,7 +1,14 @@
 package br.com.meuscontatos.principal.fragment;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,58 +16,84 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.melnykov.fab.FloatingActionButton;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 import br.com.meuscontatos.principal.R;
 import br.com.meuscontatos.principal.activity.CadastrarContatosActivity;
+import br.com.meuscontatos.principal.activity.ListaDispositivosActivity;
 import br.com.meuscontatos.principal.adapter.BluetoothRecyclerViewAdapter;
-import br.com.meuscontatos.principal.vo.ContatoVO;
 
 public class ListaBluetoothFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
+    private ProgressDialog dialog;
+
+
+    //Bluetooth setup
+    private Button btnConnect;
+    private BluetoothAdapter btfAdapter = null;
+    private final int REQUEST_ENABLE_BT = 1; //identificador para a solicitação de ativação de BT
+    private final int REQUEST_CONN_BT = 2; //identificador para a solicitação conexão
+    private boolean conn = false;
+    private static String MAC = null;
+    BluetoothDevice deviceToConnect = null;
+    BluetoothSocket myBluetoothSocket = null;
+    UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb"); //default para comunicações inseguras e sem autenticação.
+    static String MAC_ADDRESS = null;
+    private List<String> listaBluetooth = null;
+    Set<BluetoothDevice> bluetoothDevices = null;
+
+
+
+
+//
 //    private BluetoothAdapter myBluetoothAdapter = null;
-//    private int REQUEST_ENABLE_BT_ID = 1; //identificador para a solicitação/evento
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-//        myBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-//        if(myBluetoothAdapter == null){
-//            Toast.makeText(getActivity(), "Seu dispositivo não possui bluetooth", Toast.LENGTH_LONG).show();
-//
-//        } else if(!myBluetoothAdapter.isEnabled()){
-//            Intent activateBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-//            startActivityForResult(activateBluetooth, REQUEST_ENABLE_BT_ID);
-//        }
-
-
+        //Recycler View setup
         View view = inflater.inflate(R.layout.lista_bluetooth_fragment, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_lista_bluetooth);
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager lm = new LinearLayoutManager(getActivity());
         lm.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(lm);
+        listaBluetooth = new ArrayList<String>();
 
-        List<ContatoVO> listaBluetooth = new ArrayList<ContatoVO>();
-        ContatoVO c1 = new ContatoVO("nometeste1", "sobrenometeste1", "111111111", "nometeste1@email.com", null, "BLUETOOTH1");
-        ContatoVO c2 = new ContatoVO("nometeste2", "sobrenometeste2", "222222222", "nometeste2@email.com", null, "BLUETOOTH2");
-        ContatoVO c3 = new ContatoVO("nometeste3", "sobrenometeste3", "333333333", "nometeste3@email.com", null, "BLUETOOTH3");
-        listaBluetooth.add(c1);
-        listaBluetooth.add(c2);
-        listaBluetooth.add(c3);
+        setupBluetooth(); //Ativando o Bluetooth
+
+        //Iniciando a lista com os dispositivos previamente pareados
+        bluetoothDevices = btfAdapter.getBondedDevices();
+
+        //Registrando o receiver para receber as mensagens de dispositivos pareados
+        this.getActivity().registerReceiver(mReceiver, new IntentFilter(BluetoothDevice.ACTION_FOUND));
+
+        //Registrando o receiver para receber a mensagem do final da busca por devices
+        this.getActivity().registerReceiver(mReceiver, new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED));
+
+//        if(pairedDevices.size() > 0){
+//            for(BluetoothDevice device : pairedDevices){
+//                listaBluetooth.add(device.getName() + "\n" + device.getAddress());
+//            }
+//        }
 
         //TODO
         //Create a list of bluetooth contacts
 
-        BluetoothRecyclerViewAdapter contatosAdapter = new BluetoothRecyclerViewAdapter(getActivity(),listaBluetooth);
+        BluetoothRecyclerViewAdapter btfViewAdapter = new BluetoothRecyclerViewAdapter(getActivity(),listaBluetooth);
 
-        mRecyclerView.setAdapter(contatosAdapter);
+        mRecyclerView.setAdapter(btfViewAdapter);
 
         //TODO ação de clicar no floating button - ficar visível e buscar por outros dispositivos par adicioná-os a lista de pareados.
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
@@ -73,6 +106,123 @@ public class ListaBluetoothFragment extends Fragment {
             }});
 
         return view;
+    }
+
+
+
+
+    protected void setupBluetooth(){
+        this.btfAdapter = BluetoothAdapter.getDefaultAdapter();
+        if(this.btfAdapter == null){
+            Toast.makeText(getActivity(), "Seu dispositivo não possui suporte a Bluetooth", Toast.LENGTH_LONG).show();
+
+        } else if(!this.btfAdapter.isEnabled()){
+            Intent activateBtfIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(activateBtfIntent, REQUEST_ENABLE_BT); //Solicitação para habilitar o bluetooth
+        }
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //Garante que não existe outra busca sendo realizada.
+        if(btfAdapter.isDiscovering()){
+            btfAdapter.cancelDiscovery();
+        }
+        //Dispara uma nova busca
+        btfAdapter.startDiscovery();
+        dialog = ProgressDialog.show(getActivity(), "Exemplo", "Buscando dispositivos bluetooth...", false, true);
+    }
+
+
+    //Receiver para receber os broadcasts do Bluetooth
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+
+        //Quantidade de dispositivos encontrados
+        private int count;
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            //Se um device foi encontrado
+            if(BluetoothDevice.ACTION_FOUND.equals(action)){
+                //Recupera o device da intent
+                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+
+                //Se não está pareado ainda, insere na lista de devices não pareados
+                if(device.getBondState() != BluetoothDevice.BOND_BONDED){
+                    bluetoothDevices.add(device);
+                    Toast.makeText(context, "Encontrou: "+device.getName()+":"+
+                    device.getAddress(), Toast.LENGTH_SHORT).show();
+                    count++;
+                }
+            } else if(BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)){
+                //Busca por dispositivos iniciada
+                count = 0;
+                Toast.makeText(context, "Busca iniciada", Toast.LENGTH_LONG).show();
+            } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)){
+                //Busca por dispositivos finalizada
+                Toast.makeText(context, "Busca finalizada. "+count + " devices encontrados", Toast.LENGTH_LONG).show();
+                dialog.dismiss();
+                //Atualiza a listagem para conter tanto os devices pareados quanto os mais novos que foram encontrados
+                updateDevicesList();
+            }
+
+        }
+    };
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        switch (requestCode){ //Parâmetro de intent
+
+            case REQUEST_ENABLE_BT: //Solicitação para habilitar o bluetooth
+                if(resultCode == Activity.RESULT_OK){
+                    Toast.makeText(getActivity(), "O Bluetooth foi ativado", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getActivity(), "O Bluetooth não pode ser ativado", Toast.LENGTH_LONG).show();
+                    //finish();
+                }
+                break;
+            case REQUEST_CONN_BT: //Solicitação para se conectar a um dispositivo
+                if(resultCode == Activity.RESULT_OK) {
+                    MAC = data.getExtras().getString(MAC_ADDRESS);
+                    Toast.makeText(getActivity(), "MAC: " + MAC, Toast.LENGTH_LONG).show();
+                    deviceToConnect = btfAdapter.getRemoteDevice(MAC);
+                    try {
+                        myBluetoothSocket = deviceToConnect.createRfcommSocketToServiceRecord(MY_UUID);
+                        myBluetoothSocket.connect();
+                        conn = true;
+                        btnConnect.setText("Desconectar um dispositivo");
+                        Toast.makeText(getActivity(), "Conexão com "+MAC+" realizada com sucesso", Toast.LENGTH_LONG).show();
+
+                    } catch (IOException e) {
+                        conn = false;
+                        Toast.makeText(getActivity(), "Erro ao se conectar a "+MAC, Toast.LENGTH_LONG).show();
+                    }
+
+
+                } else {
+                    Toast.makeText(getActivity(), "Falha ao obter o MAC", Toast.LENGTH_LONG).show();
+                }
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //Garante que a busca é cancelada ao sair
+        if(btfAdapter != null){
+            btfAdapter.cancelDiscovery();
+        }
+
+        //Cancela o registro do receiver
+        this.getActivity().unregisterReceiver(mReceiver);
+    }
+
+
+    private void updateDevicesList() {
+        //Cria o array com o nome de cada device
+        
     }
 
 }
