@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -51,6 +52,8 @@ public class ListaBluetoothFragment extends Fragment {
     UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb"); //default para comunicações inseguras e sem autenticação.
     static String MAC_ADDRESS = null;
     Set<BluetoothDevice> bluetoothDevices = null;
+    BluetoothServerSocket btfServerSocket = null;
+    BluetoothSocket btfSocket =  null;
 
 
 
@@ -73,6 +76,8 @@ public class ListaBluetoothFragment extends Fragment {
 
         setupBluetooth(); //Ativando o Bluetooth
 
+
+        //TODO tentar colocar essa funcionalidade dentro do Float button
         //Iniciando a lista com os dispositivos previamente pareados
         bluetoothDevices = btfAdapter.getBondedDevices();
 
@@ -81,6 +86,7 @@ public class ListaBluetoothFragment extends Fragment {
 
         //Registrando o receiver para receber a mensagem do final da busca por devices
         this.getActivity().registerReceiver(mReceiver, new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED));
+        //Fim funcionalidade
 
 
         //TODO ação de clicar no floating button - ficar visível e buscar por outros dispositivos para adicioná-os a lista de pareados.
@@ -92,6 +98,23 @@ public class ListaBluetoothFragment extends Fragment {
                 Intent visibilityIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
                 visibilityIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
                 startActivity(visibilityIntent);
+
+                //Abre um servidor socket de forma não bloqueante
+                new Thread(){
+
+                    @Override
+                    public void run(){
+
+                        try {
+                            btfServerSocket = btfAdapter.listenUsingRfcommWithServiceRecord("Meus Contatos Chat", MY_UUID);
+                            btfSocket = btfServerSocket.accept();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                }.start();
             }});
 
         return view;
@@ -121,7 +144,7 @@ public class ListaBluetoothFragment extends Fragment {
         }
         //Dispara uma nova busca
         btfAdapter.startDiscovery();
-        dialog = ProgressDialog.show(getActivity(), "Exemplo", "Buscando dispositivos bluetooth...", false, true);
+        dialog = ProgressDialog.show(getActivity(), "Bluetooth", "Buscando dispositivos bluetooth...", false, true);
     }
 
 
