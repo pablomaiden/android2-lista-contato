@@ -37,16 +37,6 @@ public class BluetoothRecyclerViewAdapter extends RecyclerView.Adapter<Bluetooth
         this.layoutInflater= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-//    public Long getIdContatoVO(int position){
-//        ContatoVO contatoVO =  contatosVO.get(position);
-//        return contatoVO.getId();
-//    }
-//
-//    public String getNomeContatoVO(int position){
-//        ContatoVO contatoVO =  contatosVO.get(position);
-//        return contatoVO.getNome();
-//    }
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View v = layoutInflater.inflate(R.layout.item_bluetooth,viewGroup,false);
@@ -63,7 +53,7 @@ public class BluetoothRecyclerViewAdapter extends RecyclerView.Adapter<Bluetooth
 
         viewHolder.v.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { //TODO ação ao clicar em um contatoVO na listagem Bluetooth
+            public void onClick(View v) { //TODO ação ao clicar em um item da listagem Bluetooth
 //                Intent intent = new Intent(v.getContext(),EditarContatosActivity.class);
 //                intent.putExtra("idContato",getIdContatoVO(position));
 //                v.getContext().startActivity(intent);
@@ -72,7 +62,7 @@ public class BluetoothRecyclerViewAdapter extends RecyclerView.Adapter<Bluetooth
 
         viewHolder.v.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public boolean onLongClick(View v) { //TODO ação ao fazer clique longo em um contatoVO na listagem Bluetooth
+            public boolean onLongClick(View v) { //TODO ação ao fazer clique longo em um item da listagem Bluetooth
 //                final Realm realm = Service.getInstace().getRealm(v.getContext());
 //                AlertDialog builder = new AlertDialog.Builder(v.getContext())
 //                        .setTitle("Exclusão")
@@ -110,9 +100,7 @@ public class BluetoothRecyclerViewAdapter extends RecyclerView.Adapter<Bluetooth
             v=view;
 
             labelBluetooth = (TextView) itemView.findViewById(R.id. labelBluetooth);
-            //nome     = (TextView)  itemView.findViewById(R.id.nome);
-            //email    = (TextView)  itemView.findViewById(R.id.email);
-            //telefone = (TextView)  itemView.findViewById(R.id.telefone);
+
         }
     }
 }

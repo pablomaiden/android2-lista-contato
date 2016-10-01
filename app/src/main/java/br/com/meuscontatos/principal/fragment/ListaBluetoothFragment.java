@@ -83,14 +83,15 @@ public class ListaBluetoothFragment extends Fragment {
         this.getActivity().registerReceiver(mReceiver, new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED));
 
 
-        //TODO ação de clicar no floating button - ficar visível e buscar por outros dispositivos par adicioná-os a lista de pareados.
+        //TODO ação de clicar no floating button - ficar visível e buscar por outros dispositivos para adicioná-os a lista de pareados.
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.attachToRecyclerView(mRecyclerView);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),CadastrarContatosActivity.class);
-                startActivity(intent);
+                Intent visibilityIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+                visibilityIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
+                startActivity(visibilityIntent);
             }});
 
         return view;
@@ -214,7 +215,7 @@ public class ListaBluetoothFragment extends Fragment {
         for(BluetoothDevice device : bluetoothDevices){
             //Neste momento a lista contem ainda apenas devices pareados, o que resultará sempre em true
             boolean paired = device.getBondState() == BluetoothDevice.BOND_BONDED;
-            listaBluetooth.add(device.getName() + " - " + device.getAddress() + (paired ? "*pareado" : ""));
+            listaBluetooth.add(device.getName() + " - " + device.getAddress() + (paired ? " [pareado]" : ""));
 
             BluetoothRecyclerViewAdapter btfViewAdapter = new BluetoothRecyclerViewAdapter(getActivity(),listaBluetooth);
 
