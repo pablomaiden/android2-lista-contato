@@ -31,6 +31,7 @@ import br.com.meuscontatos.principal.R;
 import br.com.meuscontatos.principal.activity.CadastrarContatosActivity;
 import br.com.meuscontatos.principal.activity.ListaDispositivosActivity;
 import br.com.meuscontatos.principal.adapter.BluetoothRecyclerViewAdapter;
+import br.com.meuscontatos.principal.adapter.ContatoRecyclerViewAdapter;
 
 public class ListaBluetoothFragment extends Fragment {
 
@@ -49,7 +50,6 @@ public class ListaBluetoothFragment extends Fragment {
     BluetoothSocket myBluetoothSocket = null;
     UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb"); //default para comunicações inseguras e sem autenticação.
     static String MAC_ADDRESS = null;
-    private List<String> listaBluetooth = null;
     Set<BluetoothDevice> bluetoothDevices = null;
 
 
@@ -69,7 +69,7 @@ public class ListaBluetoothFragment extends Fragment {
         LinearLayoutManager lm = new LinearLayoutManager(getActivity());
         lm.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(lm);
-        listaBluetooth = new ArrayList<String>();
+
 
         setupBluetooth(); //Ativando o Bluetooth
 
@@ -82,18 +82,6 @@ public class ListaBluetoothFragment extends Fragment {
         //Registrando o receiver para receber a mensagem do final da busca por devices
         this.getActivity().registerReceiver(mReceiver, new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED));
 
-//        if(pairedDevices.size() > 0){
-//            for(BluetoothDevice device : pairedDevices){
-//                listaBluetooth.add(device.getName() + "\n" + device.getAddress());
-//            }
-//        }
-
-        //TODO
-        //Create a list of bluetooth contacts
-
-        BluetoothRecyclerViewAdapter btfViewAdapter = new BluetoothRecyclerViewAdapter(getActivity(),listaBluetooth);
-
-        mRecyclerView.setAdapter(btfViewAdapter);
 
         //TODO ação de clicar no floating button - ficar visível e buscar por outros dispositivos par adicioná-os a lista de pareados.
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
@@ -221,8 +209,19 @@ public class ListaBluetoothFragment extends Fragment {
 
 
     private void updateDevicesList() {
-        //Cria o array com o nome de cada device
-        
+        //Criando o array com o nome de cada device
+        List<String> listaBluetooth = new ArrayList<>();
+        for(BluetoothDevice device : bluetoothDevices){
+            //Neste momento a lista contem ainda apenas devices pareados, o que resultará sempre em true
+            boolean paired = device.getBondState() == BluetoothDevice.BOND_BONDED;
+            listaBluetooth.add(device.getName() + " - " + device.getAddress() + (paired ? "*pareado" : ""));
+
+            BluetoothRecyclerViewAdapter btfViewAdapter = new BluetoothRecyclerViewAdapter(getActivity(),listaBluetooth);
+
+            mRecyclerView.setAdapter(btfViewAdapter);
+        }
+
+
     }
 
 }
