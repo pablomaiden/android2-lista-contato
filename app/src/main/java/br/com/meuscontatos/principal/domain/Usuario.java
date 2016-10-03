@@ -10,6 +10,7 @@ public class Usuario extends RealmObject{
     private Long id;
     private String usuario;
     private String senha;
+    private String email;
 
     public String getSenha() {
         return senha;
@@ -33,5 +34,13 @@ public class Usuario extends RealmObject{
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
