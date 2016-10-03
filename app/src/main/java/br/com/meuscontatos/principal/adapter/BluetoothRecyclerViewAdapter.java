@@ -27,24 +27,14 @@ import io.realm.Realm;
 
 public class BluetoothRecyclerViewAdapter extends RecyclerView.Adapter<BluetoothRecyclerViewAdapter.ViewHolder>{
 
-    private List<ContatoVO> contatosVO;
+    private List<String> listaBluetooth;
     private LayoutInflater layoutInflater;
     private Context context;
 
-    public BluetoothRecyclerViewAdapter(Context context, List<ContatoVO> contatosVO) {
+    public BluetoothRecyclerViewAdapter(Context context, List<String> listaBluetooth) {
         this.context=context;
-        this.contatosVO=contatosVO;
+        this.listaBluetooth=listaBluetooth;
         this.layoutInflater= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    }
-
-    public Long getIdContatoVO(int position){
-        ContatoVO contatoVO =  contatosVO.get(position);
-        return contatoVO.getId();
-    }
-
-    public String getNomeContatoVO(int position){
-        ContatoVO contatoVO =  contatosVO.get(position);
-        return contatoVO.getNome();
     }
 
     @Override
@@ -57,13 +47,13 @@ public class BluetoothRecyclerViewAdapter extends RecyclerView.Adapter<Bluetooth
     @Override
     public void onBindViewHolder(ViewHolder viewHolder,final int position) {
 
-        viewHolder.labelBluetooth.setText(contatosVO.get(position).getLabelBluetooth());
+        viewHolder.labelBluetooth.setText(listaBluetooth.get(position));
         YoYo.with(Techniques.FadeIn).duration(800).playOn(viewHolder.itemView);
 
 
         viewHolder.v.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { //TODO ação ao clicar em um contatoVO na listagem Bluetooth
+            public void onClick(View v) { //TODO ação ao clicar em um item da listagem Bluetooth
 //                Intent intent = new Intent(v.getContext(),EditarContatosActivity.class);
 //                intent.putExtra("idContato",getIdContatoVO(position));
 //                v.getContext().startActivity(intent);
@@ -72,7 +62,7 @@ public class BluetoothRecyclerViewAdapter extends RecyclerView.Adapter<Bluetooth
 
         viewHolder.v.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public boolean onLongClick(View v) { //TODO ação ao fazer clique longo em um contatoVO na listagem Bluetooth
+            public boolean onLongClick(View v) { //TODO ação ao fazer clique longo em um item da listagem Bluetooth
 //                final Realm realm = Service.getInstace().getRealm(v.getContext());
 //                AlertDialog builder = new AlertDialog.Builder(v.getContext())
 //                        .setTitle("Exclusão")
@@ -97,7 +87,7 @@ public class BluetoothRecyclerViewAdapter extends RecyclerView.Adapter<Bluetooth
 
     @Override
     public int getItemCount() {
-        return contatosVO.size();
+        return listaBluetooth.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -109,7 +99,7 @@ public class BluetoothRecyclerViewAdapter extends RecyclerView.Adapter<Bluetooth
             super(view);
             v=view;
 
-            labelBluetooth = (TextView) itemView.findViewById(R.id.labelBluetooth);
+            labelBluetooth = (TextView) itemView.findViewById(R.id. labelBluetooth);
 
         }
     }
