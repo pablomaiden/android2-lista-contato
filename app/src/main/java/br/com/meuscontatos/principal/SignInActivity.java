@@ -50,7 +50,7 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
 
         //Autenticar pelo google
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("1:528795683125:android:9ad9942848e40d9e.br.com.meuscontatos.principal")
+                .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
 
