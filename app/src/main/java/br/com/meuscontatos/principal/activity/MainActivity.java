@@ -5,81 +5,64 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.Icon;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.UUID;
 
 import br.com.meuscontatos.principal.R;
+import br.com.meuscontatos.principal.domain.Usuario;
 import br.com.meuscontatos.principal.fragment.ListaContatosFragment;
 import br.com.meuscontatos.principal.fragment.TabContatosPrincipalFragment;
+import br.com.meuscontatos.principal.service.Service;
+import br.com.meuscontatos.principal.util.ImageLoader;
+import de.hdodenhof.circleimageview.CircleImageView;
+import io.realm.Realm;
 
 
 public class MainActivity extends ActionBarActivity {
 
     private Toolbar tbHead;
     private Toolbar tbBottom;
-
-
-//    //Bluetooth
-//    private Button btnConnect;
-//    private BluetoothAdapter myBluetoothAdapter = null;
-//    private final int REQUEST_ENABLE_BT = 1; //identificador para a solicitação de ativação de BT
-//    private final int REQUEST_CONN_BT = 2; //identificador para a solicitação conexão
-//    private boolean conn = false;
-//    private static String MAC = null;
-//    BluetoothDevice deviceToConnect = null;
-//    BluetoothSocket myBluetoothSocket = null;
-//    UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb"); //default para comunicações inseguras e sem autenticação.
+    private CircleImageView foto_perfil_autenticacao;
+    private TextView tv_nome_usuario_firebase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
-//        setupBluetooth(); //Ativando o Bluetooth
+        Realm realm = Service.getInstace().getRealm(getApplicationContext());
+        Usuario user = realm.where(Usuario.class).findFirst();
+        foto_perfil_autenticacao = (CircleImageView) findViewById(R.id.foto_perfil_autenticacao);
+        tv_nome_usuario_firebase = (TextView) findViewById(R.id.tv_nome_usuario_firebase);
 
-//        btnConnect = (Button) findViewById(R.id.btnConnect);
+        int loader = R.drawable.bubble2;
+        String image_url = user.getUrlFotoFireBase();
+        ImageLoader imgLoader = new ImageLoader(getApplicationContext());
+        imgLoader.DisplayImage(image_url, loader, foto_perfil_autenticacao);
+        tv_nome_usuario_firebase.setText(user.getNameUserFireBase());
 
-//        btnConnect.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                if(conn){
-//                    //desconectar
-//                    try{
-//                        myBluetoothSocket.close();
-//                        conn = false;
-//                        btnConnect.setText("Conectar um dispositivo");
-//                        Toast.makeText(getApplicationContext(), "Bluetooth desconectado com sucesso", Toast.LENGTH_SHORT).show();
-//                    } catch (IOException e){
-//                        Toast.makeText(getApplicationContext(), "Falha ao tentar desconectar: "+e, Toast.LENGTH_SHORT).show();
-//                    }
-//
-//                } else {
-//                    //conectar
-//                    Intent openListDevices = new Intent(MainActivity.this, ListaDispositivosActivity.class);
-//                    startActivityForResult(openListDevices, REQUEST_CONN_BT);
-//                }
-//            }
-//        });
-
-
-
-        //**************************************
         tbHead   = (Toolbar) findViewById(R.id.toolbar);
-
-
-
-        //setSupportActionBar(tbHead);
-      //  tbBottom = (Toolbar) findViewById(R.id.tb_bottom);
-
         TabContatosPrincipalFragment listaContatos = (TabContatosPrincipalFragment) getSupportFragmentManager().findFragmentByTag("fragListaContatos");
         if(listaContatos==null){
             listaContatos=new TabContatosPrincipalFragment();
@@ -87,14 +70,24 @@ public class MainActivity extends ActionBarActivity {
             ft.replace(R.id.fragment_container,listaContatos,"fragListaContatos");
             ft.commit();
         }
-
-        //btnConnect.setOnClickListener();
-
-
     }
 
-
-
+    private Bitmap getImageBitmap(String url) {
+        Bitmap bm = null;
+        try {
+            URL aURL = new URL(url);
+            URLConnection conn = aURL.openConnection();
+            conn.connect();
+            InputStream is = conn.getInputStream();
+            BufferedInputStream bis = new BufferedInputStream(is);
+            bm = BitmapFactory.decodeStream(bis);
+            bis.close();
+            is.close();
+        } catch (IOException e) {
+            //Log.e(TAG, "Error getting bitmap", e);
+        }
+        return bm;
+    }
 
 //    protected void setupBluetooth(){
 //        myBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
