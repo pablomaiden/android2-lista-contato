@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/lblBluetoothDashboard"
+        style="@style/Base.TextAppearance.AppCompat.Large.Inverse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/et_login"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="26dp"
+        android:text="@string/bluetooth_dashboard"
+        android:textAlignment="center" />
+
+
+    <Button
+        android:id="@+id/btnAtivarBluetooth"
+        style="@style/Button"
+        android:layout_alignEnd="@+id/textView4"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/textView4"
+        android:layout_below="@+id/lblBluetoothDashboard"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:clickable="true"
+        android:enabled="true"
+        android:onClick="ativarBluetooth"
+        android:text="@string/ativar_bluetooth" />
+
+
+    <Button
+        android:id="@+id/btnBuscarDevices"
+        style="@style/Button"
+        android:layout_alignEnd="@+id/textView4"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/textView4"
+        android:layout_below="@+id/btnAtivarBluetooth"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:clickable="true"
+        android:enabled="true"
+        android:onClick="buscarDevices"
+        android:text="@string/buscar_devices" />
+
+    <Button
+        android:id="@+id/btnFicarVisivel"
+        style="@style/Button"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/btnBuscarDevices"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_toEndOf="@+id/textView4"
+        android:layout_toRightOf="@+id/textView4"
+        android:clickable="true"
+        android:enabled="true"
+        android:onClick="ficarVisivel"
+        android:text="@string/ficar_visivel" />
+
+
+    <Button
+        android:id="@+id/btnIniciarServidor"
+        style="@style/Button"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/btnFicarVisivel"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_toEndOf="@+id/textView4"
+        android:layout_toRightOf="@+id/textView4"
+        android:clickable="true"
+        android:enabled="true"
+        android:onClick="iniciarServidor"
+        android:text="@string/iniciar_servidor" />
+</RelativeLayout>
