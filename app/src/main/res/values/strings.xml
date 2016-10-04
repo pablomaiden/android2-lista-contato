@@ -25,5 +25,14 @@
     <string name="label_salvar">SALVAR</string>
     <string name="hint_telefone">Telefone</string>
     <string name="id_facebook">932943306832209</string>
+
+    <string name="bluetooth_dashboard">Bluetooth Dashboard</string>
+    <string name="ativar_bluetooth">Ativar Bluetooth</string>
+    <string name="buscar_devices">Buscar Devices</string>
+    <string name="ficar_visivel">Ficar Visível</string>
+    <string name="iniciar_servidor">Iniciar Servidor</string>
+    <string name="error_login">Login ou senha invaldos</string>
+
+
 </resources>
 
