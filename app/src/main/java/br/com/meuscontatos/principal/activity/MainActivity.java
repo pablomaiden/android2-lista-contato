@@ -56,11 +56,13 @@ public class MainActivity extends ActionBarActivity {
         foto_perfil_autenticacao = (CircleImageView) findViewById(R.id.foto_perfil_autenticacao);
         tv_nome_usuario_firebase = (TextView) findViewById(R.id.tv_nome_usuario_firebase);
 
-        int loader = R.drawable.bubble2;
-        String image_url = user.getUrlFotoFireBase();
-        ImageLoader imgLoader = new ImageLoader(getApplicationContext());
-        imgLoader.DisplayImage(image_url, loader, foto_perfil_autenticacao);
-        tv_nome_usuario_firebase.setText(user.getNameUserFireBase());
+        if(user!=null && user.getUrlFotoFireBase()!=null){
+            int loader = R.drawable.bubble2;
+            String image_url = user.getUrlFotoFireBase();
+            ImageLoader imgLoader = new ImageLoader(getApplicationContext());
+            imgLoader.DisplayImage(image_url, loader, foto_perfil_autenticacao);
+            tv_nome_usuario_firebase.setText(user.getNameUserFireBase());
+        }
 
         tbHead   = (Toolbar) findViewById(R.id.toolbar);
         TabContatosPrincipalFragment listaContatos = (TabContatosPrincipalFragment) getSupportFragmentManager().findFragmentByTag("fragListaContatos");

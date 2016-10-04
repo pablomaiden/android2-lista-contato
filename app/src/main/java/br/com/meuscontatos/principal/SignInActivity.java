@@ -1,8 +1,10 @@
 package br.com.meuscontatos.principal;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -165,9 +167,7 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
         Realm realm = Service.getInstace().getRealm(getApplicationContext());
         Usuario usuario_ = realm.where(Usuario.class).equalTo("usuario", et_login.getText().toString()).equalTo("senha", et_senha.getText().toString()).findFirst();
 
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        /*if(usuario_==null){
+        if(usuario_==null){
             AlertDialog builder = new AlertDialog.Builder(this)
                     .setTitle("Erro")
                     .setMessage("Usuário ou senha incorretos")
@@ -176,12 +176,10 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
                             dialog.dismiss();
                         }
                     }).setIcon(android.R.drawable.ic_dialog_alert).create();
-            builder.show();
-
+                     builder.show();
         }else{
-            Intent intent = new Intent(this,MainActivity.class);
-            startActivity(intent);
-        }*/
+            callMainActivity();
+        }
     }
 
     @Override
