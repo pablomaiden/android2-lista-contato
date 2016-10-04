@@ -27,11 +27,12 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 import br.com.meuscontatos.principal.activity.MainActivity;
 import br.com.meuscontatos.principal.activity.SignUpActivity;
+import br.com.meuscontatos.principal.domain.Contato;
 import br.com.meuscontatos.principal.domain.Usuario;
 import br.com.meuscontatos.principal.service.Service;
 import io.realm.Realm;
 
-public class SignInActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener{
+public class SignInActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
     private EditText et_login;
     private EditText et_senha;
@@ -41,15 +42,19 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
     private CallbackManager callbackManager;
     private GoogleApiClient mGoogleApiClient;
     private static final int RC_SIGN_IN_GOOGLE = 7859;
+    private Usuario user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signin_activity);
 
-        et_login      = (EditText) findViewById(R.id.et_login);
-        et_senha      = (EditText) findViewById(R.id.et_senha);
-        signInButton  = (SignInButton) findViewById(R.id.sign_in_button);
+        Realm realm = Service.getInstace().getRealm(getApplicationContext());
+        user = realm.where(Usuario.class).findFirst();
+
+        et_login = (EditText) findViewById(R.id.et_login);
+        et_senha = (EditText) findViewById(R.id.et_senha);
+        signInButton = (SignInButton) findViewById(R.id.sign_in_button);
 
         //Autenticar pelo google
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -63,22 +68,7 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
                 .build();
 
         mAuth = FirebaseAuth.getInstance();
-        //mAuthListener = getFirebaseAuthResultHandler();
-
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    callMainActivity();
-                } else {
-                    // User is signed out
-                    //Log.d(TAG, "onAuthStateChanged:signed_out");
-                }
-                // ...
-            }
-        };
-
+        mAuthListener = getFirebaseAuthResultHandler();
         signInButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
@@ -93,42 +83,43 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
         mAuth.addAuthStateListener(mAuthListener);
     }
 
-
-    private FirebaseAuth.AuthStateListener getFirebaseAuthResultHandler(){
+    private FirebaseAuth.AuthStateListener getFirebaseAuthResultHandler() {
         FirebaseAuth.AuthStateListener callback = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
 
                 FirebaseUser userFirebase = firebaseAuth.getCurrentUser();
-
-                if( userFirebase == null ){
+                if (userFirebase == null) {
                     return;
                 }
+                //verificar se existe alguma usuário cadastrado
+                if (user == null) {
+                    Usuario usuario = new Usuario();
+                    usuario.setId(1L);
+                    usuario.setIdUserFireBase(userFirebase.getUid());
+                    usuario.setNameUserFireBase(userFirebase.getDisplayName());
+                    usuario.setEmail(userFirebase.getEmail());
+                    usuario.setUrlFotoFireBase(userFirebase.getPhotoUrl().toString());
 
-              //  if( user.getId() == null
-                    //    && isNameOk( user, userFirebase ) ){
-
-                   // user.setId( userFirebase.getUid() );
-                   // user.setNameIfNull( userFirebase.getDisplayName() );
-                   // user.setEmailIfNull( userFirebase.getEmail() );
-                   // user.saveDB();
-               // }
-
+                    Realm realm = Service.getInstace().getRealm(getApplicationContext());
+                    realm.beginTransaction();
+                    realm.insertOrUpdate(usuario);
+                    realm.commitTransaction();
+                }
+                //chamada principal do aplicativo
                 callMainActivity();
             }
         };
-        return( callback );
+        return (callback);
     }
 
-    private void callMainActivity(){
-        Intent intent = new Intent( this, MainActivity.class );
+    private void callMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
     }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-        //Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
-
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -151,34 +142,31 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN_GOOGLE) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if (result.isSuccess()) {
-                // Google Sign In was successful, authenticate with Firebase
+                //Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
             } else {
-                // Google Sign In failed, update UI appropriately
-                // ...
+                //Falha na autenticação
             }
         }
     }
 
-    public void registrar(View view){
-        Intent intent = new Intent(this,SignUpActivity.class);
+    public void registrar(View view) {
+        Intent intent = new Intent(this, SignUpActivity.class);
         startActivity(intent);
     }
 
-    public void autenticar(View view){
+    public void autenticar(View view) {
         Usuario usuario = new Usuario();
         Realm realm = Service.getInstace().getRealm(getApplicationContext());
-        Usuario usuario_= realm.where(Usuario.class).equalTo("usuario",et_login.getText().toString()).equalTo("senha",et_senha.getText().toString()).findFirst();
+        Usuario usuario_ = realm.where(Usuario.class).equalTo("usuario", et_login.getText().toString()).equalTo("senha", et_senha.getText().toString()).findFirst();
 
-        Intent intent = new Intent(this,MainActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-
         /*if(usuario_==null){
             AlertDialog builder = new AlertDialog.Builder(this)
                     .setTitle("Erro")

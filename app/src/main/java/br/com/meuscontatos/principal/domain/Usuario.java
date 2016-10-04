@@ -11,6 +11,9 @@ public class Usuario extends RealmObject{
     private String usuario;
     private String senha;
     private String email;
+    private String idUserFireBase;
+    private String nameUserFireBase;
+    private String urlFotoFireBase;
 
     public String getSenha() {
         return senha;
@@ -42,5 +45,29 @@ public class Usuario extends RealmObject{
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getIdUserFireBase() {
+        return idUserFireBase;
+    }
+
+    public void setIdUserFireBase(String idUserFireBase) {
+        this.idUserFireBase = idUserFireBase;
+    }
+
+    public String getNameUserFireBase() {
+        return nameUserFireBase;
+    }
+
+    public void setNameUserFireBase(String nameUserFireBase) {
+        this.nameUserFireBase = nameUserFireBase;
+    }
+
+    public String getUrlFotoFireBase() {
+        return urlFotoFireBase;
+    }
+
+    public void setUrlFotoFireBase(String urlFotoFireBase) {
+        this.urlFotoFireBase = urlFotoFireBase;
     }
 }
