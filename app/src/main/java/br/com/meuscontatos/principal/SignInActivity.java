@@ -15,6 +15,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -34,6 +35,7 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
 
     private EditText et_login;
     private EditText et_senha;
+    private SignInButton signInButton;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private CallbackManager callbackManager;
@@ -45,8 +47,9 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signin_activity);
 
-        et_login  = (EditText) findViewById(R.id.et_login);
-        et_senha  = (EditText) findViewById(R.id.et_senha);
+        et_login      = (EditText) findViewById(R.id.et_login);
+        et_senha      = (EditText) findViewById(R.id.et_senha);
+        signInButton  = (SignInButton) findViewById(R.id.sign_in_button);
 
         //Autenticar pelo google
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -60,13 +63,36 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
                 .build();
 
         mAuth = FirebaseAuth.getInstance();
-        mAuthListener = getFirebaseAuthResultHandler();
+        //mAuthListener = getFirebaseAuthResultHandler();
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    callMainActivity();
+                } else {
+                    // User is signed out
+                    //Log.d(TAG, "onAuthStateChanged:signed_out");
+                }
+                // ...
+            }
+        };
+
+        signInButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+                startActivityForResult(signInIntent, RC_SIGN_IN_GOOGLE);
+            }
+        });
     }
 
-    public void signIn(View view) {
-        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-        startActivityForResult(signInIntent, RC_SIGN_IN_GOOGLE);
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
     }
+
 
     private FirebaseAuth.AuthStateListener getFirebaseAuthResultHandler(){
         FirebaseAuth.AuthStateListener callback = new FirebaseAuth.AuthStateListener() {

@@ -78,7 +78,7 @@
         android:layout_marginTop="20dp"
         android:clickable="true"
         android:enabled="true"
-        android:onClick="signIn"
+        android:onClick="autenticar"
         android:text="@string/label_entrar"
         android:layout_alignParentRight="true"
         android:layout_alignParentLeft="true" />
@@ -94,7 +94,8 @@
         android:layout_alignEnd="@+id/entrar"
         android:layout_alignLeft="@+id/entrar"
         android:layout_alignStart="@+id/entrar"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp"
+        android:onClick="signIn"/>
 
     <Button
         android:id="@+id/registrar"
