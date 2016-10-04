@@ -30,6 +30,7 @@ public class SignUpActivity extends Activity {
 
     public void salvar(View view){
         Usuario usuario = new Usuario();
+        usuario.setId(1L);
         usuario.setUsuario(et_email.getText().toString());
         usuario.setSenha(et_senha.getText().toString());
 
@@ -38,9 +39,4 @@ public class SignUpActivity extends Activity {
         realm.insertOrUpdate(usuario);
         realm.commitTransaction();
     }
-
-
-
-
-
 }

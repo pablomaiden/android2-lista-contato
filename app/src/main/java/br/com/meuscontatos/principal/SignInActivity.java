@@ -8,6 +8,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -39,6 +40,7 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
     private EditText et_login;
     private EditText et_senha;
     private SignInButton signInButton;
+    private Button entrar;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private CallbackManager callbackManager;
@@ -54,9 +56,10 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
         Realm realm = Service.getInstace().getRealm(getApplicationContext());
         user = realm.where(Usuario.class).findFirst();
 
-        et_login = (EditText) findViewById(R.id.et_login);
-        et_senha = (EditText) findViewById(R.id.et_senha);
+        et_login     = (EditText)     findViewById(R.id.et_login);
+        et_senha     = (EditText)     findViewById(R.id.et_senha);
         signInButton = (SignInButton) findViewById(R.id.sign_in_button);
+        entrar       = (Button)       findViewById(R.id.entrar);
 
         //Autenticar pelo google
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -75,6 +78,28 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
             public void onClick(View v) {
                 Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
                 startActivityForResult(signInIntent, RC_SIGN_IN_GOOGLE);
+            }
+        });
+
+        entrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAuth.signInWithEmailAndPassword(et_login.getText().toString(), et_senha.getText().toString())
+                        .addOnCompleteListener(SignInActivity.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (!task.isSuccessful()) {
+                                    Toast.makeText(SignInActivity.this,R.string.error_login, Toast.LENGTH_LONG).show();
+                                } else {
+                                    FirebaseUser user = task.getResult().getUser();
+                                    if (user != null) {
+                                        Intent it = new Intent(SignInActivity.this, MainActivity.class);
+                                        startActivity(it);
+                                        finish();
+                                    }
+                                }
+                            }
+                        });
             }
         });
     }
@@ -160,26 +185,6 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
     public void registrar(View view) {
         Intent intent = new Intent(this, SignUpActivity.class);
         startActivity(intent);
-    }
-
-    public void autenticar(View view) {
-        Usuario usuario = new Usuario();
-        Realm realm = Service.getInstace().getRealm(getApplicationContext());
-        Usuario usuario_ = realm.where(Usuario.class).equalTo("usuario", et_login.getText().toString()).equalTo("senha", et_senha.getText().toString()).findFirst();
-
-        if(usuario_==null){
-            AlertDialog builder = new AlertDialog.Builder(this)
-                    .setTitle("Erro")
-                    .setMessage("Usuário ou senha incorretos")
-                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    }).setIcon(android.R.drawable.ic_dialog_alert).create();
-                     builder.show();
-        }else{
-            callMainActivity();
-        }
     }
 
     @Override
