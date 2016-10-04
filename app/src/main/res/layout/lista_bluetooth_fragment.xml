@@ -4,12 +4,6 @@
     android:layout_height="match_parent"
     xmlns:fab="http://schemas.android.com/apk/res-auto">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_lista_bluetooth"
-        android:scrollbars="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
     <com.melnykov.fab.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
@@ -22,5 +16,12 @@
         fab:fab_colorNormal="@color/colorPrimaryDark"
         fab:fab_colorPressed="@color/colorAccent"
         fab:fab_colorRipple="@color/colorAccent" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_lista_bluetooth"
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 
 </FrameLayout>

@@ -59,14 +59,15 @@
         </activity>
 
         <activity
-            android:name=".activity.ListaDispositivosActivity"
-            android:label="Dispositivos Pareados"
-            android:theme="@android:style/Theme.Dialog">
-        </activity>
-
-        <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat">
+        </activity>
+
+
+        <activity android:name=".activity.BluetoothDashboardActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.MainActivity" />
         </activity>
 
         <meta-data
