@@ -88,12 +88,17 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
                    // user.saveDB();
                // }
 
-                //callMainActivity();
+                callMainActivity();
             }
         };
         return( callback );
     }
 
+    private void callMainActivity(){
+        Intent intent = new Intent( this, MainActivity.class );
+        startActivity(intent);
+        finish();
+    }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         //Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
