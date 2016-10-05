@@ -57,11 +57,15 @@ public class MainActivity extends ActionBarActivity {
         tv_nome_usuario_firebase = (TextView) findViewById(R.id.tv_nome_usuario_firebase);
 
         if(user!=null && user.getUrlFotoFireBase()!=null){
+            //Method: Google
             int loader = R.drawable.bubble2;
             String image_url = user.getUrlFotoFireBase();
             ImageLoader imgLoader = new ImageLoader(getApplicationContext());
             imgLoader.DisplayImage(image_url, loader, foto_perfil_autenticacao);
             tv_nome_usuario_firebase.setText(user.getNameUserFireBase());
+
+            //Method: Email e Senha
+            tv_nome_usuario_firebase.setText(user.getUsuario());
         }
 
         tbHead   = (Toolbar) findViewById(R.id.toolbar);

@@ -91,11 +91,21 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
                                 if (!task.isSuccessful()) {
                                     Toast.makeText(SignInActivity.this,R.string.error_login, Toast.LENGTH_LONG).show();
                                 } else {
-                                    FirebaseUser user = task.getResult().getUser();
+                                    FirebaseUser userFirebase = task.getResult().getUser();
                                     if (user != null) {
-                                        Intent it = new Intent(SignInActivity.this, MainActivity.class);
-                                        startActivity(it);
-                                        finish();
+                                        Usuario usuario = new Usuario();
+                                        usuario.setId(1L);
+                                        usuario.setIdUserFireBase(userFirebase.getUid());
+                                        usuario.setNameUserFireBase(userFirebase.getDisplayName());
+                                        usuario.setEmail(userFirebase.getEmail());
+                                        if(userFirebase.getPhotoUrl()!=null){
+                                            usuario.setUrlFotoFireBase(userFirebase.getPhotoUrl().toString());
+                                        }
+                                        Realm realm = Service.getInstace().getRealm(getApplicationContext());
+                                        realm.beginTransaction();
+                                        realm.insertOrUpdate(usuario);
+                                        realm.commitTransaction();
+                                        callMainActivity();
                                     }
                                 }
                             }
@@ -126,8 +136,9 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
                     usuario.setIdUserFireBase(userFirebase.getUid());
                     usuario.setNameUserFireBase(userFirebase.getDisplayName());
                     usuario.setEmail(userFirebase.getEmail());
-                    usuario.setUrlFotoFireBase(userFirebase.getPhotoUrl().toString());
-
+                    if(userFirebase.getPhotoUrl()!=null){
+                       usuario.setUrlFotoFireBase(userFirebase.getPhotoUrl().toString());
+                    }
                     Realm realm = Service.getInstace().getRealm(getApplicationContext());
                     realm.beginTransaction();
                     realm.insertOrUpdate(usuario);

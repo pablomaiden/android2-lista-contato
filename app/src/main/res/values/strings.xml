@@ -25,6 +25,7 @@
     <string name="label_salvar">SALVAR</string>
     <string name="hint_telefone">Telefone</string>
     <string name="id_facebook">932943306832209</string>
+    <string name="auth_failed">Erro ao autenticar</string>
 
     <string name="bluetooth_dashboard">Bluetooth Dashboard</string>
     <string name="ativar_bluetooth">Ativar Bluetooth</string>
