@@ -36,6 +36,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import java.util.Arrays;
+
 import br.com.meuscontatos.principal.activity.MainActivity;
 import br.com.meuscontatos.principal.activity.SignUpActivity;
 import br.com.meuscontatos.principal.domain.Contato;
@@ -75,7 +77,7 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
 
         //Autenticar pelo facebook
         callbackManager = CallbackManager.Factory.create();
-        login_button_facebook.setReadPermissions("email");
+        login_button_facebook.setReadPermissions(Arrays.asList("email","user_status"));
 
         login_button_facebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
