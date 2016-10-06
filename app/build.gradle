@@ -33,7 +33,7 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.1.0'
     //noinspection GradleCompatible
     compile 'com.android.support:support-v4:24.+'
-    compile group: 'com.facebook.android', name: 'facebook-android-sdk', version: '4.15.0'
+    compile 'com.facebook.android:facebook-android-sdk:4.14.1'
     compile group: 'org.androidannotations', name: 'androidannotations-api', version: '4.1.0'
     compile 'com.google.firebase:firebase-auth:9.6.1'
     compile 'com.google.android.gms:play-services-auth:9.6.1'
