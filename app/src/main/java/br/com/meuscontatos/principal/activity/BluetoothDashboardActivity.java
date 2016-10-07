@@ -273,6 +273,6 @@ public class BluetoothDashboardActivity extends AppCompatActivity {
 //        dialog = ProgressDialog.show(getActivity(), "Bluetooth", "Buscando dispositivos bluetooth...", false, true);
     }
 
-    
+
 
 }

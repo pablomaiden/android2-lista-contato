@@ -56,7 +56,8 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
     private FirebaseAuth.AuthStateListener mAuthListener;
     private CallbackManager callbackManager;
     private GoogleApiClient mGoogleApiClient;
-    private static final int RC_SIGN_IN_GOOGLE = 7859;
+    private static final int RC_SIGN_IN_GOOGLE   = 7859;
+    private static final int RC_SIGN_IN_FACEBOOK = 64206;
     private Usuario user;
     private AccessToken token;
 
@@ -78,7 +79,6 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
         //Autenticar pelo facebook
         callbackManager = CallbackManager.Factory.create();
         login_button_facebook.setReadPermissions(Arrays.asList("email","user_status"));
-
         login_button_facebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -157,6 +157,7 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
+                        Toast.makeText(SignInActivity.this, "Authentication fACE ok.", Toast.LENGTH_SHORT).show();
                         // App code
                     }
 
@@ -271,6 +272,11 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
             } else {
                 //Falha na autenticação
             }
+        }
+
+        if (requestCode == RC_SIGN_IN_FACEBOOK) {
+            callMainActivity();
+            //callbackManager.onActivityResult(requestCode,resultCode,data);
         }
     }
 

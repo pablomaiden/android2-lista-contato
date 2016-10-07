@@ -33,7 +33,6 @@
     <string name="ficar_visivel">Ficar Visível</string>
     <string name="iniciar_servidor">Iniciar Servidor</string>
     <string name="error_login">Login ou senha invaldos</string>
-
-
+    <string name="api_key_maps">AIzaSyA1Tk14PfJILfvg3pQE034dyA6KLjoXea4</string>
 </resources>
 
