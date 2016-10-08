@@ -63,9 +63,6 @@ public class MainActivity extends ActionBarActivity {
             ImageLoader imgLoader = new ImageLoader(getApplicationContext());
             imgLoader.DisplayImage(image_url, loader, foto_perfil_autenticacao);
             tv_nome_usuario_firebase.setText(user.getNameUserFireBase());
-
-            //Method: Email e Senha
-            tv_nome_usuario_firebase.setText(user.getUsuario());
         }
 
         tbHead   = (Toolbar) findViewById(R.id.toolbar);

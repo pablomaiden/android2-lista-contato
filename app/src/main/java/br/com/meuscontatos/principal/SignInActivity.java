@@ -17,6 +17,9 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
@@ -35,6 +38,9 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Arrays;
 
@@ -60,47 +66,22 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
     private static final int RC_SIGN_IN_FACEBOOK = 64206;
     private Usuario user;
     private AccessToken token;
+    public static CallbackManager callbackmanager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.signin_activity);
-
         Realm realm = Service.getInstace().getRealm(getApplicationContext());
         user = realm.where(Usuario.class).findFirst();
 
         et_login              = (EditText)     findViewById(R.id.et_login);
         et_senha              = (EditText)     findViewById(R.id.et_senha);
         signInButton          = (SignInButton) findViewById(R.id.sign_in_button);
-        login_button_facebook = (LoginButton) findViewById(R.id.login_button_facebook);
         entrar                = (Button)       findViewById(R.id.entrar);
 
         //Autenticar pelo facebook
         callbackManager = CallbackManager.Factory.create();
-        login_button_facebook.setReadPermissions(Arrays.asList("email","user_status"));
-        login_button_facebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                Toast.makeText(SignInActivity.this, "Sucesso.", Toast.LENGTH_SHORT).show();
-                //Log.d(TAG, "facebook:onSuccess:" + loginResult);
-                handleFacebookAccessToken(loginResult.getAccessToken());
-            }
-
-            @Override
-            public void onCancel() {
-                //Log.d(TAG, "facebook:onCancel");
-                // ...
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-                Toast.makeText(SignInActivity.this, "Erro.", Toast.LENGTH_SHORT).show();
-                //Log.d(TAG, "facebook:onError", error);
-                // ...
-            }
-        });
-
         //Autenticar pelo google
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -114,6 +95,7 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
 
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = getFirebaseAuthResultHandler();
+
         signInButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
@@ -153,6 +135,15 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
             }
         });
 
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        Button btnFacebookLogin = (Button) findViewById(R.id.btnFacebookLogin);
+        btnFacebookLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onFacebookLogin();
+            }
+        });
+
         LoginManager.getInstance().registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {
                     @Override
@@ -172,11 +163,87 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
                     }
                 });
 
+        verifyLogged();
+
+        AccessToken token = AccessToken.getCurrentAccessToken();
+
+        if(token!=null){
+            Log.d("FACEBOOK", "Você esta logado");
+            callMainActivity();
+        }
+    }
+
+    private void verifyLogged(){
+        if( mAuth.getCurrentUser() != null ){
+            callMainActivity();
+        }
+        else{
+            mAuth.addAuthStateListener( mAuthListener );
+        }
+    }
+
+
+    private void onFacebookLogin() {
+        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("email", "user_photos", "user_friends", "public_profile"));
+        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Log.d("FACEBOOK", "Facebook Succesfully Login!");
+
+                String token = loginResult.getAccessToken().getToken();
+                Log.d("FACEBOOK", "TOKEN: " + token);
+
+                GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(JSONObject json, GraphResponse response) {
+                        if (response.getError() != null) {
+                            Log.d("FACEBOOK", response.getError().getErrorMessage());
+                        } else {
+                            try {
+                                String jsonresult = String.valueOf(json);
+                                Log.d("FACEBOOK", "Facebook Data: " + jsonresult);
+                                Usuario usuario = new Usuario();
+                                usuario.setId(1L);
+                                usuario.setIdUserFireBase(json.getString("id"));
+                                usuario.setNameUserFireBase(json.getString("name"));
+                                usuario.setEmail(json.getString("email"));
+
+                                JSONObject jsonPicture = json.getJSONObject("picture");
+                                JSONObject jsonUrl     = jsonPicture.getJSONObject("data");
+                                usuario.setUrlFotoFireBase(jsonUrl.getString("url"));
+
+                                Realm realm = Service.getInstace().getRealm(getApplicationContext());
+                                realm.beginTransaction();
+                                realm.insertOrUpdate(usuario);
+                                realm.commitTransaction();
+                                callMainActivity();
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                });
+
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "email,id,name,friends,last_name,first_name,picture");
+                request.setParameters(parameters);
+                request.executeAsync();
+            }
+
+            @Override
+            public void onCancel() {
+                Log.d("FACEBOOK", "Facebook Login Canceled!");
+            }
+
+            @Override
+            public void onError(FacebookException e) {
+                Log.d("FACEBOOK", e.toString());
+            }
+        });
     }
 
     private void handleFacebookAccessToken(AccessToken token) {
-        //Log.d(TAG, "handleFacebookAccessToken:" + token);
-
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -275,14 +342,30 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
         }
 
         if (requestCode == RC_SIGN_IN_FACEBOOK) {
-            callMainActivity();
-            //callbackManager.onActivityResult(requestCode,resultCode,data);
+            //callMainActivity();
+            callbackManager.onActivityResult(requestCode,resultCode,data);
         }
     }
+
+
 
     public void registrar(View view) {
         Intent intent = new Intent(this, SignUpActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        AppEventsLogger.activateApp(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        AppEventsLogger.deactivateApp(this);
     }
 
     @Override

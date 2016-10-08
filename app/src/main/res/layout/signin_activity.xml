@@ -98,23 +98,27 @@
         android:layout_marginTop="20dp"
         android:onClick="signIn"/>
 
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/login_button_facebook"
-        android:layout_width="110sp"
-        android:layout_height="48sp"
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Fazer login pelo Facebook"
+        android:textColor="@color/white"
+        android:id="@+id/btnFacebookLogin"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/com_facebook_blue"
         android:layout_marginTop="20dp"
         android:layout_below="@+id/sign_in_button"
         android:layout_alignRight="@+id/entrar"
         android:layout_alignEnd="@+id/entrar"
         android:layout_alignLeft="@+id/entrar"
-        android:layout_alignStart="@+id/entrar" />
+        android:layout_alignStart="@+id/entrar"/>
 
     <Button
         android:id="@+id/registrar"
         style="@style/Button"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/login_button_facebook"
+        android:layout_below="@+id/btnFacebookLogin"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
