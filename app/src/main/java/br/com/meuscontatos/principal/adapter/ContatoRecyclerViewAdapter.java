@@ -14,6 +14,7 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import java.util.List;
 import br.com.meuscontatos.principal.R;
+import br.com.meuscontatos.principal.activity.ChatActivity;
 import br.com.meuscontatos.principal.activity.EditarContatosActivity;
 import br.com.meuscontatos.principal.domain.Contato;
 import br.com.meuscontatos.principal.service.Service;
@@ -65,15 +66,6 @@ public class ContatoRecyclerViewAdapter extends RecyclerView.Adapter<ContatoRecy
         viewHolder.email.setText(contatos.get(position).getEmail());
         viewHolder.telefone.setText(contatos.get(position).getTelefone());
         YoYo.with(Techniques.FadeIn).duration(800).playOn(viewHolder.itemView);
-
-        viewHolder.v.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(),EditarContatosActivity.class);
-                intent.putExtra("idContato",getIdContato(position));
-                v.getContext().startActivity(intent);
-            }
-        });
     }
 
     @Override

@@ -14,6 +14,7 @@ import com.melnykov.fab.FloatingActionButton;
 
 import br.com.meuscontatos.principal.R;
 import br.com.meuscontatos.principal.activity.CadastrarContatosActivity;
+import br.com.meuscontatos.principal.activity.ChatActivity;
 import br.com.meuscontatos.principal.activity.EditarContatosActivity;
 import br.com.meuscontatos.principal.adapter.ContatoRecyclerViewAdapter;
 import br.com.meuscontatos.principal.domain.Contato;
@@ -77,7 +78,7 @@ public class ListaContatosFragment extends Fragment implements RecyclerViewOnCli
 
     @Override
     public void onClickListener(View view, int position) {
-        Intent intent = new Intent(view.getContext(),EditarContatosActivity.class);
+        Intent intent = new Intent(view.getContext(),ChatActivity.class);
         intent.putExtra("idContato",contatosAdapter.getIdContato(position));
         startActivityForResult(intent,EDIT_REQUEST_FOR_RESULT);
         contatosAdapter.notifyDataSetChanged();
