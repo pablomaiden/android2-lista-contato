@@ -5,6 +5,28 @@
     android:background="@color/white"
     android:fitsSystemWindows="true">
 
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="Name"
+        android:ems="10"
+        android:id="@+id/et_send"
+        android:layout_gravity="bottom"/>
 
+    <Button
+        android:text="Send"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/btn_send"
+        android:layout_gravity="bottom|right"
+        android:background="@drawable/send_24"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="444dp"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@+id/et_chat"/>
 
 </FrameLayout>
