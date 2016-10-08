@@ -22,11 +22,20 @@
         android:layout_gravity="bottom|right"
         android:background="@drawable/send_24"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="470dp"
-        android:inputType="textMultiLine"
-        android:ems="10"
-        android:id="@+id/et_chat"/>
+    <ScrollView
+        android:id="@+id/ScrollView01"
+        android:layout_height="500sp"
+        android:layout_width="fill_parent"
+        android:background="@color/accent">
+
+        <TextView
+            android:id="@+id/et_chat"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text=" "/>
+
+    </ScrollView>
+
+
 
 </FrameLayout>

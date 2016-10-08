@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -36,12 +37,14 @@ public class ChatActivity extends AppCompatActivity {
         et_send  = (EditText) findViewById(R.id.et_send);
         et_chat  = (TextView) findViewById(R.id.et_chat);
         btn_send = (Button)   findViewById(R.id.btn_send);
-
+        btn_send.setMovementMethod(new ScrollingMovementMethod());
         btn_send.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 et_chat.setText(et_chat.getText()+"\n"+et_send.getText()+"\n");
             }
         });
+
+
 
     }
 
