@@ -1,10 +1,9 @@
 package br.com.meuscontatos.principal;
 
-import android.content.DialogInterface;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -22,7 +21,6 @@ import com.facebook.GraphResponse;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -34,19 +32,14 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.Arrays;
-
 import br.com.meuscontatos.principal.activity.MainActivity;
 import br.com.meuscontatos.principal.activity.SignUpActivity;
-import br.com.meuscontatos.principal.domain.Contato;
 import br.com.meuscontatos.principal.domain.Usuario;
 import br.com.meuscontatos.principal.service.Service;
 import io.realm.Realm;
@@ -56,7 +49,6 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
     private EditText et_login;
     private EditText et_senha;
     private SignInButton signInButton;
-    private LoginButton login_button_facebook;
     private Button entrar;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -65,7 +57,6 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
     private static final int RC_SIGN_IN_GOOGLE   = 7859;
     private static final int RC_SIGN_IN_FACEBOOK = 64206;
     private Usuario user;
-    private AccessToken token;
     public static CallbackManager callbackmanager;
 
     @Override
@@ -143,34 +134,7 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
                 onFacebookLogin();
             }
         });
-
-        LoginManager.getInstance().registerCallback(callbackManager,
-                new FacebookCallback<LoginResult>() {
-                    @Override
-                    public void onSuccess(LoginResult loginResult) {
-                        Toast.makeText(SignInActivity.this, "Authentication fACE ok.", Toast.LENGTH_SHORT).show();
-                        // App code
-                    }
-
-                    @Override
-                    public void onCancel() {
-                        // App code
-                    }
-
-                    @Override
-                    public void onError(FacebookException exception) {
-                        // App code
-                    }
-                });
-
         verifyLogged();
-
-        AccessToken token = AccessToken.getCurrentAccessToken();
-
-        if(token!=null){
-            Log.d("FACEBOOK", "Você esta logado");
-            callMainActivity();
-        }
     }
 
     private void verifyLogged(){
@@ -180,8 +144,12 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
         else{
             mAuth.addAuthStateListener( mAuthListener );
         }
+        AccessToken token = AccessToken.getCurrentAccessToken();
+        if(token!=null){
+            Log.d("FACEBOOK", "Você esta logado");
+            callMainActivity();
+        }
     }
-
 
     private void onFacebookLogin() {
         LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("email", "user_photos", "user_friends", "public_profile"));
@@ -241,32 +209,6 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
                 Log.d("FACEBOOK", e.toString());
             }
         });
-    }
-
-    private void handleFacebookAccessToken(AccessToken token) {
-        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                           Toast.makeText(SignInActivity.this, "Authentication ok.", Toast.LENGTH_SHORT).show();
-                        //Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
-
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
-                        if (!task.isSuccessful()) {
-                            //Log.w(TAG, "signInWithCredential", task.getException());
-                            Toast.makeText(SignInActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
     }
 
     private FirebaseAuth.AuthStateListener getFirebaseAuthResultHandler() {
@@ -347,8 +289,6 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
         }
     }
 
-
-
     public void registrar(View view) {
         Intent intent = new Intent(this, SignUpActivity.class);
         startActivity(intent);
@@ -357,15 +297,24 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
     @Override
     protected void onResume() {
         super.onResume();
-
         AppEventsLogger.activateApp(this);
+        verifyLogged();
+        Log.d("FACEBOOK", "RESUME");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-
         AppEventsLogger.deactivateApp(this);
+        verifyLogged();
+        Log.d("FACEBOOK", "PAUSE");
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        verifyLogged();
+        Log.d("FACEBOOK", "START");
     }
 
     @Override
