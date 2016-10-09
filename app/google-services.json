@@ -1,27 +1,35 @@
 {
   "project_info": {
-    "project_number": "528795683125",
-    "firebase_url": "https://iesb-contatos.firebaseio.com",
-    "project_id": "iesb-contatos",
-    "storage_bucket": "iesb-contatos.appspot.com"
+    "project_number": "220560825483",
+    "firebase_url": "https://meus-contatos-2709e.firebaseio.com",
+    "project_id": "meus-contatos-2709e",
+    "storage_bucket": "meus-contatos-2709e.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:528795683125:android:9ad9942848e40d9e",
+        "mobilesdk_app_id": "1:220560825483:android:9ad9942848e40d9e",
         "android_client_info": {
           "package_name": "br.com.meuscontatos.principal"
         }
       },
       "oauth_client": [
         {
-          "client_id": "528795683125-lp12rulafq5t7q2lep2hk8rmt920qk33.apps.googleusercontent.com",
+          "client_id": "220560825483-pmhqi32hkr7rdvlij4kvp4klupqipbb2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.meuscontatos.principal",
+            "certificate_hash": "6EBF330D1EE70412B31FD2C7FB3F8B7A7E54CB30"
+          }
+        },
+        {
+          "client_id": "220560825483-fdp6hpcmfqn8kh1hac50b38sapgc72na.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBhaGlBZJp1zCZ1a4w7Tu7DdXmLfTgd8ZE"
+          "current_key": "AIzaSyCKeGjA4GJao8MflSynBiU78CXYbT8yVSE"
         }
       ],
       "services": {
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "220560825483-fdp6hpcmfqn8kh1hac50b38sapgc72na.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

@@ -2,6 +2,7 @@ package br.com.meuscontatos.principal;
 
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +22,9 @@ import com.facebook.GraphResponse;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -66,10 +70,10 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
         Realm realm = Service.getInstace().getRealm(getApplicationContext());
         user = realm.where(Usuario.class).findFirst();
 
-        et_login              = (EditText)     findViewById(R.id.et_login);
-        et_senha              = (EditText)     findViewById(R.id.et_senha);
-        signInButton          = (SignInButton) findViewById(R.id.sign_in_button);
-        entrar                = (Button)       findViewById(R.id.entrar);
+        et_login = (EditText) findViewById(R.id.et_login);
+        et_senha = (EditText) findViewById(R.id.et_senha);
+        signInButton = (SignInButton) findViewById(R.id.sign_in_button);
+        entrar = (Button) findViewById(R.id.entrar);
 
         //Autenticar pelo facebook
         callbackManager = CallbackManager.Factory.create();
@@ -79,10 +83,12 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
                 .requestEmail()
                 .build();
 
+        // ATTENTION: This "addApi(AppIndex.API)"was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
+                .addApi(AppIndex.API).build();
 
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = getFirebaseAuthResultHandler();
@@ -102,7 +108,7 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (!task.isSuccessful()) {
-                                    Toast.makeText(SignInActivity.this,R.string.error_login, Toast.LENGTH_LONG).show();
+                                    Toast.makeText(SignInActivity.this, R.string.error_login, Toast.LENGTH_LONG).show();
                                 } else {
                                     FirebaseUser userFirebase = task.getResult().getUser();
                                     if (user != null) {
@@ -111,7 +117,7 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
                                         usuario.setIdUserFireBase(userFirebase.getUid());
                                         usuario.setNameUserFireBase(userFirebase.getDisplayName());
                                         usuario.setEmail(userFirebase.getEmail());
-                                        if(userFirebase.getPhotoUrl()!=null){
+                                        if (userFirebase.getPhotoUrl() != null) {
                                             usuario.setUrlFotoFireBase(userFirebase.getPhotoUrl().toString());
                                         }
                                         Realm realm = Service.getInstace().getRealm(getApplicationContext());
@@ -312,13 +318,44 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
 
     @Override
     public void onStart() {
-        super.onStart();
+        super.onStart();// ATTENTION: This was auto-generated to implement the App Indexing API.
+// See https://g.co/AppIndexing/AndroidStudio for more information.
+        mGoogleApiClient.connect();
         verifyLogged();
         Log.d("FACEBOOK", "START");
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        AppIndex.AppIndexApi.start(mGoogleApiClient, getIndexApiAction());
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+    }
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    public Action getIndexApiAction() {
+        Thing object = new Thing.Builder()
+                .setName("SignIn Page") // TODO: Define a title for the content shown.
+                // TODO: Make sure this auto-generated URL is correct.
+                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+                .build();
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(object)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        AppIndex.AppIndexApi.end(mGoogleApiClient, getIndexApiAction());
+        mGoogleApiClient.disconnect();
     }
 }
