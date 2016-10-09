@@ -2,8 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/bluetooth"
+        android:title="Bluetooth"
+        android:icon="@drawable/bluetooth"
+        app:showAsAction="ifRoom"/>
+
+    <item
         android:id="@+id/salvar"
-        android:title="Cadastrar medicamentos"
+        android:title="Anexar Arquivos"
         android:icon="@drawable/clip_24"
         app:showAsAction="ifRoom"/>
 </menu>

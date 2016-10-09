@@ -41,7 +41,6 @@ public class ChatActivity extends AppCompatActivity {
 
         et_send      = (EditText)   findViewById(R.id.et_send);
         et_chat      = (TextView)   findViewById(R.id.et_chat);
-        tv_hora      = (TextView)   findViewById(R.id.tv_hora);
         btn_send     = (ImageView)  findViewById(R.id.btn_send);
         sc_view_chat = (ScrollView) findViewById(R.id.sc_view_chat);
 
@@ -49,6 +48,7 @@ public class ChatActivity extends AppCompatActivity {
         btn_send.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 et_chat.setText(et_chat.getText()+"\n"+et_send.getText()+"\n"+Util.getHora());
+                et_send.setText("");
                 sc_view_chat.fullScroll(View.FOCUS_DOWN);
             }
         });
