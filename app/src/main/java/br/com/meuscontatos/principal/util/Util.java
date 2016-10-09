@@ -2,11 +2,21 @@ package br.com.meuscontatos.principal.util;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by pablo.guimaraes on 31/08/2016.
  */
 public class Util {
+
+    public static String getHora(){
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        Date hora = Calendar.getInstance().getTime();
+        String dataFormatada = sdf.format(hora);
+        return dataFormatada;
+    }
 
     public static void CopyStream(InputStream is, OutputStream os)
     {
