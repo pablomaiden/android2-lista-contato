@@ -87,7 +87,7 @@ public class BluetoothDashboardActivity extends AppCompatActivity {
 
     }
 
-        protected void setupBluetooth(){
+    protected void setupBluetooth(){
         this.btfAdapter = BluetoothAdapter.getDefaultAdapter();
         if(this.btfAdapter == null){
             Toast.makeText(getApplicationContext(), "Seu dispositivo não possui suporte a Bluetooth", Toast.LENGTH_LONG).show();
@@ -154,7 +154,7 @@ public class BluetoothDashboardActivity extends AppCompatActivity {
 
 
     //Receiver para receber os broadcasts do Bluetooth
-    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+    public final BroadcastReceiver mReceiver = new BroadcastReceiver() {
 
         //Quantidade de dispositivos encontrados
         private int count;
@@ -244,6 +244,10 @@ public class BluetoothDashboardActivity extends AppCompatActivity {
 
     private void updateDevicesList() {
         //Criando o array com o nome de cada device
+        //Iniciando a lista com os dispositivos previamente pareados
+
+        bluetoothDevices = btfAdapter.getBondedDevices();
+
         List<String> listaBluetooth = new ArrayList<>();
         for(BluetoothDevice device : bluetoothDevices){
             //Neste momento a lista contem ainda apenas devices pareados, o que resultará sempre em true
