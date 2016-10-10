@@ -14,6 +14,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.system.ErrnoException;
 import android.view.Menu;
@@ -29,6 +31,9 @@ import java.util.ArrayList;
 import java.util.List;
 import br.com.meuscontatos.principal.R;
 
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+
 public class CortarFotoActivity extends ActionBarActivity {
 
     private CropImageView mCropImageView;
@@ -41,6 +46,20 @@ public class CortarFotoActivity extends ActionBarActivity {
         setContentView(R.layout.cropp_image_activity);
         mCropImageView = (CropImageView)  findViewById(R.id.CropImageView);
         startActivityForResult(getPickImageChooserIntent(),200);
+
+        if (ContextCompat.checkSelfPermission(this,WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, WRITE_EXTERNAL_STORAGE)) {
+            } else {
+                ActivityCompat.requestPermissions(this,new String[]{WRITE_EXTERNAL_STORAGE},0);
+            }
+        }
+
+        if (ContextCompat.checkSelfPermission(this,READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, READ_EXTERNAL_STORAGE)) {
+            } else {
+                ActivityCompat.requestPermissions(this,new String[]{READ_EXTERNAL_STORAGE},0);
+            }
+        }
     }
 
     public void onCropImageClick(View view) {
@@ -76,12 +95,12 @@ public class CortarFotoActivity extends ActionBarActivity {
             // but we don't know if we need to for the URI so the simplest is to try open the stream and see if we get error.
             boolean requirePermissions = false;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
-                    checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED &&
+                    checkSelfPermission(READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED &&
                     isUriRequiresPermissions(imageUri)) {
                 // request permissions and handle the result in onRequestPermissionsResult()
                 requirePermissions = true;
                 mCropImageUri = imageUri;
-                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
+                requestPermissions(new String[]{READ_EXTERNAL_STORAGE}, 0);
             }
 
             if (!requirePermissions) {
