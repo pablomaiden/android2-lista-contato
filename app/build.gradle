@@ -3,6 +3,16 @@ apply plugin: 'realm-android'
 apply plugin: 'com.getkeepsafe.dexcount'
 
 android {
+
+    signingConfigs {
+        config {
+            keyAlias 'meus_contatos_key'
+            keyPassword '123456'
+            storeFile file('/Volumes/HDD1TB/dev/android/keys/mystore.keystore')
+            storePassword '123456'
+        }
+    }
+
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
 
@@ -12,12 +22,19 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        signingConfig signingConfigs.config
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
+        debug {
+            signingConfig signingConfigs.config
+        }
+    }
+    productFlavors {
     }
 }
 
@@ -35,13 +52,23 @@ dependencies {
     compile 'com.android.support:support-v4:24.+'
     compile 'com.facebook.android:facebook-android-sdk:4.14.1'
     compile group: 'org.androidannotations', name: 'androidannotations-api', version: '4.1.0'
+    compile 'com.google.firebase:firebase-core:9.6.1'
+    compile 'com.google.firebase:firebase-database:9.6.1'
+    compile 'com.google.firebase:firebase-storage:9.6.1'
+    compile 'com.google.firebase:firebase-crash:9.6.1'
+    compile 'com.google.firebase:firebase-messaging:9.6.1'
+    compile 'com.google.firebase:firebase-config:9.6.1'
+    compile 'com.google.firebase:firebase-invites:9.6.1'
+    compile 'com.google.android.gms:play-services-appindexing:9.6.1'
     compile 'com.google.firebase:firebase-auth:9.6.1'
-    compile 'com.google.android.gms:play-services-auth:9.6.1'
+    compile 'com.google.firebase:firebase-ads:9.6.1'
+    compile 'com.google.android.gms:play-services:9.6.1'
     compile('com.mikepenz:materialdrawer:5.3.1@aar') {
         transitive = true
     }
+
+    apply plugin: 'com.google.gms.google-services'
 }
-apply plugin: 'com.google.gms.google-services'
 
 
 
