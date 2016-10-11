@@ -78,7 +78,7 @@ public class ListaContatosFragment extends Fragment implements RecyclerViewOnCli
 
     @Override
     public void onClickListener(View view, int position) {
-        Intent intent = new Intent(view.getContext(),ChatActivity.class);
+        Intent intent = new Intent(view.getContext(),EditarContatosActivity.class);
         intent.putExtra("idContato",contatosAdapter.getIdContato(position));
         startActivityForResult(intent,EDIT_REQUEST_FOR_RESULT);
         contatosAdapter.notifyDataSetChanged();
