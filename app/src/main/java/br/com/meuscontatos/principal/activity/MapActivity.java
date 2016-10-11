@@ -1,9 +1,15 @@
 package br.com.meuscontatos.principal.activity;
 
 import android.app.Dialog;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
@@ -62,21 +68,60 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        LatLng cali = new LatLng(3.4383, -76.5161);
-        googleMap.addMarker(new MarkerOptions()
-                .position(cali)
-                .title("Cali la Sucursal del cielo"));
+        Toast.makeText(this, "onMapReady()", Toast.LENGTH_LONG);
+        mMap = googleMap;
+        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, MAP_PERMISSION_ACCESS_COURSE_LOCATION);
 
-        CameraPosition cameraPosition = CameraPosition.builder()
-                .target(cali)
-                .zoom(10)
-                .build();
+        } else {
 
-        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 500, 1, new LocationListener() {
+
+                       @Override
+                        public void onLocationChanged(Location location) {
+
+                            if (yourMarker != null) {
+                                yourMarker.remove();
+                            }
+                            LatLng newPosition = new LatLng(location.getLatitude(), location.getLongitude());
+                            MarkerOptions newMarkerOptions = new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title("Você");
+                            yourMarker = mMap.addMarker(newMarkerOptions);
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(newPosition, 30));
+
+
+                        }
+
+
+                        @Override
+                        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+                        }
+
+                        @Override
+                        public void onProviderEnabled(String provider) {
+
+                        }
+
+                        @Override
+                        public void onProviderDisabled(String provider) {
+
+                        }
+
+
+            });
+
+        }
+
+        LatLng iesbSul = new LatLng(-15.7571194, -47.8788442);
+        mMap.addMarker(new MarkerOptions().position(iesbSul).title("IESB Sul"));
+
     }
 
 
+
     public boolean googleServicesAvailable() {
+        Toast.makeText(this, "googleServicesAvailable()", Toast.LENGTH_LONG);
         GoogleApiAvailability api = GoogleApiAvailability.getInstance();
         int isAvailable = api.isGooglePlayServicesAvailable(this);
         if(isAvailable == ConnectionResult.SUCCESS){
