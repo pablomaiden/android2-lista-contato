@@ -9,10 +9,11 @@ import android.support.v4.app.FragmentPagerAdapter;
 import br.com.meuscontatos.principal.fragment.ListaBluetoothFragment;
 import br.com.meuscontatos.principal.fragment.ListaContatosFragment;
 import br.com.meuscontatos.principal.fragment.ListaConversasFragment;
+import br.com.meuscontatos.principal.fragment.MapaFragment;
 
 public class TabsAdapter extends FragmentPagerAdapter {
     private Context mContext;
-    private String[] titles = {"CONVERSAS", "CONTATOS", "BLUETOOTH"};
+    private String[] titles = {"CONVERSAS", "CONTATOS", "BLUETOOTH", "MAPA"};
     //private int[] icons = new int[]{R.drawable.account, R.drawable.almoco_, R.drawable.bell_ring, R.drawable.account, R.drawable.account};
     //private int heightIcon;
 
@@ -30,6 +31,7 @@ public class TabsAdapter extends FragmentPagerAdapter {
             case 0: frag = new ListaConversasFragment(); break;
             case 1: frag = new ListaContatosFragment(); break;
             case 2: frag = new ListaBluetoothFragment(); break;
+            case 3: frag = new MapaFragment(); break;
 
         }
 
