@@ -23,7 +23,6 @@ import java.io.IOException;
 import java.util.UUID;
 
 import br.com.meuscontatos.principal.R;
-import br.com.meuscontatos.principal.domain.Contato;
 import br.com.meuscontatos.principal.domain.Conversa;
 import br.com.meuscontatos.principal.service.Service;
 import br.com.meuscontatos.principal.util.Util;

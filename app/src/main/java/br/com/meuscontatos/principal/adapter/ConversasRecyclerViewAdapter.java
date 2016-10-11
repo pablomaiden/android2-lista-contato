@@ -18,32 +18,41 @@ import com.daimajia.androidanimations.library.YoYo;
 import java.util.List;
 
 import br.com.meuscontatos.principal.R;
-import br.com.meuscontatos.principal.activity.EditarContatosActivity;
-import br.com.meuscontatos.principal.domain.Contato;
+import br.com.meuscontatos.principal.activity.ChatActivity;
+import br.com.meuscontatos.principal.domain.Conversa;
+import br.com.meuscontatos.principal.interfaces.*;
 import br.com.meuscontatos.principal.service.Service;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.realm.Realm;
 
 public class ConversasRecyclerViewAdapter extends RecyclerView.Adapter<ConversasRecyclerViewAdapter.ViewHolder>{
 
-    private List<Contato> contatos;
+    private List<Conversa> conversas;
     private LayoutInflater layoutInflater;
     private Context context;
+    static final int CHAT_REQUEST_FOR_RESULT = 36;
+    private RecyclerViewOnClickListenerHack mRecyclerViewOnClickListenerHack;
 
-    public ConversasRecyclerViewAdapter(Context context, List<Contato> contatos) {
+    public ConversasRecyclerViewAdapter(Context context, List<Conversa> conversas) {
         this.context=context;
-        this.contatos=contatos;
+        this.conversas=conversas;
         this.layoutInflater= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
     }
 
-    public Long getIdContato(int position){
-        Contato contato =  contatos.get(position);
-        return contato.getId();
+    public Long getIdConversa(int position){
+        Conversa conversa =  conversas.get(position);
+        return conversa.getId();
     }
 
-    public String getNomeContato(int position){
-        Contato contato =  contatos.get(position);
-        return contato.getNome();
+    public String getNomeConversa(int position){
+        Conversa conversa =  conversas.get(position);
+        return conversa.getNomeDest();
+    }
+
+
+    public void setRecyclerViewOnClickListenerHack(RecyclerViewOnClickListenerHack r){
+        mRecyclerViewOnClickListenerHack = r;
     }
 
     @Override
@@ -55,25 +64,28 @@ public class ConversasRecyclerViewAdapter extends RecyclerView.Adapter<Conversas
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder,final int position) {
-        if(contatos.get(position).getUrlFoto()!=null && !contatos.get(position).getUrlFoto().isEmpty()){
-           viewHolder.foto.setImageURI(Uri.parse(contatos.get(position).getUrlFoto()));
+        if(conversas.get(position).getUrlFotoDest()!=null && !conversas.get(position).getUrlFotoDest().isEmpty()){
+           viewHolder.urlFotoDest.setImageURI(Uri.parse(conversas.get(position).getUrlFotoDest()));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                viewHolder.foto.setBackground(null);
+                viewHolder.urlFotoDest.setBackground(null);
             }
         }else {
-           viewHolder.foto.setImageResource(R.drawable.sem_foto);
+           viewHolder.urlFotoDest.setImageResource(R.drawable.sem_foto);
         }
-        viewHolder.nome.setText(contatos.get(position).getNome());
-        viewHolder.email.setText(contatos.get(position).getEmail());
-        viewHolder.telefone.setText(contatos.get(position).getTelefone());
+        viewHolder.nomeDest.setText(conversas.get(position).getNomeDest());
+        viewHolder.lastMsg.setText(conversas.get(position).getLastMsg());
         YoYo.with(Techniques.FadeIn).duration(800).playOn(viewHolder.itemView);
 
         viewHolder.v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(),EditarContatosActivity.class);
-                intent.putExtra("idContato",getIdContato(position));
+
+
+                Intent intent = new Intent(v.getContext(), ChatActivity.class);
+                intent.putExtra("idConversa", getIdConversa(position));
+                //v.getContext().startActivityForResult(intent,CHAT_REQUEST_FOR_RESULT);
                 v.getContext().startActivity(intent);
+                notifyDataSetChanged();
             }
         });
 
@@ -83,12 +95,12 @@ public class ConversasRecyclerViewAdapter extends RecyclerView.Adapter<Conversas
 
                 AlertDialog builder = new AlertDialog.Builder(v.getContext())
                         .setTitle("Exclusão")
-                        .setMessage("Deseja excluir "+getNomeContato(position)+" ? ")
+                        .setMessage("Deseja excluir a conversa "+getNomeConversa(position)+" ? ")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 Realm realm = Service.getInstace().getRealm(context);
                                 realm.beginTransaction();
-                                realm.where(Contato.class).equalTo("id",getIdContato(position)).findFirst().deleteFromRealm();
+                                realm.where(Conversa.class).equalTo("id",getIdConversa(position)).findFirst().deleteFromRealm();
                                 realm.commitTransaction();
                                 notifyItemRemoved(position);
                             }
@@ -105,23 +117,21 @@ public class ConversasRecyclerViewAdapter extends RecyclerView.Adapter<Conversas
 
     @Override
     public int getItemCount() {
-        return contatos.size();
+        return conversas.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public View v;
-        public CircleImageView foto;
-        public TextView nome;
-        public TextView email;
-        public TextView telefone;
+        public CircleImageView urlFotoDest;
+        public TextView nomeDest;
+        public TextView lastMsg;
 
         public ViewHolder(View view){
             super(view);
             v=view;
-            foto     = (CircleImageView) itemView.findViewById(R.id.foto);
-            nome     = (TextView)  itemView.findViewById(R.id.nome);
-            email    = (TextView)  itemView.findViewById(R.id.email);
-            telefone = (TextView)  itemView.findViewById(R.id.telefone);
+            urlFotoDest     = (CircleImageView) itemView.findViewById(R.id.urlFotoDest);
+            nomeDest     = (TextView)  itemView.findViewById(R.id.nomeDest);
+            lastMsg    = (TextView)  itemView.findViewById(R.id.lastMsg);
         }
     }
 }
