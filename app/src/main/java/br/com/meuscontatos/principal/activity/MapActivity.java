@@ -1,15 +1,20 @@
 package br.com.meuscontatos.principal.activity;
 
+import android.app.Dialog;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import br.com.meuscontatos.principal.R;
@@ -23,12 +28,21 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private MapaFragment mapaFragment;
 
+    public static final int MAP_PERMISSION_ACCESS_COURSE_LOCATION = 9999;
+    private GoogleMap mMap;
+    LocationManager locationManager;
+    private Marker yourMarker;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
-        setContentView(R.layout.mapa_tab);
+
+        if(googleServicesAvailable()){
+            Toast.makeText(this, "Carregando...", Toast.LENGTH_LONG).show();
+            setContentView(R.layout.mapa_tab);
+        }
+
 
         mapaFragment = MapaFragment.newInstance();
         getSupportFragmentManager()
@@ -59,6 +73,21 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 .build();
 
         googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+    }
+
+
+    public boolean googleServicesAvailable() {
+        GoogleApiAvailability api = GoogleApiAvailability.getInstance();
+        int isAvailable = api.isGooglePlayServicesAvailable(this);
+        if(isAvailable == ConnectionResult.SUCCESS){
+            return true;
+        } else if(api.isUserResolvableError(isAvailable)){ //Deu erro mas pode ser consertado pelo usuário
+            Dialog dialog = api.getErrorDialog(this, isAvailable, 0);
+            dialog.show();
+        } else {
+            Toast.makeText(this, "Não foi possível se conectar ao Play Services", Toast.LENGTH_LONG).show();
+        }
+            return false;
     }
 }
 
