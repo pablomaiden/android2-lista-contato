@@ -46,7 +46,9 @@ public class ChatActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setShowHideAnimationEnabled(true);
         recuperarConversa();
-        getSupportActionBar().setTitle(conversa.getNomeDest());
+
+        if(conversa!=null)
+           getSupportActionBar().setTitle(conversa.getNomeDest());
 
         et_send      = (EditText)   findViewById(R.id.et_send);
         et_chat      = (TextView)   findViewById(R.id.et_chat);
@@ -64,9 +66,11 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     public void recuperarConversa(){
-        Long idConversa = (Long) getIntent().getExtras().get("idConversa");
-        if(idConversa!=null) {
-           conversa = getConversa(idConversa);
+        if(getIntent().getExtras()!=null){
+            Long idConversa = (Long) getIntent().getExtras().get("idConversa");
+            if(idConversa!=null) {
+                conversa = getConversa(idConversa);
+            }
         }
     }
 
