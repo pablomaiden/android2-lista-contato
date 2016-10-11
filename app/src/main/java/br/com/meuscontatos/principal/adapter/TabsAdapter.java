@@ -12,7 +12,7 @@ import br.com.meuscontatos.principal.fragment.ListaConversasFragment;
 
 public class TabsAdapter extends FragmentPagerAdapter {
     private Context mContext;
-    private String[] titles = {"CHAMADAS", "CONVERSAS", "CONTATOS", "BLUETOOTH"};
+    private String[] titles = {"CONVERSAS", "CONTATOS", "BLUETOOTH"};
     //private int[] icons = new int[]{R.drawable.account, R.drawable.almoco_, R.drawable.bell_ring, R.drawable.account, R.drawable.account};
     //private int heightIcon;
 
@@ -27,10 +27,9 @@ public class TabsAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         Fragment frag = null;
         switch (position){
-            case 0: frag = new ListaContatosFragment(); break;
-            case 1: frag = new ListaConversasFragment(); break;
-            case 2: frag = new ListaContatosFragment(); break;
-            case 3: frag = new ListaBluetoothFragment(); break;
+            case 0: frag = new ListaConversasFragment(); break;
+            case 1: frag = new ListaContatosFragment(); break;
+            case 2: frag = new ListaBluetoothFragment(); break;
 
         }
 
