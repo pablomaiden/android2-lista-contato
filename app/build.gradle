@@ -4,14 +4,14 @@ apply plugin: 'com.getkeepsafe.dexcount'
 
 android {
 
-    signingConfigs {
+    /*signingConfigs {
         config {
             keyAlias 'meus_contatos_key'
             keyPassword '123456'
             storeFile file('/Volumes/HDD1TB/dev/android/keys/mystore.keystore')
             storePassword '123456'
         }
-    }
+    }*/
 
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
@@ -22,7 +22,7 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
-        signingConfig signingConfigs.config
+        //signingConfig signingConfigs.config
         //Enabling multidex support
         multiDexEnabled true
     }
@@ -30,10 +30,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.config
+            //signingConfig signingConfigs.config
         }
         debug {
-            signingConfig signingConfigs.config
+            //signingConfig signingConfigs.config
         }
     }
     packagingOptions {
@@ -81,9 +81,7 @@ dependencies {
     compile('com.mikepenz:materialdrawer:5.3.1@aar') {
         transitive = true
     }
-    apply plugin: 'com.google.gms.google-services'
-
 }
-
+apply plugin: 'com.google.gms.google-services'
 
 

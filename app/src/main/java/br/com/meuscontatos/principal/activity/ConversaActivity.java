@@ -55,6 +55,7 @@ package br.com.meuscontatos.principal.activity;
         import br.com.meuscontatos.principal.R;
         import br.com.meuscontatos.principal.SignInActivity;
         import br.com.meuscontatos.principal.domain.Conversa;
+        import br.com.meuscontatos.principal.fragment.MapaFragment;
         import br.com.meuscontatos.principal.util.ChatPreferences;
         import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -222,10 +223,8 @@ public class ConversaActivity extends AppCompatActivity
         mMapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               Intent intent = new Intent(getApplication(), MapActivity.class);
+               Intent intent = new Intent(getApplication(), MapaFragment.class);
                 startActivity(intent);
-
-
             }
         });
     }
