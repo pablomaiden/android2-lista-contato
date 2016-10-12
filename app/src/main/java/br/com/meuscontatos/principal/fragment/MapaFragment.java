@@ -1,33 +1,38 @@
 package br.com.meuscontatos.principal.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.support.v4.app.FragmentActivity;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import br.com.meuscontatos.principal.R;
 
-import br.com.meuscontatos.principal.activity.CadastrarContatosActivity;
-import br.com.meuscontatos.principal.activity.MapActivity;
+public class MapaFragment extends FragmentActivity implements OnMapReadyCallback {
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.mapa_tab);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
 
-public class MapaFragment extends SupportMapFragment {
-
-    public MapaFragment() {
-    }
-
-    public static MapaFragment newInstance() {
-        return new MapaFragment();
+        GoogleMapOptions options = new GoogleMapOptions();
+        options.mapType(GoogleMap.MAP_TYPE_SATELLITE)
+                .compassEnabled(false)
+                .rotateGesturesEnabled(false)
+                .tiltGesturesEnabled(false);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = super.onCreateView(inflater, container, savedInstanceState);
-        Intent intent = new Intent(getActivity(), MapActivity.class);
-        MapaFragment.this.startActivity(intent);
-        return view;
+    public void onMapReady(GoogleMap map) {
+        LatLng sydney = new LatLng(-15.8728144,-48.0166341);
+        map.addMarker(new MarkerOptions().position(sydney).title("Brasília"));
+        map.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
-
 }

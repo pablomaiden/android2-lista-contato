@@ -1,29 +1,21 @@
 {
   "project_info": {
-    "project_number": "220560825483",
-    "firebase_url": "https://meus-contatos-2709e.firebaseio.com",
-    "project_id": "meus-contatos-2709e",
-    "storage_bucket": "meus-contatos-2709e.appspot.com"
+    "project_number": "227651476069",
+    "firebase_url": "https://meus-contatos-19198.firebaseio.com",
+    "project_id": "meus-contatos-19198",
+    "storage_bucket": "meus-contatos-19198.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:220560825483:android:9ad9942848e40d9e",
+        "mobilesdk_app_id": "1:227651476069:android:9ad9942848e40d9e",
         "android_client_info": {
           "package_name": "br.com.meuscontatos.principal"
         }
       },
       "oauth_client": [
         {
-          "client_id": "220560825483-16arla9i98qbgnjhu9vg375a96va0mr7.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "br.com.meuscontatos.principal",
-            "certificate_hash": "61AC504A551A57C4AD2C72792828A707186825CB"
-          }
-        },
-        {
-          "client_id": "220560825483-g8pp60u0u736o12c62ak4ipp90hrf73j.apps.googleusercontent.com",
+          "client_id": "227651476069-69vktoh68mc0qnldoi80bd10pdcinh5c.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "br.com.meuscontatos.principal",
@@ -31,29 +23,13 @@
           }
         },
         {
-          "client_id": "220560825483-0ubjre9310apl35tjrnuti7ak5jcn3he.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "br.com.meuscontatos.principal",
-            "certificate_hash": "6EBF330D1EE70412B31FD2C7FB3F8B7A7E54CB30"
-          }
-        },
-        {
-          "client_id": "220560825483-118e8qmp2ho1vrg81nicnemud29o6ikn.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "br.com.meuscontatos.principal",
-            "certificate_hash": "AFC18A29391430AFE3248FCF36A953D8B5D8B393"
-          }
-        },
-        {
-          "client_id": "220560825483-fdp6hpcmfqn8kh1hac50b38sapgc72na.apps.googleusercontent.com",
+          "client_id": "227651476069-mvt5rbikvisr1ic7fj0g6eiqt3o024kb.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCKeGjA4GJao8MflSynBiU78CXYbT8yVSE"
+          "current_key": "AIzaSyBfBB9EUXnEPAK1vw5Az4MN08sv7eDqKZo"
         }
       ],
       "services": {
@@ -64,7 +40,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "220560825483-fdp6hpcmfqn8kh1hac50b38sapgc72na.apps.googleusercontent.com",
+              "client_id": "227651476069-mvt5rbikvisr1ic7fj0g6eiqt3o024kb.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

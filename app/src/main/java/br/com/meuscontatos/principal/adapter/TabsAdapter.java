@@ -3,14 +3,13 @@ package br.com.meuscontatos.principal.adapter;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-
-import br.com.meuscontatos.principal.activity.MapActivity;
 import br.com.meuscontatos.principal.fragment.ConversarFragment;
 import br.com.meuscontatos.principal.fragment.ListaBluetoothFragment;
 import br.com.meuscontatos.principal.fragment.ListaContatosFragment;
-import br.com.meuscontatos.principal.fragment.ListaConversasFragment;
+import br.com.meuscontatos.principal.fragment.MapFragments;
 import br.com.meuscontatos.principal.fragment.MapaFragment;
 
 public class TabsAdapter extends FragmentPagerAdapter {
@@ -30,10 +29,10 @@ public class TabsAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         Fragment frag = null;
         switch (position){
-            case 0: frag = new ConversarFragment(); break;
-            case 1: frag = new ListaContatosFragment(); break;
-            case 2: frag = new ListaBluetoothFragment(); break;
-            case 3: frag = new MapaFragment(); break;
+            case 0: frag    = new ConversarFragment(); break;
+            case 1: frag    = new ListaContatosFragment(); break;
+            case 2: frag    = new ListaBluetoothFragment(); break;
+            case 3: frag    = new MapFragments(); break;
 
         }
 
@@ -42,6 +41,8 @@ public class TabsAdapter extends FragmentPagerAdapter {
         frag.setArguments(b);
         return frag;
     }
+
+
 
     @Override
     public int getCount() {
