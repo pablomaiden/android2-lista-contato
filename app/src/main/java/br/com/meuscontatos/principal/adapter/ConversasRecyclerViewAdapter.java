@@ -47,7 +47,7 @@ public class ConversasRecyclerViewAdapter extends RecyclerView.Adapter<Conversas
 
     public String getNomeConversa(int position){
         Conversa conversa =  conversas.get(position);
-        return conversa.getNomeDest();
+        return conversa.getName();
     }
 
 
@@ -64,16 +64,16 @@ public class ConversasRecyclerViewAdapter extends RecyclerView.Adapter<Conversas
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder,final int position) {
-        if(conversas.get(position).getUrlFotoDest()!=null && !conversas.get(position).getUrlFotoDest().isEmpty()){
-           viewHolder.urlFotoDest.setImageURI(Uri.parse(conversas.get(position).getUrlFotoDest()));
+        if(conversas.get(position).getPhotoUrl()!=null && !conversas.get(position).getPhotoUrl().isEmpty()){
+           viewHolder.urlFotoDest.setImageURI(Uri.parse(conversas.get(position).getPhotoUrl()));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                 viewHolder.urlFotoDest.setBackground(null);
             }
         }else {
            viewHolder.urlFotoDest.setImageResource(R.drawable.sem_foto);
         }
-        viewHolder.nomeDest.setText(conversas.get(position).getNomeDest());
-        viewHolder.lastMsg.setText(conversas.get(position).getLastMsg());
+        viewHolder.nomeDest.setText(conversas.get(position).getName());
+        viewHolder.lastMsg.setText(conversas.get(position).getText());
         YoYo.with(Techniques.FadeIn).duration(800).playOn(viewHolder.itemView);
 
         viewHolder.v.setOnClickListener(new View.OnClickListener() {
