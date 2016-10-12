@@ -29,7 +29,7 @@
             android:layout_rowSpan="3"/>
 
         <TextView
-            android:text="TextView"
+            android:text="@+id/tv_nome_usuario_firebase"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="50sp"
