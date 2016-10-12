@@ -8,24 +8,32 @@ public class Conversa extends RealmObject {
 
     @PrimaryKey
     private long id;
-    private String nomeDest; //Pessoa com quem se esta conversando, quem recebeu a primeira mensagem (para aparecer na lista de conversas)
-    private String sobreNomeDest; // Pessoa com quem se esta conversando (para aparecer na lista de conversas)
-    private String lastMsg; //Texto da última mensagem enviada (para aparecer na lista de conversas)
-    private String urlFotoDest; //Foto do usuário Destinatário da conversa
+    private String idFirebase;
+    private String name; //Pessoa com quem se esta conversando, quem recebeu a primeira mensagem (para aparecer na lista de conversas)
+    private String text; //Texto da última mensagem enviada (para aparecer na lista de conversas)
+    private String photoUrl; //Foto do usuário Destinatário da conversa
 
     //Acrescentar dados do usuário remetente tb, aquele que iniciou a conversa
 
     public Conversa(){}
 
-    public Conversa(String nomeDest, String sobreNomeDest, String lastMsg, String urlFotoDest){
-        this.nomeDest = nomeDest;
-        this.sobreNomeDest = sobreNomeDest;
-        this.lastMsg = lastMsg;
-        this.urlFotoDest = urlFotoDest;
+    public Conversa(String name, String text, String photoUrl){
+        this.name = name;
+        this.text = text;
+        this.photoUrl = photoUrl;
 
     }
 
     //getters and setters
+//    public long getId() {
+//        return id;
+//    }
+//
+//    public void setId(long id) {
+//        this.id = id;
+//    }
+
+
     public long getId() {
         return id;
     }
@@ -34,35 +42,35 @@ public class Conversa extends RealmObject {
         this.id = id;
     }
 
-    public String getNomeDest() {
-        return nomeDest;
+    public String getIdFirebase() {
+        return idFirebase;
     }
 
-    public void setNomeDest(String nomeDest) {
-        this.nomeDest = nomeDest;
+    public void setIdFirebase(String idFirebase) {
+        this.idFirebase = idFirebase;
     }
 
-    public String getSobreNomeDest() {
-        return sobreNomeDest;
+    public String getName() {
+        return name;
     }
 
-    public void setSobreNomeDest(String sobreNomeDest) {
-        this.sobreNomeDest = sobreNomeDest;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getLastMsg() {
-        return lastMsg;
+    public String getPhotoUrl() {
+        return photoUrl;
     }
 
-    public void setLastMsg(String lastMsg) {
-        this.lastMsg = lastMsg;
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
     }
 
-    public String getUrlFotoDest() {
-        return urlFotoDest;
+    public String getText() {
+        return text;
     }
 
-    public void setUrlFotoDest(String urlFotoDest) {
-        this.urlFotoDest = urlFotoDest;
+    public void setText(String text) {
+        this.text = text;
     }
 }
