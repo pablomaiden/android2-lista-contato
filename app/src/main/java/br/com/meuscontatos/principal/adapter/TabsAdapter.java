@@ -15,7 +15,7 @@ import br.com.meuscontatos.principal.fragment.MapaFragment;
 
 public class TabsAdapter extends FragmentPagerAdapter {
     private Context mContext;
-    private String[] titles = {"CONVERSAS", "CONTATOS", "BLUETOOTH", "MAPA"};
+    private String[] titles = {"CONVERSAR", "CONTATOS", "BLUETOOTH", "MAPA"};
     //private int[] icons = new int[]{R.drawable.account, R.drawable.almoco_, R.drawable.bell_ring, R.drawable.account, R.drawable.account};
     //private int heightIcon;
 

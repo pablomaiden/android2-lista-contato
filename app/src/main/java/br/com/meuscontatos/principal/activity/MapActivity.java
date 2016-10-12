@@ -44,13 +44,24 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+    }
+
+
+    public MapaFragment getMapaFragment() {
+        return mapaFragment;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         if(googleServicesAvailable()){
             Toast.makeText(this, "Carregando...", Toast.LENGTH_LONG).show();
             setContentView(R.layout.mapa_tab);
         }
 
 
-        mapaFragment = MapaFragment.newInstance();
+       // mapaFragment = MapaFragment.newInstance();
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.map, mapaFragment)
@@ -59,12 +70,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         // Registra o onMapReadyCallback
         mapaFragment.getMapAsync(this);
     }
-
-
-    public MapaFragment getMapaFragment() {
-        return mapaFragment;
-    }
-
 
     @Override
     public void onMapReady(GoogleMap googleMap) {

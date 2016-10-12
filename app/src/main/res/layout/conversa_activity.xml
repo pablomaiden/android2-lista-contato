@@ -32,6 +32,7 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"/>
 
+
         <Button
             android:id="@+id/sendButton"
             android:layout_width="wrap_content"
@@ -39,6 +40,16 @@
             android:layout_gravity="bottom"
             android:enabled="false"
             android:text="ENVIAR"/>
+
+
+        <Button
+            android:id="@+id/mapButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:enabled="true"
+            android:text="MAPA"/>
+
 
     </LinearLayout>
 
