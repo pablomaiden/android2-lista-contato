@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import br.com.meuscontatos.principal.activity.MapActivity;
+import br.com.meuscontatos.principal.fragment.ConversarFragment;
 import br.com.meuscontatos.principal.fragment.ListaBluetoothFragment;
 import br.com.meuscontatos.principal.fragment.ListaContatosFragment;
 import br.com.meuscontatos.principal.fragment.ListaConversasFragment;
@@ -29,7 +30,7 @@ public class TabsAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         Fragment frag = null;
         switch (position){
-            case 0: frag = new ListaConversasFragment(); break;
+            case 0: frag = new ConversarFragment(); break;
             case 1: frag = new ListaContatosFragment(); break;
             case 2: frag = new ListaBluetoothFragment(); break;
             case 3: frag = new MapaFragment(); break;

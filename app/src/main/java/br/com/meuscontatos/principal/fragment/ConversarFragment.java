@@ -24,7 +24,7 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 
 
-public class ListaConversasFragment extends Fragment implements RecyclerViewOnClickListenerHack {
+public class ConversarFragment extends Fragment implements RecyclerViewOnClickListenerHack {
 
     private RecyclerView mRecyclerView;
     static final int CHAT_REQUEST_FOR_RESULT = 35;
@@ -66,20 +66,21 @@ public class ListaConversasFragment extends Fragment implements RecyclerViewOnCl
                 //if(position > 0){
                 //    intent.putExtra("idConversa",conversasRecyclerViewAdapter.getIdConversa(position));
                 //}
-                startActivityForResult(intent,CHAT_REQUEST_FOR_RESULT);
-                conversasAdapter.notifyDataSetChanged();
+                //startActivityForResult(intent,CHAT_REQUEST_FOR_RESULT);
+                //conversasAdapter.notifyDataSetChanged();
+                startActivity(intent);
             }});
         return view;
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CHAT_REQUEST_FOR_RESULT) {
-            Realm realm = Service.getInstace().getRealm(getActivity());
-            //int total = (int) realm.where(Conversa.class).count();
-            //conversasAdapter.notifyItemInserted(total);
-        }
-    }
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        if (requestCode == CHAT_REQUEST_FOR_RESULT) {
+//            Realm realm = Service.getInstace().getRealm(getActivity());
+//            //int total = (int) realm.where(Conversa.class).count();
+//          //  conversasAdapter.notifyItemInserted(total);
+//        }
+//    }
 
     @Override
     public void onClickListener(View view, int position) {
@@ -98,7 +99,7 @@ public class ListaConversasFragment extends Fragment implements RecyclerViewOnCl
                     public void onClick(DialogInterface dialog, int which) {
                         Realm realm = Service.getInstace().getRealm(getActivity());
                         realm.beginTransaction();
-          //              realm.where(Conversa.class).equalTo("id",conversasAdapter.getIdConversa(position)).findFirst().deleteFromRealm();
+                 //       realm.where(Conversa.class).equalTo("id",conversasAdapter.getIdConversa(position)).findFirst().deleteFromRealm();
                         realm.commitTransaction();
                         conversasAdapter.notifyItemRemoved(position);
                     }

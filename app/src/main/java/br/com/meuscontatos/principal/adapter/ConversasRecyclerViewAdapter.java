@@ -39,11 +39,11 @@ public class ConversasRecyclerViewAdapter extends RecyclerView.Adapter<Conversas
         this.layoutInflater= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
     }
-
-    public Long getIdConversa(int position){
-        Conversa conversa =  conversas.get(position);
-        return conversa.getId();
-    }
+//
+//    public Long getIdConversa(int position){
+//        Conversa conversa =  conversas.get(position);
+//        return conversa.getId();
+//    }
 
     public String getNomeConversa(int position){
         Conversa conversa =  conversas.get(position);
@@ -82,7 +82,7 @@ public class ConversasRecyclerViewAdapter extends RecyclerView.Adapter<Conversas
 
 
                 Intent intent = new Intent(v.getContext(), ChatActivity.class);
-                intent.putExtra("idConversa", getIdConversa(position));
+              //  intent.putExtra("idConversa", getIdConversa(position));
                 //v.getContext().startActivityForResult(intent,CHAT_REQUEST_FOR_RESULT);
                 v.getContext().startActivity(intent);
                 notifyDataSetChanged();
@@ -100,7 +100,7 @@ public class ConversasRecyclerViewAdapter extends RecyclerView.Adapter<Conversas
                             public void onClick(DialogInterface dialog, int which) {
                                 Realm realm = Service.getInstace().getRealm(context);
                                 realm.beginTransaction();
-                                realm.where(Conversa.class).equalTo("id",getIdConversa(position)).findFirst().deleteFromRealm();
+ //                               realm.where(Conversa.class).equalTo("id",getIdConversa(position)).findFirst().deleteFromRealm();
                                 realm.commitTransaction();
                                 notifyItemRemoved(position);
                             }
