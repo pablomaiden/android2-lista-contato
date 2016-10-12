@@ -4,10 +4,10 @@ package br.com.meuscontatos.principal.domain;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class Conversa extends RealmObject {
+public class Conversa /*extends RealmObject*/ {
 
-    @PrimaryKey
-    private long id;
+    //@PrimaryKey
+    //private long id;
     private String idFirebase;
     private String name; //Pessoa com quem se esta conversando, quem recebeu a primeira mensagem (para aparecer na lista de conversas)
     private String text; //Texto da última mensagem enviada (para aparecer na lista de conversas)
@@ -34,13 +34,13 @@ public class Conversa extends RealmObject {
 //    }
 
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
+//    public long getId() {
+//        return id;
+//    }
+//
+//    public void setId(long id) {
+//        this.id = id;
+//    }
 
     public String getIdFirebase() {
         return idFirebase;

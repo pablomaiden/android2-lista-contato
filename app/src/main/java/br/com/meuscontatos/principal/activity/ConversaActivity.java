@@ -28,8 +28,9 @@ package br.com.meuscontatos.principal.activity;
         import android.widget.TextView;
         import android.widget.Toast;
 
-//        import com.bumptech.glide.Glide;
-//        import com.firebase.ui.database.FirebaseRecyclerAdapter;
+
+        import com.bumptech.glide.Glide;
+        import com.firebase.ui.database.FirebaseRecyclerAdapter;
         import com.google.android.gms.ads.AdRequest;
         import com.google.android.gms.ads.AdView;
         import com.google.android.gms.appinvite.AppInvite;
@@ -52,6 +53,7 @@ package br.com.meuscontatos.principal.activity;
         import java.util.Map;
 
         import br.com.meuscontatos.principal.R;
+        import br.com.meuscontatos.principal.domain.Conversa;
         import br.com.meuscontatos.principal.util.ChatPreferences;
         import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -65,9 +67,9 @@ public class ConversaActivity extends AppCompatActivity
 
         public MessageViewHolder(View v) {
             super(v);
-//            messageTextView = (TextView) itemView.findViewById(R.id.messageTextView);
-//            messengerTextView = (TextView) itemView.findViewById(R.id.messengerTextView);
-//            messengerImageView = (CircleImageView) itemView.findViewById(R.id.messengerImageView);
+            messageTextView = (TextView) itemView.findViewById(R.id.messageTextView);
+            messengerTextView = (TextView) itemView.findViewById(R.id.messengerTextView);
+            messengerImageView = (CircleImageView) itemView.findViewById(R.id.messengerImageView);
         }
     }
 
@@ -89,6 +91,12 @@ public class ConversaActivity extends AppCompatActivity
     private EditText mMessageEditText;
 
     // Firebase instance variables
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    private FirebaseUser mUser;
+    private DatabaseReference mFirebaseDatabaseReference;
+    private FirebaseRecyclerAdapter<Conversa, MessageViewHolder>
+            mFirebaseAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +105,10 @@ public class ConversaActivity extends AppCompatActivity
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         // Set default username is anonymous.
         mUsername = ANONYMOUS;
+
+        //Initialize FirebaseAuth
+       // mAuth = FirebaseAuth.getInstance();
+       // mAuthListener = getFirebaseAuthResultHandler();
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
@@ -110,7 +122,56 @@ public class ConversaActivity extends AppCompatActivity
         mLinearLayoutManager.setStackFromEnd(true);
         mMessageRecyclerView.setLayoutManager(mLinearLayoutManager);
 
-        mProgressBar.setVisibility(ProgressBar.INVISIBLE);
+
+
+        // New child entries
+        mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
+        mFirebaseAdapter = new FirebaseRecyclerAdapter<Conversa,
+                        MessageViewHolder>(
+                Conversa.class,
+                R.layout.item_conversa,
+                MessageViewHolder.class,
+                mFirebaseDatabaseReference.child(MESSAGES_CHILD)) {
+
+            @Override
+            protected void populateViewHolder(MessageViewHolder viewHolder,
+                                              Conversa conversa, int position) {
+                mProgressBar.setVisibility(ProgressBar.INVISIBLE);
+                viewHolder.messageTextView.setText(conversa.getText());
+                viewHolder.messengerTextView.setText(conversa.getName());
+                if (conversa.getPhotoUrl() == null) {
+                    viewHolder.messengerImageView
+                            .setImageDrawable(ContextCompat
+                                    .getDrawable(getApplicationContext(),
+                                            R.drawable.sem_foto));
+                } else {
+                    Glide.with(getApplicationContext())
+                            .load(conversa.getPhotoUrl())
+                            .into(viewHolder.messengerImageView);
+                }
+            }
+        };
+
+        mFirebaseAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                int conversaCount = mFirebaseAdapter.getItemCount();
+                int lastVisiblePosition =
+                        mLinearLayoutManager.findLastCompletelyVisibleItemPosition();
+                // If the recycler view is initially being loaded or the
+                // user is at the bottom of the list, scroll to the bottom
+                // of the list to show the newly added message.
+                if (lastVisiblePosition == -1 ||
+                        (positionStart >= (conversaCount - 1) &&
+                                lastVisiblePosition == (positionStart - 1))) {
+                    mMessageRecyclerView.scrollToPosition(positionStart);
+                }
+            }
+        });
+
+        mMessageRecyclerView.setLayoutManager(mLinearLayoutManager);
+        mMessageRecyclerView.setAdapter(mFirebaseAdapter);
 
         mMessageEditText = (EditText) findViewById(R.id.messageEditText);
         mMessageEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(mSharedPreferences
