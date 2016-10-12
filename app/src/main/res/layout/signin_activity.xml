@@ -101,7 +101,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Fazer login pelo Facebook"
+        android:text="Logar com Facebook"
         android:textColor="@color/white"
         android:id="@+id/btnFacebookLogin"
         android:layout_gravity="center_horizontal"

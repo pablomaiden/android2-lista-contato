@@ -50,18 +50,22 @@ import io.realm.Realm;
 
 public class SignInActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
+    private static final String TAG = "SignInActivity";
     private EditText et_login;
     private EditText et_senha;
     private SignInButton signInButton;
     private Button entrar;
+    // Firebase instance variables
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private FirebaseUser mUser;
     private CallbackManager callbackManager;
     private GoogleApiClient mGoogleApiClient;
     private static final int RC_SIGN_IN_GOOGLE   = 7859;
     private static final int RC_SIGN_IN_FACEBOOK = 64206;
     private Usuario user;
     public static CallbackManager callbackmanager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,11 +76,12 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
 
         et_login = (EditText) findViewById(R.id.et_login);
         et_senha = (EditText) findViewById(R.id.et_senha);
-        signInButton = (SignInButton) findViewById(R.id.sign_in_button);
+        signInButton = (SignInButton) findViewById(R.id.sign_in_button); //Botão de SignIn com Google
         entrar = (Button) findViewById(R.id.entrar);
 
         //Autenticar pelo facebook
         callbackManager = CallbackManager.Factory.create();
+
         //Autenticar pelo google
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -90,8 +95,10 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .addApi(AppIndex.API).build();
 
+        //Initialize FirebaseAuth
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = getFirebaseAuthResultHandler();
+
 
         signInButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -260,13 +267,13 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        //Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
+                        Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
 
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
-                            //Log.w(TAG, "signInWithCredential", task.getException());
+                            Log.w(TAG, "signInWithCredential", task.getException());
                             //Toast.makeText(GoogleSignInActivity.this, "Authentication failed.",Toast.LENGTH_SHORT).show();
                         }
                         // ...
@@ -286,6 +293,8 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
                 firebaseAuthWithGoogle(account);
             } else {
                 //Falha na autenticação
+                Toast.makeText(this, "Falha no Google Sign In", Toast.LENGTH_LONG);
+                Log.e(TAG, "Google Sign In failed.");
             }
         }
 
@@ -330,7 +339,8 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
+        Log.d(TAG, "onConnectionFailed:" + connectionResult);
+        Toast.makeText(this, "Google Play Services error.", Toast.LENGTH_SHORT).show();
     }
 
     /**
