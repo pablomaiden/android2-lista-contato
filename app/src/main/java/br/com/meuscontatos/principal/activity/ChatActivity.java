@@ -45,10 +45,10 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.chatbubble);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setShowHideAnimationEnabled(true);
-        recuperarConversa();
+        //recuperarConversa();
 
         if(conversa!=null)
-           getSupportActionBar().setTitle(conversa.getNomeDest());
+           getSupportActionBar().setTitle(conversa.getName());
 
         et_send      = (EditText)   findViewById(R.id.et_send);
         et_chat      = (TextView)   findViewById(R.id.et_chat);
@@ -65,36 +65,36 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
-    public void recuperarConversa(){
-        if(getIntent().getExtras()!=null){
-            Long idConversa = (Long) getIntent().getExtras().get("idConversa");
-            if(idConversa!=null) {
-                conversa = getConversa(idConversa);
-            }
-        }
-    }
+//    public void recuperarConversa(){
+//        if(getIntent().getExtras()!=null){
+//            Long idConversa = (Long) getIntent().getExtras().get("idConversa");
+//            if(idConversa!=null) {
+//                conversa = getConversa(idConversa);
+//            }
+//        }
+//    }
+//
+//    public Conversa getConversa(Long id){
+//        Realm realm = Service.getInstace().getRealm(getApplicationContext());
+//        return realm.where(Conversa.class).equalTo("id",id).findFirst();
+//    }
 
-    public Conversa getConversa(Long id){
-        Realm realm = Service.getInstace().getRealm(getApplicationContext());
-        return realm.where(Conversa.class).equalTo("id",id).findFirst();
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu_chat, menu);
+//        return true;
+//    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_chat, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.sendLocation:
-                //TODO Enviar um marker para o mapa com a posição do usuário e postar no chat.
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.sendLocation:
+//                //TODO Enviar um marker para o mapa com a posição do usuário e postar no chat.
+//                return true;
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
+//    }
 
 
 

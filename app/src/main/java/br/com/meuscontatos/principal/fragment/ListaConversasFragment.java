@@ -15,6 +15,7 @@ import com.melnykov.fab.FloatingActionButton;
 
 import br.com.meuscontatos.principal.R;
 import br.com.meuscontatos.principal.activity.ChatActivity;
+import br.com.meuscontatos.principal.activity.ConversaActivity;
 import br.com.meuscontatos.principal.adapter.ConversasRecyclerViewAdapter;
 import br.com.meuscontatos.principal.domain.Conversa;
 import br.com.meuscontatos.principal.interfaces.RecyclerViewOnClickListenerHack;
@@ -60,7 +61,8 @@ public class ListaConversasFragment extends Fragment implements RecyclerViewOnCl
                 // 2 - Ao selecionar o Contato desejado, iniciar uma conversa
                 // 3 - Abrir um chat
                 //int position = 0; //Remover quando mover esse código para um clique em um item da lista, e utilizar o position do item clicado
-                Intent intent = new Intent(getActivity(),ChatActivity.class);
+                //Intent intent = new Intent(getActivity(),ChatActivity.class);
+                Intent intent = new Intent(getActivity(),ConversaActivity.class);
                 //if(position > 0){
                 //    intent.putExtra("idConversa",conversasRecyclerViewAdapter.getIdConversa(position));
                 //}
