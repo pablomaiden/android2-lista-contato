@@ -47,6 +47,7 @@ public class MainActivity extends ActionBarActivity {
             String image_url = user.getUrlFotoFireBase();
             ImageLoader imgLoader = new ImageLoader(getApplicationContext());
             imgLoader.DisplayImage(image_url, loader, foto_perfil_autenticacao);
+
             tv_nome_usuario_firebase.setText(user.getNameUserFireBase());
         }
 
