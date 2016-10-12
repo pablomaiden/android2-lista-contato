@@ -200,6 +200,13 @@ public class ConversaActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 // Send messages on click.
+                Conversa conversa = new
+                        Conversa(mMessageEditText.getText().toString(),
+                        mUsername,
+                        mPhotoUrl);
+                mFirebaseDatabaseReference.child(MESSAGES_CHILD)
+                        .push().setValue(conversa);
+                mMessageEditText.setText("");
             }
         });
     }

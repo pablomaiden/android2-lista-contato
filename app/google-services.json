@@ -15,11 +15,35 @@
       },
       "oauth_client": [
         {
-          "client_id": "220560825483-pmhqi32hkr7rdvlij4kvp4klupqipbb2.apps.googleusercontent.com",
+          "client_id": "220560825483-16arla9i98qbgnjhu9vg375a96va0mr7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.meuscontatos.principal",
+            "certificate_hash": "61AC504A551A57C4AD2C72792828A707186825CB"
+          }
+        },
+        {
+          "client_id": "220560825483-g8pp60u0u736o12c62ak4ipp90hrf73j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.meuscontatos.principal",
+            "certificate_hash": "3A72A45FEF5BB7611F76DFBF22910F98EC93C8CD"
+          }
+        },
+        {
+          "client_id": "220560825483-0ubjre9310apl35tjrnuti7ak5jcn3he.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "br.com.meuscontatos.principal",
             "certificate_hash": "6EBF330D1EE70412B31FD2C7FB3F8B7A7E54CB30"
+          }
+        },
+        {
+          "client_id": "220560825483-118e8qmp2ho1vrg81nicnemud29o6ikn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.meuscontatos.principal",
+            "certificate_hash": "AFC18A29391430AFE3248FCF36A953D8B5D8B393"
           }
         },
         {
