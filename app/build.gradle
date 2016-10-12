@@ -34,6 +34,11 @@ android {
             signingConfig signingConfigs.config
         }
     }
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE-FIREBASE.txt'
+        exclude 'META-INF/NOTICE'
+    }
     productFlavors {
     }
 }
@@ -52,6 +57,7 @@ dependencies {
     compile 'com.android.support:support-v4:24.+'
     compile 'com.facebook.android:facebook-android-sdk:4.14.1'
     compile 'org.androidannotations:androidannotations-api:4.1.0'
+    //Firebase
     compile 'com.google.firebase:firebase-core:9.6.1'
     compile 'com.google.firebase:firebase-database:9.6.1'
     compile 'com.google.firebase:firebase-storage:9.6.1'
@@ -62,6 +68,9 @@ dependencies {
     compile 'com.google.android.gms:play-services-appindexing:9.6.1'
     compile 'com.google.firebase:firebase-auth:9.6.1'
     compile 'com.google.firebase:firebase-ads:9.6.1'
+    //Firebase UI
+    compile 'com.firebaseui:firebase-ui-database:0.4.0'
+    //Google Maps API
     compile 'com.google.android.gms:play-services:9.6.1'
     compile 'com.google.android.gms:play-services-maps:9.6.1'
     compile('com.mikepenz:materialdrawer:5.3.1@aar') {
