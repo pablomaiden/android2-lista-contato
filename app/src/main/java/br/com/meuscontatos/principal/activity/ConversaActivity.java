@@ -107,7 +107,9 @@ public class ConversaActivity extends AppCompatActivity
         mUsername = ANONYMOUS;
 
         //Initialize FirebaseAuth
-       // mAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        mUsername = mAuth.getCurrentUser().getDisplayName();
+        mPhotoUrl = mAuth.getCurrentUser().getPhotoUrl().toString();
        // mAuthListener = getFirebaseAuthResultHandler();
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
