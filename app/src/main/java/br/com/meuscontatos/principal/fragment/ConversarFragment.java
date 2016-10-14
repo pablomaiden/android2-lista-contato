@@ -63,24 +63,11 @@ public class ConversarFragment extends Fragment implements RecyclerViewOnClickLi
                 //int position = 0; //Remover quando mover esse código para um clique em um item da lista, e utilizar o position do item clicado
                 //Intent intent = new Intent(getActivity(),ChatActivity.class);
                 Intent intent = new Intent(getActivity(),ConversaActivity.class);
-                //if(position > 0){
-                //    intent.putExtra("idConversa",conversasRecyclerViewAdapter.getIdConversa(position));
-                //}
-                //startActivityForResult(intent,CHAT_REQUEST_FOR_RESULT);
-                //conversasAdapter.notifyDataSetChanged();
                 startActivity(intent);
             }});
         return view;
     }
 
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (requestCode == CHAT_REQUEST_FOR_RESULT) {
-//            Realm realm = Service.getInstace().getRealm(getActivity());
-//            //int total = (int) realm.where(Conversa.class).count();
-//          //  conversasAdapter.notifyItemInserted(total);
-//        }
-//    }
 
     @Override
     public void onClickListener(View view, int position) {
@@ -99,7 +86,7 @@ public class ConversarFragment extends Fragment implements RecyclerViewOnClickLi
                     public void onClick(DialogInterface dialog, int which) {
                         Realm realm = Service.getInstace().getRealm(getActivity());
                         realm.beginTransaction();
-                 //       realm.where(Conversa.class).equalTo("id",conversasAdapter.getIdConversa(position)).findFirst().deleteFromRealm();
+                        //realm.where(Conversa.class).equalTo("id",conversasAdapter.getIdConversa(position)).findFirst().deleteFromRealm();
                         realm.commitTransaction();
                         conversasAdapter.notifyItemRemoved(position);
                     }
